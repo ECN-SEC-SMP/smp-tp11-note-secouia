@@ -2,10 +2,13 @@
 #include "Plateau.hpp"
 #include <algorithm>
 
+// CORRECTION : l'ordre d'initialisation doit correspondre à l'ordre de
+// déclaration dans le .hpp : ticketFini, nbWagons, missions, couleur, nom, mainCartes
 Joueur::Joueur(const std::string &nom, couleurJoueur couleur)
-    : nom(nom), couleur(couleur), nbWagons(20), ticketFini(0) {}
+    : ticketFini(0), nbWagons(20), couleur(couleur), nom(nom) {}
 
-Joueur::~Joueur() = default;
+// CORRECTION : suppression de Joueur::~Joueur() = default;
+// Le destructeur est déjà = default dans le .hpp, le redéfinir ici est une erreur.
 
 // ---- Getters ----
 
@@ -30,9 +33,10 @@ int Joueur::getNbCartes(couleurTrain couleur) const
   return count;
 }
 
+// CORRECTION : cast explicite size_t -> int pour éviter le warning sign-compare
 int Joueur::getNbCartesTotales() const
 {
-  return mainCartes.size();
+  return static_cast<int>(mainCartes.size());
 }
 
 // ---- Gestion des cartes ----
