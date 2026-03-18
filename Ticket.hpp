@@ -5,13 +5,15 @@
 using namespace std;
 
 
-class Train {
+class Ticket {
     private:
         Ville* villeDepart;
         Ville* villeArrivee;
     public:
-        Train(Ville* villeDepart, Ville* villeArrivee);
-        ~Train();
+        Ticket(Ville* villeDepart, Ville* villeArrivee);
+        ~Ticket();
+        Ville* getVilleDepart() const;
+        Ville* getVilleArrivee() const;
 };
 
 

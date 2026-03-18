@@ -9,9 +9,9 @@ class Train {
     private:
         enum couleurTrain couleur ;
     public:
-        enum couleurTrain getCouleurTrain(string couleur);
         Train(enum couleurTrain couleur);
         ~Train();
+        enum couleurTrain getCouleurTrain()const;
 };
 
 
