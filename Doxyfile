@@ -1,0 +1,107 @@
+# =============================================================================
+# Doxyfile – Les Aventuriers du Rail
+# Génère une documentation HTML complète avec graphes de dépendances.
+#
+# Les variables @CMAKE_SOURCE_DIR@ et @PROJECT_VERSION@ sont substituées
+# automatiquement par CMake via configure_file().
+# =============================================================================
+
+# ── Identité du projet ────────────────────────────────────────────────────────
+PROJECT_NAME           = "Les Aventuriers du Rail"
+PROJECT_NUMBER         = 0.1
+PROJECT_BRIEF          = "Implémentation C++ du jeu de société"
+PROJECT_LOGO           =
+
+# ── Répertoires sources ───────────────────────────────────────────────────────
+INPUT                  = @CMAKE_SOURCE_DIR@/include \
+                         @CMAKE_SOURCE_DIR@/src
+RECURSIVE              = YES
+FILE_PATTERNS          = *.hpp *.h *.cpp *.c
+
+# ── Sortie ────────────────────────────────────────────────────────────────────
+OUTPUT_DIRECTORY       = @CMAKE_SOURCE_DIR@/docs
+OUTPUT_LANGUAGE        = French
+CREATE_SUBDIRS         = NO
+
+# ── Quoi documenter ───────────────────────────────────────────────────────────
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+INTERNAL_DOCS          = YES
+SHOW_INCLUDE_FILES     = YES
+SHOW_USED_FILES        = YES
+
+# ── Graphes (nécessite Graphviz) ──────────────────────────────────────────────
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 0
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+DOT_TRANSPARENT        = YES
+
+# ── Sortie HTML ───────────────────────────────────────────────────────────────
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_COLORSTYLE        = AUTO_LIGHT
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 260
+FULL_SIDEBAR           = NO
+HTML_DYNAMIC_SECTIONS  = YES
+HTML_INDEX_NUM_ENTRIES = 100
+SEARCHENGINE           = YES
+SERVER_BASED_SEARCH    = NO
+GENERATE_HTMLHELP      = NO
+
+# ── Désactiver les autres formats ─────────────────────────────────────────────
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+GENERATE_DOCBOOK       = NO
+
+# ── Préprocesseur ─────────────────────────────────────────────────────────────
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = @CMAKE_SOURCE_DIR@/include
+
+# ── Warnings ─────────────────────────────────────────────────────────────────
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES
+WARN_FORMAT            = "$file:$line: $text"
+
+# ── Source inline ─────────────────────────────────────────────────────────────
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+REFERENCES_LINK_SOURCE = YES
+
+# ── Tri ───────────────────────────────────────────────────────────────────────
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+SORT_GROUP_NAMES       = YES
+SORT_BY_SCOPE_NAME     = NO
+
+# ── Divers ────────────────────────────────────────────────────────────────────
+BUILTIN_STL_SUPPORT    = YES
+TYPEDEF_HIDES_STRUCT   = NO
+MARKDOWN_SUPPORT       = YES
+AUTOLINK_SUPPORT       = YES
+VERBATIM_HEADERS       = YES
