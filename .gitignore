@@ -117,3 +117,5 @@ vgcore.*
 
 # ── Packages / vcpkg ─────────────────────────────────────────────────────────
 vcpkg_installed/
+
+.claude
