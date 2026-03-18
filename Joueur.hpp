@@ -52,11 +52,14 @@ public:
     // gestion des tickets
     void ajouterTicket(Ticket *ticket);
     std::vector<Ticket *> defausserTickets();
-    bool Joueur::validerTicket(Ticket *ticket, Plateau &plateau) const;
+    bool validerTicket(Ticket *ticket, Plateau &plateau);
 
     // fin de partie
     bool aGagne() const;
     bool naPlusDeWagons() const;
+
+    // affichage
+    void afficherMain(std::ostream &os) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const Joueur &joueur);
