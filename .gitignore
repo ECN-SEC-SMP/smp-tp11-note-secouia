@@ -119,3 +119,4 @@ vgcore.*
 vcpkg_installed/
 
 .claude
+build
