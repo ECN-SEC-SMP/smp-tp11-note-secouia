@@ -12,5 +12,6 @@ class Partie {
         vector<Train*> piocheTrain;
         vector<Joueur*> joueurs;
     public:
-
+        Partie(vector<Ticket*> pioche, bool grandeTraversee, vector<Tain*> piocheTrain, vector<Joueur*> joueurs);
+        ~Partie();
 };
