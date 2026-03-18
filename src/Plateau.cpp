@@ -1,6 +1,6 @@
 #include "Plateau.hpp"
 
-bool Plateau::isVilleStringInVector(string ville, vector<Ville*> listeVille){
+bool Plateau::isVilleStringInVector(string ville, vector<Ville*> listeVille) const {
     for(int i = 0; i < listeVille.size(); i++){
         if(listeVille[i]->getNom() == ville){
             return true;
@@ -9,7 +9,7 @@ bool Plateau::isVilleStringInVector(string ville, vector<Ville*> listeVille){
     return false;
 }
 
-bool Plateau::isVilleInVector(Ville* ville, vector<Ville*> listeVille){
+bool Plateau::isVilleInVector(Ville* ville, vector<Ville*> listeVille) const {
     for(int i = 0; i < listeVille.size(); i++){
         if(listeVille[i] == ville){
             return true;
@@ -52,7 +52,7 @@ void Plateau::placeWagon(string villeA, string villeB, Joueur* joueur, couleurTr
     }
 }
 
-Ville* Plateau::getVilleFromString(string ville, vector<Ville*> v){
+Ville* Plateau::getVilleFromString(string ville, vector<Ville*> v) const {
     for(int i = 0; i < v.size(); i ++){
         if(v[i]->getNom() == ville){
             return v[i];
@@ -74,7 +74,7 @@ bool verifDiskstra(vector<Ville*> listeVille, map<Ville*, int> distance, vector<
     }
 }
 
-bool Plateau::existeChemin(string villeA, string villeB, Joueur* joueur){
+bool Plateau::existeChemin(string villeA, string villeB, Joueur* joueur) const {
     /* Initialisation du tableau distances */
 
     map<Ville*, int> distance;

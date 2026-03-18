@@ -5,10 +5,7 @@
 using namespace std;
 
 
-Ticket::Ticket(Ville* villeDepart, Ville* villeArrivee) {
-    this->villeDepart = villeDepart;
-    this->villeArrivee = villeArrivee;
-}
+Ticket::Ticket(Ville* villeDepart, Ville* villeArrivee) : villeDepart(villeDepart), villeArrivee(villeArrivee) {}
 
 
 Ticket::~Ticket(){
