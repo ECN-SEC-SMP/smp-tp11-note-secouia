@@ -1,9 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "Ticket.h"
-#include "Joueur.h"
-#include "Train.h"
+#include "Ticket.hpp"
+#include "Joueur.hpp"
+#include "Train.hpp"
 
 class Partie {
     private:
