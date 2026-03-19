@@ -4,8 +4,11 @@
 #include <limits>
 #include <map>
 #include <algorithm>
-
-
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include "Ticket.hpp"
+#include "Train.hpp"
 
 class Plateau {
     private:
@@ -24,5 +27,8 @@ class Plateau {
         void placeWagon(string villeA, string villeB, Joueur* joueur, couleurTrain couleur); //OK
         bool existeChemin(string villeA, string villeB, Joueur* joueur) const; //OK
         bool existeTraversee(Joueur* joueur);  // TODO 
+        vector<Ticket*> getPiocheTickets();
+        vector<Train*> getPiocheTrain();
+
 
 };

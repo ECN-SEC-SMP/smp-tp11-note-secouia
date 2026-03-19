@@ -120,3 +120,10 @@ vcpkg_installed/
 
 .claude
 build
+*.log
+*.out
+*.toc
+*.aux
+CR/_minted-rapport_new/
+*.gz
+.claude/build/
