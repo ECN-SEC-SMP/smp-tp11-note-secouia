@@ -8,12 +8,11 @@
 #include "Train.hpp"
 #include "Plateau.hpp"
 
-Partie::Partie(bool grandeTraversee, vector<Train*> piocheTrain, vector<Joueur*> joueurs){
-
+Partie::Partie(vector<Ticket *> piocheTicket, bool grandeTraversee, vector<Train *> piocheTrain, vector<Joueur *> joueurs)
+{
 	this->plateau = new Plateau();
 
-	this->piocheTicket = this->plateau.getPiocheTickets();
-
+	this->piocheTicket = piocheTicket;
 
 	// On mélange les cartes
 	std::random_device rd;
