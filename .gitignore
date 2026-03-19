@@ -4,4 +4,4 @@
 *.aux
 CR/_minted-rapport_new/
 *.gz
-.claude/
+.claude/build/
