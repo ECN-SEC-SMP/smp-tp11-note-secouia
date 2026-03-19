@@ -4,8 +4,9 @@
 #include <limits>
 #include <map>
 #include <algorithm>
-
-
+#include <iostream>
+#include <sstream>
+#include <fstream>
 
 class Plateau {
     private:
@@ -24,5 +25,6 @@ class Plateau {
         void placeWagon(string villeA, string villeB, Joueur* joueur, couleurTrain couleur); //OK
         bool existeChemin(string villeA, string villeB, Joueur* joueur); //OK
         bool existeTraversee(Joueur* joueur);  // TODO 
+        vector<Ticket*> getPiocheTickets();
 
 };

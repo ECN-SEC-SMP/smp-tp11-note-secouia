@@ -1,4 +1,5 @@
 #include "VoieFerree.hpp"
+#include "Ticket.hpp"
 
 VoieFerree::VoieFerree(vector<Ville*> listeVille, couleurTrain couleur, int poids){
     this->listeVille = listeVille;
