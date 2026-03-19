@@ -4,10 +4,8 @@
 
 using namespace std;
 
-Train::Train(enum couleurTrain couleur)
-{
-    this->couleur = couleur;
-}
+
+Train::Train(enum couleurTrain couleur) : couleur(couleur) {}
 
 enum couleurTrain Train::getCouleurTrain() const
 {

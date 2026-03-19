@@ -8,26 +8,26 @@
 #include "Train.hpp"
 #include "Plateau.hpp"
 
-Partie::Partie(bool grandeTraversee, vector<Train*> piocheTrain, vector<Joueur*> joueurs, Plateau* plateau) {
-	this->plateau = new Plateau();
-
+Partie::Partie(vector<Ticket*> piocheTicket, bool grandeTraversee, vector<Train*> piocheTrain, vector<Joueur*> joueurs){
 	// On mélange les cartes
-    std::random_device rd;
-    std::mt19937 g(rd());
-    this->piocheTicket = std::shuffle(this->plateau.getPiocheTicket.begin(), this->plateau.getPiocheTicket.end(), g);
-    this->grandeTraversee = grandeTraversee;
-    this->piocheTrain = std::shuffle(piocheTrain.begin(), piocheTrain.end(), g);
+	std::random_device rd;
+	std::mt19937 g(rd());
+	std::shuffle(piocheTicket.begin(), piocheTicket.end(), g);
+	this->piocheTicket = piocheTicket;
+	this->grandeTraversee = grandeTraversee;
+	std::shuffle(piocheTrain.begin(), piocheTrain.end(), g);
+	this->piocheTrain = piocheTrain;
     this->joueurs = joueurs;
 	for (auto joueur : joueurs){
 
 		// Distribution des 4 trains
 		for (int j = 0; j < 4; j++){
-			this.piocherTrain(joueur));
+			this->piocherTrain(*joueur);
 		}
 
 		// Distribution des 2 tickets
 		for (int j = 0; j < 2; j++){
-			this.piocherTicket(joueur);
+			this->piocherTicket(*joueur);
 		}
 	}
 }

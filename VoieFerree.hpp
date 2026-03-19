@@ -3,10 +3,11 @@
 #include <vector>
 #include <assert.h>
 #include "Ville.hpp"
-#include "Joueur.hpp"
 #include "couleurEnum.hpp"
 
 using namespace std;
+
+class Joueur;
 
 
 class VoieFerree {
