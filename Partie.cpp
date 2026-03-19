@@ -6,7 +6,7 @@
 #include "Joueur.hpp"
 #include "Ticket.hpp"
 #include "Train.hpp"
-#include "Plateau.hpp
+#include "Plateau.hpp"
 
 Partie::Partie(bool grandeTraversee, vector<Train*> piocheTrain, vector<Joueur*> joueurs, Plateau* plateau) {
 	this->plateau = new Plateau();
