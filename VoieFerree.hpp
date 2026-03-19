@@ -1,5 +1,7 @@
+#pragma once
 #include <string>
 #include <vector>
+#include <assert.h>
 #include "Ville.hpp"
 #include "Joueur.hpp"
 #include "couleurEnum.hpp"
@@ -14,7 +16,11 @@ class VoieFerree {
         vector<Ville*> listeVille;
         Joueur* joueur;
     public:
-        VoieFerree(vector<Ville*> listeVille, string couleur, int poids);
+        VoieFerree(vector<Ville*> listeVille, couleurTrain couleur, int poids);
         vector<Ville*> getListeVille() const;
+        Joueur* getJoueur() const;
+        int getPoids() const;
+        couleurTrain getCouleur() const;
+        void setJoueur(Joueur* joueur);
 
 };

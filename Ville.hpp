@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 using namespace std;
@@ -7,6 +8,7 @@ class Ville {
         string nom;
     
     public:
+        Ville(string nom);
         string getNom() const; 
 
 };
