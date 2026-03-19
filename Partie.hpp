@@ -17,6 +17,8 @@ class Partie {
     public:
         Partie(vector<Ticket*> piocheTicket, bool grandeTraversee, vector<Tain*> piocheTrain, vector<Joueur*> joueurs);
         vector<Ticket*> melangerTicket(vector<Ticket*> paquetTicket);
-		Plateau* getPlateau(Plateau* p);
+		void piocherTicket(Joueur &joueur);
+		void piocherTrain(Joueur &joueur);
+		Plateau* getPlateau();
         ~Partie();
 };

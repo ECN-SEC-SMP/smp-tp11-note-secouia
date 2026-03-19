@@ -42,3 +42,7 @@ void Partie::piocherTrain(Joueur &joueur){
 	this->piocheTrain.erase(this->piocheTrain.begin());
 	joueur.ajouterTrain(trainPioche);
 }
+
+Plateau* Partie::getPlateau(){
+	return this->plateau;
+}
