@@ -20,8 +20,92 @@ bool Plateau::isVilleInVector(Ville* ville, vector<Ville*> listeVille) const {
 
 
 Plateau::Plateau(){
-    vector<VoieFerree*> v;
-    this->listeVoieFerree = v;
+    vector<VoieFerree*> temp_listeVoieFerree;
+
+    vector<Ville*> temp_listeVille;
+    
+    ifstream fichier("./files/map.csv"); //city_a, city_b, color, length
+
+    if(!fichier.is_open()){
+        cerr << "Erreur lors de l'ouverture du fichier *map.csv* !!" << endl;
+    }
+
+    string ligne;
+    getline(fichier, ligne);
+
+    while(getline(fichier, ligne)){
+        stringstream ss(ligne);
+
+        // GET VILLE A
+        string nom_villeA;
+        getline(ss, nom_villeA, ',');
+        Ville* villeA;
+
+        if(!isVilleStringInVector(nom_villeA, temp_listeVille)){
+            villeA = new Ville(nom_villeA);
+        }else{
+            villeA = getVilleFromString(nom_villeA, temp_listeVille);
+        }
+
+        //Get VILLE B
+        string nom_villeB;
+        getline(ss, nom_villeB, ',');
+        Ville* villeB;
+
+        if(!isVilleStringInVector(nom_villeB, temp_listeVille)){
+            villeB = new Ville(nom_villeB);
+        }else{
+            villeB = getVilleFromString(nom_villeB, temp_listeVille);
+        }
+
+
+        //Get COLOR 
+        string color; 
+        getline(ss, color, ',');
+
+        couleurTrain tempColor; 
+
+        if(color == "black"){
+            tempColor = couleurTrain::NOIR;
+        }
+        if(color == "red"){
+            tempColor = couleurTrain::ROUGE;
+        }
+        if(color == "yellow"){
+            tempColor = couleurTrain::JAUNE;
+        }
+        if(color == "blue"){
+            tempColor = couleurTrain::BLEU;
+        }
+        if(color == "white"){
+            tempColor = couleurTrain::BLANC;
+        }
+        if(color == "green"){
+            tempColor = couleurTrain::VERT;
+        }
+
+        // Get LENGHT
+        int poids; 
+        string tempPoids;
+
+        getline(ss, tempPoids, ',');
+
+        poids = stoi(tempPoids);
+        
+        vector<Ville*> tempVillePourVF; 
+
+        tempVillePourVF.push_back(villeA);
+        tempVillePourVF.push_back(villeB);
+
+        VoieFerree* tempVoieFerree = new VoieFerree(tempVillePourVF, tempColor, poids);
+        temp_listeVoieFerree.push_back(tempVoieFerree);
+    }
+    fichier.close();
+
+    this->listeVoieFerree = temp_listeVoieFerree;
+    this->listeVille = temp_listeVille; 
+
+
 }
 
 Plateau::~Plateau() {
@@ -136,4 +220,42 @@ vector<VoieFerree*> Plateau::getListeVoieFerree() const{
 
 vector<Ville*> Plateau::getListeVille() const {
     return this->listeVille;
+}
+
+vector<Ticket*> Plateau::getPiocheTickets() {
+    vector<Ticket*> piocheTickets;
+
+    ifstream fichier("./files/ticket.csv");
+
+    if(!fichier.is_open()){
+        cerr << "Erreur dans l'ouverture du fichier *ticket.csv*" << endl;
+    }
+
+    string ligne;
+
+    getline(fichier, ligne);
+
+
+    while (getline(fichier, ligne))
+    {
+        stringstream ss(ligne);
+        string ticketId;
+        string nom_villeA; 
+        string nom_villeB; 
+
+        getline(ss, ticketId, ',');
+        getline(ss, nom_villeA, ',');
+        getline(ss, nom_villeB, ',');
+
+        Ville* villeA = getVilleFromString(nom_villeA, this->getListeVille());
+        Ville* villeB = getVilleFromString(nom_villeB, this->getListeVille());
+
+        Ticket* tempTicket = new Ticket(villeA, villeB);
+
+        piocheTickets.push_back(tempTicket);
+
+    }
+
+    return piocheTickets;
+    
 }

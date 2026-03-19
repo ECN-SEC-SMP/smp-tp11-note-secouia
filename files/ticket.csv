@@ -1,0 +1,33 @@
+ticket_id,city_a,city_b
+1,Seattle,Los Angeles
+2,Seattle,Helena
+3,Seattle,Calgary
+4,San Francisco,Los Angeles
+5,San Francisco,Salt Lake City
+6,San Francisco,Helena
+7,Los Angeles,Albuquerque
+8,Los Angeles,Salt Lake City
+9,Calgary,Winnipeg
+10,Calgary,Helena
+11,Winnipeg,Duluth
+12,Winnipeg,Chicago
+13,Helena,Denver
+14,Helena,Kansas City
+15,Denver,Dallas
+16,Denver,Albuquerque
+17,Albuquerque,Dallas
+18,Dallas,New Orleans
+19,Dallas,Atlanta
+20,New Orleans,Miami
+21,New Orleans,Atlanta
+22,Atlanta,Miami
+23,Atlanta,Chicago
+24,Chicago,Washington
+25,Chicago,Duluth
+26,Duluth,Montreal
+27,Montreal,New York
+28,Washington,New York
+29,Washington,Atlanta
+30,New York,Miami
+31,Calgary,Chicago
+32,Seattle,New York

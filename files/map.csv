@@ -1,0 +1,57 @@
+city_a,city_b,color,length
+Seattle,Calgary,black,4
+Seattle,Calgary,red,4
+Seattle,Helena,yellow,4
+Seattle,San Francisco,blue,5
+
+San Francisco,Los Angeles,yellow,3
+San Francisco,Salt Lake City,orange,3
+San Francisco,Salt Lake City,green,3
+
+Los Angeles,Albuquerque,blue,4
+Los Angeles,Salt Lake City,red,3
+
+Salt Lake City,Helena,yellow,3
+Salt Lake City,Denver,blue,3
+Salt Lake City,Denver,black,3
+
+Calgary,Winnipeg,yellow,4
+Calgary,Winnipeg,green,4
+
+Winnipeg,Duluth,black,3
+Winnipeg,Duluth,red,3
+
+Helena,Denver,green,3
+Helena,Kansas City,black,5
+
+Denver,Kansas City,green,4
+Denver,Dallas,yellow,3
+Denver,Albuquerque,red,2
+
+Albuquerque,Dallas,green,3
+
+Dallas,New Orleans,red,3
+Dallas,Atlanta,blue,3
+
+New Orleans,Atlanta,yellow,4
+New Orleans,Miami,white,6
+
+Atlanta,Miami,green,5
+Atlanta,Chicago,blue,4
+
+Kansas City,Chicago,black,4
+Kansas City,Chicago,white,4
+
+Chicago,Washington,black,4
+Chicago,Duluth,red,3
+
+Duluth,Montreal,blue,4
+Duluth,Chicago,white,3
+
+Montreal,New York,blue,3
+Montreal,New York,green,3
+
+Washington,New York,red,3
+Washington,New York,white,3
+
+Washington,Atlanta,yellow,3
