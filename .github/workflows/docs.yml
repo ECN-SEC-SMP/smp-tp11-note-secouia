@@ -1,0 +1,45 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+# Permet au workflow de pousser sur gh-pages
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupération du code source
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Installation des dépendances
+      - name: Installer Doxygen + Graphviz
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y doxygen graphviz
+
+      # 3. Configuration CMake (suffit pour générer le Doxyfile substitué)
+      - name: Configurer CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      # 4. Génération de la documentation
+      - name: Générer la documentation Doxygen
+        run: cmake --build build --target doc
+
+      # 5. Déploiement sur GitHub Pages (seulement sur push, pas sur PR)
+      - name: Déployer sur GitHub Pages
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
+          publish_branch: gh-pages
+          force_orphan: true          # garde gh-pages propre (pas d'historique inutile)
+          commit_message: "docs: mise à jour automatique [${{ github.sha }}]"
