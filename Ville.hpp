@@ -8,6 +8,7 @@ class Ville {
         string nom;
     
     public:
+        Ville(string nom);
         string getNom() const; 
 
 };
