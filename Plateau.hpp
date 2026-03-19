@@ -7,6 +7,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include "Ticket.hpp"
 
 class Plateau {
     private:
