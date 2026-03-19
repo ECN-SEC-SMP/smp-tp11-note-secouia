@@ -12,5 +12,9 @@ class Partie {
         vector<Train*> piocheTrain;
         vector<Joueur*> joueurs;
     public:
+        Partie();
+        ~Partie();
+        vector<Joueur*> getJoueur() const;
+        Joueur* getJoueur(int index) const;
 
 };

@@ -1,9 +1,11 @@
+#pragma once
 #include <string>
 #include <vector>
 #include "Ville.hpp"
-#include "Joueur.hpp"
 
 using namespace std;
+
+class Joueur;
 
 
 class VoieFerree {
