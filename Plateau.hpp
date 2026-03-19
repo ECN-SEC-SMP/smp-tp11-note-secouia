@@ -8,6 +8,7 @@
 #include <sstream>
 #include <fstream>
 #include "Ticket.hpp"
+#include "Train.hpp"
 
 class Plateau {
     private:
@@ -27,5 +28,7 @@ class Plateau {
         bool existeChemin(string villeA, string villeB, Joueur* joueur) const; //OK
         bool existeTraversee(Joueur* joueur);  // TODO 
         vector<Ticket*> getPiocheTickets();
+        vector<Train*> getPiocheTrain();
+
 
 };
