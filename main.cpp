@@ -35,9 +35,22 @@ void setup() {
 
     cout << "Initialisation de la partie..." << endl;
     cout << "Le but du jeu est d’être le premier à réussir 6 tickets." << endl;
-    cout << "Entrez le nombre de joueurs entre 2 et 4 : ";
     int nbJoueurs;
-    cin >> nbJoueurs;
+    do {
+        cout << "Entrez le nombre de joueurs entre 2 et 4 : ";
+        cin >> nbJoueurs;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            nbJoueurs = 0; // force la boucle à continuer
+        }
+
+        if (nbJoueurs < 2 || nbJoueurs > 4) {
+            cout << "Valeur invalide. Merci d'entrer 2, 3 ou 4." << endl;
+        }
+    } while (nbJoueurs < 2 || nbJoueurs > 4);
+
     // Appeler l'init de la partie
     for (int i =0; i < nbJoueurs; i++) {
         cout << "Entrez le nom du joueur " << i+1 << " : ";
@@ -55,6 +68,7 @@ Joueur* vainqueur(Partie &partie) {
             return partie.getJoueur(i);
         }
     }
+    return nullptr; // Aucun vainqueur pour le moment
 }
 
 void partieFinie(Partie &partie, Joueur &vainqueur) {
@@ -66,6 +80,15 @@ void partieFinie(Partie &partie, Joueur &vainqueur) {
 void loop() {
     setup();
     Partie partie;
+    
     Joueur *vainqueur = ::vainqueur(partie);
-    partieFinie(partie, *vainqueur);
+    if (vainqueur != nullptr) {
+        partieFinie(partie, *vainqueur);
+        return;
+    }
+}
+
+int main() {
+    loop();
+    return 0;
 }
