@@ -4,14 +4,19 @@
 #include "Ticket.hpp"
 #include "Joueur.hpp"
 #include "Train.hpp"
+#include "Plateau.hpp"
 
 class Partie {
     private:
-        vector<Ticket*> pioche;
+        vector<Ticket*> piocheTicket;
         bool grandeTraversee;
         vector<Train*> piocheTrain;
         vector<Joueur*> joueurs;
+		Plateau* plateau;
+
     public:
-        Partie(vector<Ticket*> pioche, bool grandeTraversee, vector<Tain*> piocheTrain, vector<Joueur*> joueurs);
+        Partie(vector<Ticket*> piocheTicket, bool grandeTraversee, vector<Tain*> piocheTrain, vector<Joueur*> joueurs);
+        vector<Ticket*> melangerTicket(vector<Ticket*> paquetTicket);
+		Plateau* getPlateau(Plateau* p);
         ~Partie();
 };
