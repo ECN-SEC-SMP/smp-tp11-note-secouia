@@ -259,3 +259,33 @@ vector<Ticket*> Plateau::getPiocheTickets() {
     return piocheTickets;
     
 }
+
+
+vector<Train*> Plateau::getPiocheTrain(){
+    vector<Train*> tempPioche; 
+
+    for(int i = 0; i < 10; i++){
+        //Création des cartes :
+        Train* trainJaune = new Train(couleurTrain::JAUNE);
+        Train* trainVert = new Train(couleurTrain::VERT);
+        Train* trainBlanc = new Train(couleurTrain::BLANC);
+        Train* trainNoir = new Train(couleurTrain::NOIR);
+        Train* trainBleu = new Train(couleurTrain::BLEU);
+        Train* trainRouge = new Train(couleurTrain::ROUGE);
+
+        tempPioche.push_back(trainJaune);
+        tempPioche.push_back(trainVert);
+        tempPioche.push_back(trainBlanc);
+        tempPioche.push_back(trainNoir);
+        tempPioche.push_back(trainBleu);
+        tempPioche.push_back(trainRouge);
+    }
+
+    for(int i = 0; i < 12; i++){
+        Train* locomotive = new Train(couleurTrain::MULTI);
+
+        tempPioche.push_back(locomotive);
+    }
+
+    return tempPioche;
+}
