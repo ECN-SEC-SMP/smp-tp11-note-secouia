@@ -48,3 +48,17 @@ void Partie::piocherTrain(Joueur &joueur){
 Plateau* Partie::getPlateau(){
 	return this->plateau;
 }
+
+Partie::Partie() : grandeTraversee(false), plateau(nullptr) {}
+
+vector<Joueur*> Partie::getJoueur() const {
+	return this->joueurs;
+}
+
+Joueur* Partie::getJoueur(int index) const {
+	return this->joueurs[index];
+}
+
+Partie::~Partie() {
+	delete this->plateau;
+}

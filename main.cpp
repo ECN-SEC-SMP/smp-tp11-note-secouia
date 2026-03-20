@@ -78,7 +78,6 @@ void partieFinie(Partie &partie, Joueur &vainqueur) {
 }
 
 void loop() {
-    setup();
     Partie partie;
     
     Joueur *vainqueur = ::vainqueur(partie);
@@ -89,6 +88,10 @@ void loop() {
 }
 
 int main() {
-    loop();
+    setup();
+    while (1) {
+        loop();
+    }
+    
     return 0;
 }
