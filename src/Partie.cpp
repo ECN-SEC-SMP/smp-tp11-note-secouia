@@ -8,64 +8,57 @@
 #include "Train.hpp"
 #include "Plateau.hpp"
 
-Partie::Partie(vector<Ticket *> piocheTicket, bool grandeTraversee, vector<Train *> piocheTrain, vector<Joueur *> joueurs)
-{
-	this->plateau = new Plateau();
-
-	this->piocheTicket = piocheTicket;
-
+Partie::Partie(vector<Ticket*> piocheTicket, bool grandeTraversee, vector<Train*> piocheTrain, vector<Joueur*> joueurs){
 	// On mélange les cartes
 	std::random_device rd;
 	std::mt19937 g(rd());
-	std::shuffle(this->piocheTicket.begin(), this->piocheTicket.end(), g);
+	std::shuffle(piocheTicket.begin(), piocheTicket.end(), g);
+	this->piocheTicket = piocheTicket;
 	this->grandeTraversee = grandeTraversee;
 	std::shuffle(piocheTrain.begin(), piocheTrain.end(), g);
 	this->piocheTrain = piocheTrain;
-	this->joueurs = joueurs;
-	this->plateau = nullptr;
+    this->joueurs = joueurs;
+	for (auto joueur : joueurs){
 
-	for (auto joueur : joueurs)
-	{
 		// Distribution des 4 trains
-		for (int j = 0; j < 4; j++)
-		{
+		for (int j = 0; j < 4; j++){
 			this->piocherTrain(*joueur);
 		}
+
 		// Distribution des 2 tickets
-		for (int j = 0; j < 2; j++)
-		{
+		for (int j = 0; j < 2; j++){
 			this->piocherTicket(*joueur);
 		}
 	}
+	this->plateau = new Plateau();
 }
 
-void Partie::piocherTicket(Joueur &joueur)
-{
-	Ticket *ticketPioche = this->piocheTicket.front();
+void Partie::piocherTicket(Joueur &joueur){
+	Ticket* ticketPioche = this->piocheTicket.front();
 	this->piocheTicket.erase(this->piocheTicket.begin());
 	joueur.ajouterTicket(ticketPioche);
 }
 
-void Partie::piocherTrain(Joueur &joueur)
-{
-	Train *trainPioche = this->piocheTrain.front();
+void Partie::piocherTrain(Joueur &joueur){
+	Train* trainPioche = this->piocheTrain.front();
 	this->piocheTrain.erase(this->piocheTrain.begin());
 	joueur.ajouterCarte(trainPioche);
 }
 
-Plateau *Partie::getPlateau()
-{
+Plateau* Partie::getPlateau(){
 	return this->plateau;
 }
 
-// CORRECTION : getter ajouté — permet d'accéder à joueurs depuis main.cpp
-const vector<Joueur *> &Partie::getJoueurs() const
-{
+Partie::Partie() : grandeTraversee(false), plateau(nullptr) {}
+
+vector<Joueur*> Partie::getJoueur() const {
 	return this->joueurs;
 }
 
-// CORRECTION : destructeur manquant dans le .cpp (déclaré dans le .hpp)
-Partie::~Partie()
-{
+Joueur* Partie::getJoueur(int index) const {
+	return this->joueurs[index];
+}
+
+Partie::~Partie() {
 	delete this->plateau;
 }

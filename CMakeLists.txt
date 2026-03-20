@@ -36,6 +36,11 @@ target_include_directories(aventuriers_lib PUBLIC include)
 # L'exécutable principal
 add_executable(aventuriers src/main.cpp)
 target_link_libraries(aventuriers PRIVATE aventuriers_lib)
+# Passe le chemin absolu du dossier files/ au moment de la compilation
+target_compile_definitions(aventuriers PRIVATE
+    FILES_DIR="${CMAKE_SOURCE_DIR}/files"
+    ASCII_ART="${CMAKE_SOURCE_DIR}/ascii-art.txt"
+)
 
 # Tests unitaires avec Google Test
 enable_testing()
