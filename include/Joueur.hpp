@@ -19,12 +19,12 @@
 class Joueur
 {
 private:
-    int ticketFini;
-    int nbWagons;
-    std::vector<Ticket *> missions;
-    couleurJoueur couleur;
-    std::string nom;
-    std::vector<Train *> mainCartes;
+    int ticketFini;                  // nombre de tickets complétés
+    int nbWagons;                    // nombre de wagons restants
+    std::vector<Ticket *> missions;  // tickets en cours (non complétés)
+    couleurJoueur couleur;           // couleur du joueur
+    std::string nom;                 // nom du joueur
+    std::vector<Train *> mainCartes; // cartes de train en main
 
 public:
     Joueur(const std::string &nom, couleurJoueur couleur);
@@ -52,11 +52,14 @@ public:
     // gestion des tickets
     void ajouterTicket(Ticket *ticket);
     std::vector<Ticket *> defausserTickets();
-    bool validerTicket(Ticket *ticket, const Plateau &plateau) const;
+    bool validerTicket(Ticket *ticket, Plateau &plateau);
 
     // fin de partie
     bool aGagne() const;
     bool naPlusDeWagons() const;
+
+    // affichage
+    void afficherMain(std::ostream &os) const;
 };
 
 std::ostream &operator<<(std::ostream &os, const Joueur &joueur);
