@@ -33,7 +33,12 @@
 using namespace std;
 
 // ── couleurs ─────────────────────────────────────────────────────────────────
-
+/**
+ * @brief Convertit une chaîne de caractères en couleur de train
+ * 
+ * @param s 
+ * @return couleurTrain 
+ */
 static couleurTrain couleurFromString(const string& s)
 {
     if (s == "black")  return couleurTrain::NOIR;
@@ -45,7 +50,12 @@ static couleurTrain couleurFromString(const string& s)
     if (s == "orange") return couleurTrain::JAUNE; // pas d'orange dans l'enum
     return couleurTrain::NOIR;
 }
-
+/**
+ * @brief Convertit une couleur de train en chaîne de caractères
+ * 
+ * @param c 
+ * @return string 
+ */
 static string nomTrain(couleurTrain c)
 {
     switch (c) {
@@ -59,7 +69,12 @@ static string nomTrain(couleurTrain c)
         default:                  return "?";
     }
 }
-
+/**
+ * @brief Convertit une couleur de joueur en chaîne de caractères
+ * 
+ * @param c 
+ * @return string 
+ */
 static string nomJoueur(couleurJoueur c)
 {
     switch (c) {
@@ -72,7 +87,11 @@ static string nomJoueur(couleurJoueur c)
 }
 
 // ── affichage ────────────────────────────────────────────────────────────────
-
+/**
+ * @brief Affiche la main d'un joueur
+ * 
+ * @param j 
+ */
 static void afficherMain(const Joueur* j)
 {
     vector<couleurTrain> cs = {
@@ -87,7 +106,11 @@ static void afficherMain(const Joueur* j)
     }
     cout << "\n";
 }
-
+/**
+ * @brief Affiche les missions d'un joueur
+ * 
+ * @param j 
+ */
 static void afficherMissions(const Joueur* j)
 {
     const auto& ms = j->getMissions();
@@ -97,7 +120,11 @@ static void afficherMissions(const Joueur* j)
         cout << "  - " << t->getVilleDepart()->getNom()
              << " -> " << t->getVilleArrivee()->getNom() << "\n";
 }
-
+/**
+ * @brief Affiche le plateau de jeu
+ * 
+ * @param voies 
+ */
 static void afficherPlateau(const vector<VoieFerree*>& voies)
 {
     cout << "\n=== Plateau ===\n";
@@ -112,7 +139,16 @@ static void afficherPlateau(const vector<VoieFerree*>& voies)
 }
 
 // ── BFS connectivité ────────────────────────────────────────────────────────
-
+/**
+ * @brief Vérifie si deux villes sont connectées par des voies de train
+ * 
+ * @param a 
+ * @param b 
+ * @param voies 
+ * @param joueur 
+ * @return true 
+ * @return false 
+ */
 static bool estConnecte(const string& a, const string& b,
                         const vector<VoieFerree*>& voies, Joueur* joueur)
 {
@@ -142,7 +178,14 @@ static bool estConnecte(const string& a, const string& b,
 
 static const vector<string> COTE_OUEST = {"Seattle", "San Francisco", "Los Angeles"};
 static const vector<string> COTE_EST   = {"New York", "Washington", "Miami", "Montreal"};
-
+/**
+ * @brief Vérifie si un joueur a accompli la grande traversée
+ * 
+ * @param j 
+ * @param voies 
+ * @return true 
+ * @return false 
+ */
 static bool verifierGrandeTraversee(Joueur* j, const vector<VoieFerree*>& voies)
 {
     for (const auto& ouest : COTE_OUEST)
@@ -154,7 +197,10 @@ static bool verifierGrandeTraversee(Joueur* j, const vector<VoieFerree*>& voies)
 // ── Gestion de la pioche de tickets ──────────────────────────────────────────
 // Deux niveaux : pioche de Partie (via partie.piocherTicket) puis
 // pioche locale alimentée par la défausse recyclée.
-
+/**
+ * @brief Structure représentant la pioche de tickets
+ * 
+ */
 struct PiocheTickets {
     int             partieLeft; // tickets restants dans Partie
     vector<Ticket*> locale;     // pioche locale (recyclage)
@@ -162,7 +208,12 @@ struct PiocheTickets {
     mt19937&        rng;
 
     PiocheTickets(int n, mt19937& g) : partieLeft(n), rng(g) {}
-
+    /**
+     * @brief Vérifie si la pioche est vide (Partie + locale)
+     * 
+     * @return true 
+     * @return false 
+     */
     bool vide() const
     {
         return partieLeft <= 0 && locale.empty() && defausse.empty();
@@ -170,6 +221,14 @@ struct PiocheTickets {
 
     // Recycle la défausse si nécessaire puis pioche 1 ticket pour j.
     // Retourne true si un ticket a été pioché.
+    /**
+     * @brief Pioche un ticket pour un joueur
+     * 
+     * @param j 
+     * @param partie 
+     * @return true 
+     * @return false 
+     */
     bool piocher(Joueur& j, Partie& partie)
     {
         // Recyclage si la pioche principale et locale sont vides
@@ -201,7 +260,11 @@ struct PiocheTickets {
         }
         return true;
     }
-
+    /**
+     * @brief Défausse des tickets
+     * 
+     * @param tickets 
+     */
     void defausser(vector<Ticket*>& tickets)
     {
         for (auto t : tickets) defausse.push_back(t);
@@ -209,7 +272,15 @@ struct PiocheTickets {
 };
 
 // ── Validation des tickets + auto-pioche ─────────────────────────────────────
-
+/**
+ * @brief Valide les tickets d'un joueur et pioche automatiquement s'il en obtient un
+ * 
+ * @param j 
+ * @param voies 
+ * @param plateau 
+ * @param pioche 
+ * @param partie 
+ */
 static void validerTickets(Joueur* j,
                            const vector<VoieFerree*>& voies,
                            Plateau* plateau,
@@ -234,19 +305,35 @@ static void validerTickets(Joueur* j,
 }
 
 // ── Chargement CSV ────────────────────────────────────────────────────────────
-
+/**
+ * @brief Supprime les espaces en début et fin de chaîne
+ * 
+ * @param s 
+ */
 static void trim(string& s)
 {
     while (!s.empty() && (s.front() == ' ' || s.front() == '\r')) s.erase(s.begin());
     while (!s.empty() && (s.back()  == ' ' || s.back()  == '\r')) s.pop_back();
 }
-
+/**
+ * @brief Get the Ou Creer Ville object
+ * 
+ * @param nom 
+ * @param villes 
+ * @return Ville* 
+ */
 static Ville* getOuCreerVille(const string& nom, vector<Ville*>& villes)
 {
     for (auto v : villes) if (v->getNom() == nom) return v;
     auto* v = new Ville(nom); villes.push_back(v); return v;
 }
-
+/**
+ * @brief Charge la carte depuis un fichier CSV et remplit les listes de villes et voies
+ * 
+ * @param fichier 
+ * @param villes 
+ * @param voies 
+ */
 static void chargerMap(const string& fichier,
                        vector<Ville*>& villes,
                        vector<VoieFerree*>& voies)
@@ -269,7 +356,13 @@ static void chargerMap(const string& fichier,
         voies.push_back(new VoieFerree(vector<Ville*>{va, vb}, couleurFromString(coul), poids));
     }
 }
-
+/**
+ * @brief Charge les tickets depuis un fichier CSV et remplit la pioche de tickets
+ * 
+ * @param fichier 
+ * @param villes 
+ * @return vector<Ticket*> 
+ */
 static vector<Ticket*> chargerTickets(const string& fichier,
                                       const vector<Ville*>& villes)
 {
@@ -296,7 +389,11 @@ static vector<Ticket*> chargerTickets(const string& fichier,
 }
 
 // ── Pioche de trains (72 cartes : 10 par couleur + 12 locos) ─────────────────
-
+/**
+ * @brief Crée la pioche de trains
+ * 
+ * @return vector<Train*> 
+ */
 static vector<Train*> creerTrains()
 {
     vector<Train*> pile;
@@ -313,7 +410,19 @@ static vector<Train*> creerTrains()
 }
 
 // ── Tour d'un joueur ─────────────────────────────────────────────────────────
-
+/**
+ * @brief Gère le tour d'un joueur
+ * 
+ * @param j 
+ * @param partie 
+ * @param voies 
+ * @param trainsLeft 
+ * @param pioche 
+ * @param grandeTraverseeGagnee 
+ * @param villes 
+ * @return true 
+ * @return false 
+ */
 static bool tourJoueur(Joueur* j, Partie& partie,
                        vector<VoieFerree*>& voies,
                        int& trainsLeft,
@@ -439,7 +548,11 @@ static bool tourJoueur(Joueur* j, Partie& partie,
 }
 
 // ── main ─────────────────────────────────────────────────────────────────────
-
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 int main()
 {
     cout << "=== Aventuriers du Rail ===\n";

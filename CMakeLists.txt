@@ -80,7 +80,31 @@ else()
     )
 endif()
 
-# Documentation avec Doxygen
+# ── Interface graphique SFML ───────────────────────────────────────────────────
+# Homebrew (Apple Silicon) installe SFML dans /opt/homebrew
+list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew")
+
+find_package(SFML 3 QUIET COMPONENTS Graphics)
+
+if(SFML_FOUND)
+    add_executable(aventuriers_gui src/gui_main.cpp)
+    target_link_libraries(aventuriers_gui
+        PRIVATE aventuriers_lib SFML::Graphics)
+    target_compile_definitions(aventuriers_gui PRIVATE
+        FILES_DIR="${CMAKE_SOURCE_DIR}/files"
+        ASCII_ART="${CMAKE_SOURCE_DIR}/ascii-art.txt"
+    )
+    message(STATUS "SFML ${SFML_VERSION} trouvé – cible 'aventuriers_gui' disponible")
+else()
+    message(WARNING
+        "SFML non trouvé – l'interface graphique ne sera pas compilée.\n"
+        "  macOS  : brew install sfml\n"
+        "  Linux  : sudo apt install libsfml-dev\n"
+        "  Windows: vcpkg install sfml"
+    )
+endif()
+
+# ── Documentation avec Doxygen ─────────────────────────────────────────────────
 find_package(Doxygen QUIET)
 
 if(DOXYGEN_FOUND)
