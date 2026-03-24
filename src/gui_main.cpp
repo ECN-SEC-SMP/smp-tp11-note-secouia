@@ -1,8 +1,23 @@
-// gui_main.cpp – Interface graphique SFML 3 pour Aventuriers du Rail
-// Exécutable séparé (aventuriers_gui), logique de jeu autonome.
+// gui_main.cpp – Interface graphique Qt pour Aventuriers du Rail
 
-#include <SFML/Graphics.hpp>
-
+#include <QApplication>
+#include <QWidget>
+#include <QPainter>
+#include <QPainterPath>
+#include <QTimer>
+#include <QElapsedTimer>
+#include <QMouseEvent>
+#include <QKeyEvent>
+#include <QFont>
+#include <QFontMetrics>
+#include <QColor>
+#include <QPixmap>
+#include <QRectF>
+#include <QPointF>
+#include <QString>
+#include <QPen>
+#include <QBrush>
+#include <cmath>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -12,8 +27,6 @@
 #include <set>
 #include <algorithm>
 #include <random>
-#include <cmath>
-#include <optional>
 
 #include "Partie.hpp"
 #include "Joueur.hpp"
@@ -28,7 +41,12 @@ using namespace std;
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 1 – Logique de jeu
 // ═══════════════════════════════════════════════════════════════════════════════
-
+/**
+ * @brief Convertit une chaîne de caractères en couleur de train
+ * 
+ * @param s 
+ * @return couleurTrain 
+ */
 static couleurTrain couleurFromString(const string& s)
 {
     if (s == "black")  return couleurTrain::NOIR;
@@ -40,7 +58,12 @@ static couleurTrain couleurFromString(const string& s)
     if (s == "orange") return couleurTrain::JAUNE;
     return couleurTrain::NOIR;
 }
-
+/**
+ * @brief Retourne le nom d'un train en fonction de sa couleur
+ * 
+ * @param c 
+ * @return string 
+ */
 static string nomTrain(couleurTrain c)
 {
     switch (c) {
@@ -54,7 +77,12 @@ static string nomTrain(couleurTrain c)
         default:                  return "?";
     }
 }
-
+/**
+ * @brief Retourne le nom d'un joueur en fonction de sa couleur
+ * 
+ * @param c 
+ * @return string 
+ */
 static string nomJoueurCol(couleurJoueur c)
 {
     switch (c) {
@@ -65,19 +93,35 @@ static string nomJoueurCol(couleurJoueur c)
         default:                   return "?";
     }
 }
-
+/**
+ * @brief  Affiche la main d'un joueur
+ * 
+ * @param s 
+ */
 static void trimStr(string& s)
 {
     while (!s.empty() && (s.front() == ' ' || s.front() == '\r')) s.erase(s.begin());
     while (!s.empty() && (s.back()  == ' ' || s.back()  == '\r')) s.pop_back();
 }
-
+/**
+ * @brief Affiche la main d'un joueur
+ * 
+ * @param nom 
+ * @param villes 
+ * @return Ville* 
+ */
 static Ville* getOuCreer(const string& nom, vector<Ville*>& villes)
 {
     for (auto v : villes) if (v->getNom() == nom) return v;
     auto* v = new Ville(nom); villes.push_back(v); return v;
 }
-
+/**
+ * @brief Charge la carte à partir d'un fichier CSV et remplit les villes et voies
+ * 
+ * @param fichier 
+ * @param villes 
+ * @param voies 
+ */
 static void chargerMap(const string& fichier,
                        vector<Ville*>& villes, vector<VoieFerree*>& voies)
 {
@@ -98,7 +142,13 @@ static void chargerMap(const string& fichier,
             couleurFromString(coul), stoi(len)));
     }
 }
-
+/**
+ * @brief Charge les tickets à partir d'un fichier CSV
+ * 
+ * @param fichier 
+ * @param villes 
+ * @return vector<Ticket*> 
+ */
 static vector<Ticket*> chargerTickets(const string& fichier,
                                       const vector<Ville*>& villes)
 {
@@ -119,7 +169,11 @@ static vector<Ticket*> chargerTickets(const string& fichier,
     }
     return pile;
 }
-
+/**
+ * @brief Crée les trains pour la partie
+ * 
+ * @return vector<Train*> 
+ */
 static vector<Train*> creerTrains()
 {
     vector<Train*> pile;
@@ -129,7 +183,16 @@ static vector<Train*> creerTrains()
     for (int i = 0; i < 12; i++) pile.push_back(new Train(couleurTrain::MULTI));
     return pile;
 }
-
+/**
+ * @brief Vérifie si deux villes sont connectées par des voies de train appartenant à un joueur
+ * 
+ * @param a 
+ * @param b 
+ * @param voies 
+ * @param joueur 
+ * @return true 
+ * @return false 
+ */
 static bool estConnecte(const string& a, const string& b,
                         const vector<VoieFerree*>& voies, Joueur* joueur)
 {
@@ -155,6 +218,14 @@ static bool estConnecte(const string& a, const string& b,
 static const vector<string> COTE_OUEST = {"Seattle","San Francisco","Los Angeles"};
 static const vector<string> COTE_EST   = {"New York","Washington","Miami","Montreal"};
 
+/**
+ * @brief Vérifie si un joueur a accompli une grande traversée
+ * 
+ * @param j 
+ * @param voies 
+ * @return true 
+ * @return false 
+ */
 static bool verifierGrandeTraversee(Joueur* j, const vector<VoieFerree*>& voies)
 {
     for (const auto& o : COTE_OUEST)
@@ -162,16 +233,38 @@ static bool verifierGrandeTraversee(Joueur* j, const vector<VoieFerree*>& voies)
             if (estConnecte(o, e, voies, j)) return true;
     return false;
 }
-
+/**
+ * @brief Représente la pioche de tickets
+ * 
+ */
 struct PiocheTickets {
     int             partieLeft;
     vector<Ticket*> locale;
     vector<Ticket*> defausse;
     mt19937&        rng;
-
+    /**
+     * @brief Construct a new Pioche Tickets object
+     * 
+     * @param n 
+     * @param g 
+     */
     PiocheTickets(int n, mt19937& g) : partieLeft(n), rng(g) {}
+    /**
+     * @brief Vérifie si la pioche est vide
+     * 
+     * @return true 
+     * @return false 
+     */
     bool vide() const { return partieLeft <= 0 && locale.empty() && defausse.empty(); }
-
+    /**
+     * @brief Pioche un ticket pour le joueur
+     * 
+     * @param j 
+     * @param partie 
+     * @param log 
+     * @return true 
+     * @return false 
+     */
     bool piocher(Joueur& j, Partie& partie, vector<string>& log)
     {
         if (partieLeft <= 0 && locale.empty()) {
@@ -196,10 +289,24 @@ struct PiocheTickets {
         }
         return true;
     }
+    /**
+     * @brief Défausse des tickets
+     * 
+     * @param tickets 
+     */
     void defausser(vector<Ticket*>& tickets)
     { for (auto t : tickets) defausse.push_back(t); }
 };
-
+/**
+ * @brief Valide les tickets d'un joueur
+ * 
+ * @param j 
+ * @param voies 
+ * @param plateau 
+ * @param pioche 
+ * @param partie 
+ * @param log 
+ */
 static void validerTickets(Joueur* j, const vector<VoieFerree*>& voies,
                            Plateau* plateau, PiocheTickets& pioche,
                            Partie& partie, vector<string>& log)
@@ -216,46 +323,51 @@ static void validerTickets(Joueur* j, const vector<VoieFerree*>& voies,
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 2 – Palette Bootstrap-dark & positions
+// SECTION 2 – Palette & positions
 // ═══════════════════════════════════════════════════════════════════════════════
 
 namespace BS {
-    // Fond & surfaces
-    const sf::Color DarkBg    = {  6,  8, 20};
-    const sf::Color Card      = { 16, 20, 46};
-    const sf::Color CardBdr   = { 38, 50, 95};
-    const sf::Color Dark      = { 22, 26, 48};
-    // Accents aventure
-    const sf::Color Gold      = {212,168, 22};
-    const sf::Color GoldLight = {255,220, 80};
-    const sf::Color Warning   = {255,190,  0};
-    // Actions
-    const sf::Color Primary   = { 55,120,255};
-    const sf::Color PrimaryH  = { 88,152,255};
-    const sf::Color Success   = {  0,178,120};
-    const sf::Color Danger    = {218, 50, 70};
-    const sf::Color Secondary = { 72, 85,120};
-    // Texte
-    const sf::Color Light     = {215,222,245};
-    const sf::Color Muted     = { 85, 98,135};
-    // Carte géographique (utilisées dans drawMap)
-    const sf::Color MapBg1    = { 18, 52, 35};   // terrain forêt
-    const sf::Color MapOcean  = { 12, 30, 65};   // océan
-    const sf::Color MapMtn    = { 38, 55, 45};   // montagnes
+    const QColor DarkBg    = {  6,  8, 20};
+    const QColor Card      = { 16, 20, 46};
+    const QColor CardBdr   = { 38, 50, 95};
+    const QColor Dark      = { 22, 26, 48};
+    const QColor Gold      = {212,168, 22};
+    const QColor GoldLight = {255,220, 80};
+    const QColor Warning   = {255,190,  0};
+    const QColor Primary   = { 55,120,255};
+    const QColor PrimaryH  = { 88,152,255};
+    const QColor Success   = {  0,178,120};
+    const QColor Danger    = {218, 50, 70};
+    const QColor Secondary = { 72, 85,120};
+    const QColor Light     = {215,222,245};
+    const QColor Muted     = { 85, 98,135};
+    const QColor MapBg1    = { 18, 52, 35};
+    const QColor MapOcean  = { 12, 30, 65};
+    const QColor MapMtn    = { 38, 55, 45};
 }
-
-static sf::Color lerp(sf::Color a, sf::Color b, float t)
+/** @brief Interpole entre deux couleurs
+ * 
+ * @param a 
+ * @param b 
+ * @param t 
+ * @return QColor 
+ */
+static QColor lerp(QColor a, QColor b, float t)
 {
-    t = std::max(0.f, std::min(1.f, t));
-    return {
-        static_cast<uint8_t>(a.r + t * (static_cast<float>(b.r) - static_cast<float>(a.r))),
-        static_cast<uint8_t>(a.g + t * (static_cast<float>(b.g) - static_cast<float>(a.g))),
-        static_cast<uint8_t>(a.b + t * (static_cast<float>(b.b) - static_cast<float>(a.b))),
-        static_cast<uint8_t>(a.a + t * (static_cast<float>(b.a) - static_cast<float>(a.a)))
-    };
+    t = qBound(0.f, t, 1.f);
+    return QColor(
+        int(a.red()   + t * (b.red()   - a.red())),
+        int(a.green() + t * (b.green() - a.green())),
+        int(a.blue()  + t * (b.blue()  - a.blue())),
+        int(a.alpha() + t * (b.alpha() - a.alpha()))
+    );
 }
-
-static sf::Color sfRoute(couleurTrain c)
+/** @brief Convertit une couleur de train en couleur Qt
+ * 
+ * @param c 
+ * @return QColor 
+ */
+static QColor qRoute(couleurTrain c)
 {
     switch (c) {
         case couleurTrain::JAUNE: return {230,190,  0};
@@ -268,8 +380,12 @@ static sf::Color sfRoute(couleurTrain c)
         default:                  return {128,128,128};
     }
 }
-
-static sf::Color sfJoueur(couleurJoueur c)
+/** @brief Convertit une couleur de joueur en couleur Qt
+ * 
+ * @param c 
+ * @return QColor 
+ */
+static QColor qJoueur(couleurJoueur c)
 {
     switch (c) {
         case couleurJoueur::JAUNE: return {255,215,  0};
@@ -279,8 +395,10 @@ static sf::Color sfJoueur(couleurJoueur c)
         default:                   return {200,200,200};
     }
 }
-
-static const map<string, sf::Vector2f> CITY_POS = {
+/** @brief Positions des villes sur la carte
+ * 
+ */
+static const map<string, QPointF> CITY_POS = {
     {"Seattle",         { 85.f,  90.f}},
     {"Calgary",         {215.f,  60.f}},
     {"Helena",          {295.f, 155.f}},
@@ -303,178 +421,197 @@ static const map<string, sf::Vector2f> CITY_POS = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 3 – Helpers de dessin
+// SECTION 3 – Helpers de dessin (QPainter)
 // ═══════════════════════════════════════════════════════════════════════════════
-
-// Fix accents : convertit une std::string UTF-8 en sf::String correctement
-static sf::String sfStr(const string& s)
+/** @brief Crée une police de caractères
+ * 
+ * @param pixelSize 
+ * @return QFont 
+ */
+static QFont mkFont(int pixelSize)
 {
-    return sf::String::fromUtf8(s.begin(), s.end());
+    QFont f;
+    f.setPixelSize(pixelSize);
+    return f;
 }
-
-static sf::Text mkText(const sf::Font& font, const string& s,
-                       unsigned sz, sf::Color col, float x, float y)
-{
-    sf::Text t(font, sfStr(s), sz);
-    t.setFillColor(col);
-    t.setPosition({x, y});
-    return t;
-}
-
-static bool btnHit(float bx, float by, float bw, float bh, sf::Vector2i p)
-{
-    return p.x >= static_cast<int>(bx) && p.x <= static_cast<int>(bx+bw) &&
-           p.y >= static_cast<int>(by) && p.y <= static_cast<int>(by+bh);
-}
-
-// Dessine une ombre portée multicouche
-static void drawShadow(sf::RenderWindow& w, float x, float y, float bw, float bh,
-                       uint8_t alpha = 90u)
+/** @brief Dessine une ombre portée
+ * 
+ * @param p 
+ * @param x 
+ * @param y 
+ * @param bw 
+ * @param bh 
+ * @param alpha 
+ */
+static void drawShadow(QPainter& p, float x, float y, float bw, float bh, int alpha = 90)
 {
     for (int i = 5; i >= 1; i--) {
-        float fi = static_cast<float>(i);
-        sf::RectangleShape s({bw + fi*2.f, bh + fi*2.f});
-        s.setPosition({x - fi + fi*2.f, y + fi*1.5f});
-        s.setFillColor({0, 0, 0, static_cast<uint8_t>(static_cast<float>(alpha) / (fi + 1.f))});
-        w.draw(s);
+        float fi = float(i);
+        QColor c(0, 0, 0, int(float(alpha) / (fi + 1.f)));
+        p.fillRect(QRectF(x - fi + fi*2.f, y + fi*1.5f, bw + fi*2.f, bh + fi*2.f), c);
     }
 }
-
-// Dessine un bouton aventure : dégradé, bordure dorée au hover, effet pressé
-static void drawBtn(sf::RenderWindow& w, const sf::Font& font,
-                    float x, float y, float bw, float bh,
-                    const string& label,
-                    bool disabled,
-                    sf::Vector2i mouse,
-                    float time,
-                    sf::Color base = BS::Primary,
-                    sf::Color hoverCol = BS::PrimaryH)
+/** @brief Vérifie si un point est dans un bouton
+ * 
+ * @param bx 
+ * @param by 
+ * @param bw 
+ * @param bh 
+ * @param pt 
+ * @return true 
+ * @return false 
+ */
+static bool btnHit(float bx, float by, float bw, float bh, QPoint pt)
+{
+    return pt.x() >= int(bx) && pt.x() <= int(bx+bw) &&
+           pt.y() >= int(by) && pt.y() <= int(by+bh);
+}
+/** @brief Dessine une carte
+ * 
+ * @param p 
+ * @param x 
+ * @param y 
+ * @param cw 
+ * @param ch 
+ * @param bg 
+ * @param topAccent 
+ */
+static void drawCard(QPainter& p, float x, float y, float cw, float ch,
+                     QColor bg = BS::Card, QColor topAccent = Qt::transparent)
+{
+    drawShadow(p, x, y, cw, ch, 80);
+    p.fillRect(QRectF(x, y, cw, ch), bg);
+    p.save();
+    p.setPen(QPen(BS::CardBdr, 1.f));
+    p.setBrush(Qt::NoBrush);
+    p.drawRect(QRectF(x, y, cw, ch));
+    p.restore();
+    p.fillRect(QRectF(x, y, cw, ch/3.f), QColor(255,255,255, 6));
+    if (topAccent.alpha() > 0)
+        p.fillRect(QRectF(x, y, cw, 3.f), topAccent);
+}
+/** @brief Dessine un bouton
+ * 
+ * @param p 
+ * @param x 
+ * @param y 
+ * @param bw 
+ * @param bh 
+ * @param label 
+ * @param disabled 
+ * @param mouse 
+ * @param time 
+ * @param base 
+ * @param hoverCol 
+ */
+static void drawBtn(QPainter& p, float x, float y, float bw, float bh,
+                    const QString& label, bool disabled,
+                    QPoint mouse, float time,
+                    QColor base = BS::Primary, QColor hoverCol = BS::PrimaryH)
 {
     bool hovered = !disabled && btnHit(x, y, bw, bh, mouse);
     float pulse  = (std::sin(time * 3.5f) + 1.f) * 0.5f;
+    float offY   = hovered ? 2.f : 0.f;
 
-    // Effet pressé au hover : léger décalage vers le bas
-    float offY = hovered ? 2.f : 0.f;
-
-    sf::Color bgTop, bgBot;
+    QColor bgTop, bgBot;
     if (disabled) {
         bgTop = lerp(BS::Secondary, {100,110,150}, 0.3f);
         bgBot = BS::Secondary;
     } else if (hovered) {
-        bgTop = lerp(hoverCol, {255,255,255}, 0.15f + 0.05f * pulse);
+        bgTop = lerp(hoverCol, Qt::white, 0.15f + 0.05f * pulse);
         bgBot = hoverCol;
     } else {
-        bgTop = lerp(base, {255,255,255}, 0.12f);
-        bgBot = lerp(base, {0,0,0}, 0.15f);
+        bgTop = lerp(base, Qt::white, 0.12f);
+        bgBot = lerp(base, Qt::black, 0.15f);
     }
 
-    // Ombre
-    if (!disabled && !hovered) drawShadow(w, x, y + offY, bw, bh, 80u);
+    if (!disabled && !hovered) drawShadow(p, x, y + offY, bw, bh, 80);
 
-    // Corps du bouton : demi-haut + demi-bas
-    sf::RectangleShape top({bw, bh / 2.f});
-    top.setPosition({x, y + offY});
-    top.setFillColor(bgTop);
-    w.draw(top);
-    sf::RectangleShape bot({bw, bh / 2.f});
-    bot.setPosition({x, y + offY + bh / 2.f});
-    bot.setFillColor(bgBot);
-    w.draw(bot);
+    p.fillRect(QRectF(x, y + offY,         bw, bh / 2.f), bgTop);
+    p.fillRect(QRectF(x, y + offY + bh/2.f, bw, bh / 2.f), bgBot);
 
-    // Bordure extérieure
-    sf::Color border;
-    if (disabled)     border = {60, 70, 100, 120};
+    QColor border;
+    if (disabled)     border = QColor(60, 70, 100, 120);
     else if (hovered) border = lerp(BS::GoldLight, BS::Gold, pulse);
-    else              border = lerp(base, {200,200,255}, 0.35f);
-    sf::RectangleShape frame({bw, bh});
-    frame.setPosition({x, y + offY});
-    frame.setFillColor(sf::Color::Transparent);
-    frame.setOutlineColor(border);
-    frame.setOutlineThickness(1.5f);
-    w.draw(frame);
+    else              border = lerp(base, QColor(200,200,255), 0.35f);
 
-    // Reflet supérieur
-    sf::RectangleShape shine({bw - 4.f, 2.f});
-    shine.setPosition({x + 2.f, y + offY + 2.f});
-    shine.setFillColor({255, 255, 255, static_cast<uint8_t>(disabled ? 0u : (hovered ? 55u : 28u))});
-    w.draw(shine);
+    p.save();
+    p.setPen(QPen(border, 1.5f));
+    p.setBrush(Qt::NoBrush);
+    p.drawRect(QRectF(x, y + offY, bw, bh));
+    p.restore();
 
-    // Accents aux coins (petits carrés dorés si hover)
+    p.fillRect(QRectF(x+2.f, y+offY+2.f, bw-4.f, 2.f),
+               QColor(255,255,255, disabled ? 0 : (hovered ? 55 : 28)));
+
     if (hovered) {
         float cs = 4.f;
+        QColor cc = lerp(BS::Gold, BS::GoldLight, pulse);
         for (auto [cx2, cy2] : vector<pair<float,float>>{
                 {x, y+offY}, {x+bw-cs, y+offY},
-                {x, y+offY+bh-cs}, {x+bw-cs, y+offY+bh-cs}}) {
-            sf::RectangleShape corner({cs, cs});
-            corner.setPosition({cx2, cy2});
-            corner.setFillColor(lerp(BS::Gold, BS::GoldLight, pulse));
-            w.draw(corner);
-        }
+                {x, y+offY+bh-cs}, {x+bw-cs, y+offY+bh-cs}})
+            p.fillRect(QRectF(cx2, cy2, cs, cs), cc);
     }
 
-    // Texte centré
-    sf::Text t(font, sfStr(label), 14u);
-    t.setFillColor(disabled ? BS::Muted : sf::Color::White);
-    if (!disabled && hovered) t.setFillColor(BS::GoldLight);
-    auto b = t.getLocalBounds();
-    t.setOrigin({b.position.x + b.size.x/2.f, b.position.y + b.size.y/2.f});
-    t.setPosition({x + bw/2.f, y + offY + bh/2.f});
-    w.draw(t);
+    p.save();
+    QFont f = mkFont(14);
+    p.setFont(f);
+    QColor tc = disabled ? BS::Muted : Qt::white;
+    if (!disabled && hovered) tc = BS::GoldLight;
+    p.setPen(tc);
+    p.drawText(QRectF(x, y+offY, bw, bh), Qt::AlignCenter, label);
+    p.restore();
 }
 
-// Dessine une carte avec dégradé de fond et trait coloré facultatif en haut
-static void drawCard(sf::RenderWindow& w, float x, float y, float cw, float ch,
-                     sf::Color bg = BS::Card,
-                     sf::Color topAccent = sf::Color::Transparent)
+/**
+ * @brief Dessine une ligne épaisse (rectangle tourné)
+ * 
+ * @param p 
+ * @param a 
+ * @param b 
+ * @param color 
+ * @param thick 
+ * @param perpOff 
+ */
+static void drawThickLine(QPainter& p,
+                          QPointF a, QPointF b,
+                          QColor color, float thick, float perpOff = 0.f)
 {
-    drawShadow(w, x, y, cw, ch, 80u);
-    // Corps
-    sf::RectangleShape r({cw, ch});
-    r.setPosition({x, y});
-    r.setFillColor(bg);
-    r.setOutlineColor(BS::CardBdr);
-    r.setOutlineThickness(1.f);
-    w.draw(r);
-    // Reflet intérieur subtil (coin supérieur gauche)
-    sf::RectangleShape glow({cw, ch / 3.f});
-    glow.setPosition({x, y});
-    glow.setFillColor({255, 255, 255, 6});
-    w.draw(glow);
-    // Trait coloré en haut
-    if (topAccent.a > 0) {
-        sf::RectangleShape bar({cw, 3.f});
-        bar.setPosition({x, y});
-        bar.setFillColor(topAccent);
-        w.draw(bar);
-    }
-}
+    QPointF d = b - a;
+    double len = std::sqrt(d.x()*d.x() + d.y()*d.y());
+    if (len < 1.0) return;
+    double nx = -d.y() / len, ny = d.x() / len;
+    QPointF start = QPointF(a.x() + nx * perpOff, a.y() + ny * perpOff);
+    double angleDeg = std::atan2(d.y(), d.x()) * 180.0 / M_PI;
 
-// Dessine une ligne épaisse avec décalage perpendiculaire
-static void drawLine(sf::RenderWindow& w,
-                     sf::Vector2f a, sf::Vector2f b,
-                     sf::Color color, float thick, float perpOff = 0.f)
+    p.save();
+    p.translate(start);
+    p.rotate(angleDeg);
+    p.fillRect(QRectF(0, -thick/2.0, len, thick), color);
+    p.restore();
+}
+/**
+ * @brief Calcule la distance d'un point à un segment
+ * 
+ * @param pt 
+ * @param a 
+ * @param b 
+ * @return double 
+ */
+static double distSeg(QPointF pt, QPointF a, QPointF b)
 {
-    sf::Vector2f d = b - a;
-    float len = std::sqrt(d.x*d.x + d.y*d.y);
-    if (len < 1.f) return;
-    sf::Vector2f perp = {-d.y / len, d.x / len};
-    sf::RectangleShape r({len, thick});
-    r.setOrigin({0.f, thick / 2.f});
-    r.setPosition(a + perp * perpOff);
-    r.setRotation(sf::radians(std::atan2(d.y, d.x)));
-    r.setFillColor(color);
-    w.draw(r);
+    QPointF ab = b - a, ap = pt - a;
+    double t = (ap.x()*ab.x() + ap.y()*ab.y()) / (ab.x()*ab.x() + ab.y()*ab.y() + 1e-6);
+    t = qBound(0.0, t, 1.0);
+    QPointF cl = a + ab * t, dv = pt - cl;
+    return std::sqrt(dv.x()*dv.x() + dv.y()*dv.y());
 }
-
-static float distSeg(sf::Vector2f p, sf::Vector2f a, sf::Vector2f b)
-{
-    sf::Vector2f ab = b - a, ap = p - a;
-    float t = (ap.x*ab.x + ap.y*ab.y) / (ab.x*ab.x + ab.y*ab.y + 1e-6f);
-    t = std::max(0.f, std::min(1.f, t));
-    sf::Vector2f cl = a + ab * t, dv = p - cl;
-    return std::sqrt(dv.x*dv.x + dv.y*dv.y);
-}
-
+/**
+ * @brief Calcule les offsets pour les voies parallèles
+ * 
+ * @param voies 
+ * @return map<VoieFerree*, float> 
+ */
 static map<VoieFerree*, float> calcOffsets(const vector<VoieFerree*>& voies)
 {
     map<VoieFerree*, float> offsets;
@@ -488,24 +625,27 @@ static map<VoieFerree*, float> calcOffsets(const vector<VoieFerree*>& voies)
     for (auto& kv : grp) {
         auto& g = kv.second;
         if (g.size() == 1) { offsets[g[0]] = 0.f; continue; }
-        float start = -(static_cast<float>(g.size()) - 1.f) * 7.f / 2.f;
+        float start = -(float(g.size()) - 1.f) * 7.f / 2.f;
         for (size_t i = 0; i < g.size(); i++)
-            offsets[g[i]] = start + static_cast<float>(i) * 7.f;
+            offsets[g[i]] = start + float(i) * 7.f;
     }
     return offsets;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═════════════════════════════════
 // SECTION 4 – État global
-// ═══════════════════════════════════════════════════════════════════════════════
+// ═════════════════════════════════
 
 enum class AppState { SETUP_NB, SETUP_NAME, GAME, GAME_OVER };
 enum class ActionSt { MENU, SELECT_ROUTE };
-
+/**
+ * @brief Structure contenant l'état global du jeu
+ * 
+ */
 struct GS {
-    AppState app       = AppState::SETUP_NB;
-    int      nbJ       = 2;
-    int      nameIdx   = 0;
+    AppState app     = AppState::SETUP_NB;
+    int      nbJ     = 2;
+    int      nameIdx = 0;
     string   inputBuf;
 
     vector<Joueur*>     joueurs;
@@ -513,36 +653,35 @@ struct GS {
     vector<Ville*>      villes;
     vector<Train*>      trains;
     vector<Ticket*>     tickets;
-    Partie*             partie     = nullptr;
-    PiocheTickets*      pioche     = nullptr;
-    mt19937             rng        {random_device{}()};
-    int                 trainLeft  = 0;
-    size_t              tourIdx    = 0;
-    bool                grandeTrav = false;
-    ActionSt            action     = ActionSt::MENU;
-    Joueur*             gagnant    = nullptr;
+    Partie*             partie    = nullptr;
+    PiocheTickets*      pioche    = nullptr;
+    mt19937             rng       {random_device{}()};
+    int                 trainLeft = 0;
+    size_t              tourIdx   = 0;
+    bool                grandeTrav= false;
+    ActionSt            action    = ActionSt::MENU;
+    Joueur*             gagnant   = nullptr;
     string              statusMsg;
-    bool                shouldQuit = false;
+    bool                shouldQuit= false;
 
-    // Log avec timestamps pour animation de fondu
-    vector<string>  log;
-    vector<float>   logTimes;     // temps d'ajout de chaque entrée
-    float           now = 0.f;    // mis à jour chaque frame
-
-    void addLog(const string& s)
-    {
+    vector<string> log;
+    vector<float>  logTimes;
+    float          now = 0.f;
+    /**
+     * @brief Ajoute un message au journal
+     * 
+     * @param s 
+     */
+    void addLog(const string& s) {
         log.push_back(s);
         logTimes.push_back(now);
-        if (log.size() > 7) {
-            log.erase(log.begin());
-            logTimes.erase(logTimes.begin());
-        }
+        if (log.size() > 7) { log.erase(log.begin()); logTimes.erase(logTimes.begin()); }
     }
 
     VoieFerree*             hovered = nullptr;
     map<VoieFerree*, float> offsets;
 
-    std::optional<sf::Texture> logoTex;  // logo SEC/AI
+    QPixmap logoPix;
 
     Joueur* cur() const { return joueurs[tourIdx % joueurs.size()]; }
 };
@@ -550,15 +689,19 @@ struct GS {
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 5 – Initialisation
 // ═══════════════════════════════════════════════════════════════════════════════
-
+/**
+ * @brief Initialise le jeu
+ * 
+ * @param gs 
+ */
 static void initGame(GS& gs)
 {
     chargerMap(string(FILES_DIR) + "/map.csv", gs.villes, gs.voies);
     gs.trains  = creerTrains();
     gs.tickets = chargerTickets(string(FILES_DIR) + "/ticket.csv", gs.villes);
     gs.partie  = new Partie(gs.tickets, false, gs.trains, gs.joueurs);
-    gs.trainLeft = static_cast<int>(gs.trains.size())  - gs.nbJ * 4;
-    int tLeft    = static_cast<int>(gs.tickets.size()) - gs.nbJ * 2;
+    gs.trainLeft = int(gs.trains.size())  - gs.nbJ * 4;
+    int tLeft    = int(gs.tickets.size()) - gs.nbJ * 2;
     gs.pioche    = new PiocheTickets(tLeft, gs.rng);
     gs.offsets   = calcOffsets(gs.voies);
     gs.app       = AppState::GAME;
@@ -566,411 +709,309 @@ static void initGame(GS& gs)
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 6 – Dessin de la carte (map)
+// SECTION 6 – Dessin de la carte
 // ═══════════════════════════════════════════════════════════════════════════════
-
-static void drawMap(sf::RenderWindow& w, const sf::Font& font,
-                    const GS& gs, float time)
+/**
+ * @brief   Dessine un champ d'étoiles en arrière-plan
+ * 
+ * @param p 
+ * @param time 
+ * @param areaW 
+ * @param areaH 
+ */
+static void drawStarfield(QPainter& p, float time, float areaW = 808.f, float areaH = 720.f)
 {
-    // ── Fond terrain multicouche ────────────────────────────────────────────
-    // Base : vert forêt
-    sf::RectangleShape bgBase({800.f, 720.f});
-    bgBase.setFillColor(BS::MapBg1);
-    w.draw(bgBase);
+    for (int i = 0; i < 90; i++) {
+        float seed    = float(i) * 137.508f;
+        float sx      = std::fmod(seed * 4.13f, areaW);
+        float sy      = std::fmod(seed * 2.97f, areaH);
+        float twinkle = (std::sin(time * 1.2f + seed * 0.05f) + 1.f) * 0.5f;
+        float r       = 0.8f + twinkle * 1.8f;
+        int   a       = int(25.f + twinkle * 110.f);
+        QColor c = (i % 11 == 0) ? QColor(255,220,100,a) : QColor(180,200,255,a);
+        p.setBrush(c);
+        p.setPen(Qt::NoPen);
+        p.drawEllipse(QRectF(sx-r, sy-r, 2*r, 2*r));
+    }
+}
+/** @brief Dessine les rails d'un train
+ * 
+ * @param p 
+ * @param y 
+ * @param time 
+ * @param alpha01 
+ */
+static void drawTrainTrack(QPainter& p, float y, float time, float alpha01)
+{
+    int a = int(alpha01 * 30.f);
+    if (a == 0) return;
+    QColor c(200,170,100,a);
+    p.fillRect(QRectF(0.f, y-5.f, 808.f, 2.f), c);
+    p.fillRect(QRectF(0.f, y+5.f, 808.f, 2.f), c);
+    float offset = std::fmod(time * 40.f, 44.f);
+    p.save();
+    p.setBrush(QColor(170,130,70, a*9/10));
+    p.setPen(Qt::NoPen);
+    for (float tx = -44.f + offset; tx < 808.f; tx += 44.f)
+        p.drawRect(QRectF(tx-3.f, y-7.f, 6.f, 14.f));
+    p.restore();
+}
+/** @brief Dessine la carte
+ * 
+ * @param p 
+ * @param gs 
+ * @param time 
+ */
+static void drawMap(QPainter& p, const GS& gs, float time)
+{
+    // Fond
+    p.fillRect(QRectF(0,0,800,720), BS::MapBg1);
+    p.fillRect(QRectF(230,160,340,440), QColor(24,62,40,180));
+    p.fillRect(QRectF(0,0,90,720),   BS::MapOcean);
+    p.fillRect(QRectF(720,0,80,720), BS::MapOcean);
+    p.fillRect(QRectF(200,100,120,500), QColor(BS::MapMtn.red(), BS::MapMtn.green(), BS::MapMtn.blue(),120));
 
-    // Zone centrale légèrement plus claire (plaines)
-    sf::RectangleShape plains({340.f, 440.f});
-    plains.setPosition({230.f, 160.f});
-    plains.setFillColor({24, 62, 40, 180});
-    w.draw(plains);
-
-    // Bande océan Pacifique (côte ouest)
-    sf::RectangleShape pacific({90.f, 720.f});
-    pacific.setFillColor(BS::MapOcean);
-    w.draw(pacific);
-
-    // Bande océan Atlantique (côte est)
-    sf::RectangleShape atlantic({80.f, 720.f});
-    atlantic.setPosition({720.f, 0.f});
-    atlantic.setFillColor(BS::MapOcean);
-    w.draw(atlantic);
-
-    // Zone montagneuse (Rocheuses)
-    sf::RectangleShape rockies({120.f, 500.f});
-    rockies.setPosition({200.f, 100.f});
-    rockies.setFillColor({BS::MapMtn.r, BS::MapMtn.g, BS::MapMtn.b, 120});
-    w.draw(rockies);
-
-    // Vignette (bords assombris)
+    // Vignette
     for (int edge = 0; edge < 4; edge++) {
         for (int i = 0; i < 5; i++) {
-            float fi = static_cast<float>(i);
-            float t  = (5.f - fi) / 5.f;
-            uint8_t a = static_cast<uint8_t>(t * t * 90.f);
+            float fi = float(i);
+            int a = int(((5.f-fi)/5.f) * ((5.f-fi)/5.f) * 90.f);
             float dim = fi * 12.f;
-            if (edge == 0) {
-                sf::RectangleShape v2({800.f, dim});
-                v2.setPosition({0.f, 0.f});
-                v2.setFillColor({0, 0, 0, a}); w.draw(v2);
-            } else if (edge == 1) {
-                sf::RectangleShape v2({800.f, dim});
-                v2.setPosition({0.f, 720.f - dim});
-                v2.setFillColor({0, 0, 0, a}); w.draw(v2);
-            } else if (edge == 2) {
-                sf::RectangleShape v2({dim, 720.f});
-                v2.setPosition({0.f, 0.f});
-                v2.setFillColor({0, 0, 0, a}); w.draw(v2);
-            } else {
-                sf::RectangleShape v2({dim, 720.f});
-                v2.setPosition({800.f - dim, 0.f});
-                v2.setFillColor({0, 0, 0, a}); w.draw(v2);
-            }
+            if      (edge==0) p.fillRect(QRectF(0,0,800,dim), QColor(0,0,0,a));
+            else if (edge==1) p.fillRect(QRectF(0,720-dim,800,dim), QColor(0,0,0,a));
+            else if (edge==2) p.fillRect(QRectF(0,0,dim,720), QColor(0,0,0,a));
+            else              p.fillRect(QRectF(800-dim,0,dim,720), QColor(0,0,0,a));
         }
     }
 
-    // Grille topographique fine
-    for (int i = 0; i <= 16; i++) {
-        float xg = static_cast<float>(i) * 50.f;
-        sf::RectangleShape gl({1.f, 720.f});
-        gl.setPosition({xg, 0.f});
-        gl.setFillColor({255, 255, 255, 7});
-        w.draw(gl);
-    }
-    for (int i = 0; i <= 14; i++) {
-        float yg = static_cast<float>(i) * 52.f;
-        sf::RectangleShape gl({800.f, 1.f});
-        gl.setPosition({0.f, yg});
-        gl.setFillColor({255, 255, 255, 7});
-        w.draw(gl);
-    }
+    // Grille topographique
+    p.save();
+    p.setPen(QPen(QColor(255,255,255,7), 1.f));
+    for (int i = 0; i <= 16; i++) p.drawLine(QPointF(i*50.f,0), QPointF(i*50.f,720));
+    for (int i = 0; i <= 14; i++) p.drawLine(QPointF(0,i*52.f), QPointF(800,i*52.f));
+    p.restore();
 
-    // ── Routes ──────────────────────────────────────────────────────────────
+    // Routes
+    p.save();
+    p.setPen(Qt::NoPen);
     for (auto v : gs.voies) {
         auto lv = v->getListeVille();
-        const string& na = lv[0]->getNom();
-        const string& nb = lv[1]->getNom();
+        const string& na = lv[0]->getNom(), &nb = lv[1]->getNom();
         if (!CITY_POS.count(na) || !CITY_POS.count(nb)) continue;
 
-        sf::Vector2f pa = CITY_POS.at(na), pb = CITY_POS.at(nb);
-        float off    = gs.offsets.count(v) ? gs.offsets.at(v) : 0.f;
-        int   poids  = v->getPoids();
-        float thick  = 7.f;
-        bool  owned  = v->getJoueur() != nullptr;
-        bool  isHov  = (v == gs.hovered && gs.action == ActionSt::SELECT_ROUTE);
-        float pulse  = (std::sin(time * 5.f) + 1.f) * 0.5f;
+        QPointF pa = CITY_POS.at(na), pb = CITY_POS.at(nb);
+        float off   = gs.offsets.count(v) ? gs.offsets.at(v) : 0.f;
+        int   poids = v->getPoids();
+        float thick = 7.f;
+        bool  owned = v->getJoueur() != nullptr;
+        bool  isHov = (v == gs.hovered && gs.action == ActionSt::SELECT_ROUTE);
+        float pulse = (std::sin(time * 5.f) + 1.f) * 0.5f;
 
-        sf::Color col;
-        if (owned)       col = sfJoueur(v->getJoueur()->getCouleur());
-        else if (isHov)  col = lerp({255,225,30}, {255,140,0}, pulse);
-        else             col = sfRoute(v->getCouleur());
+        QColor col;
+        if (owned)      col = qJoueur(v->getJoueur()->getCouleur());
+        else if (isHov) col = lerp({255,225,30}, {255,140,0}, pulse);
+        else            col = qRoute(v->getCouleur());
 
         if (isHov) thick = 9.f + pulse * 3.f;
         if (owned) thick = 10.f;
 
-        sf::Vector2f d  = pb - pa;
-        float len       = std::sqrt(d.x*d.x + d.y*d.y);
-        sf::Vector2f ud = d / len;
-        sf::Vector2f perp = {-ud.y, ud.x};
+        QPointF d  = pb - pa;
+        double  len = std::sqrt(d.x()*d.x() + d.y()*d.y());
+        QPointF ud = len > 0 ? d / len : d;
+        QPointF perp = {-ud.y(), ud.x()};
 
-        // Rail de fond (ombre portée)
-        drawLine(w, pa, pb, {0, 0, 0, 100}, thick + 4.f, off + 2.f);
-        // Rail de ballast (bord extérieur foncé)
-        drawLine(w, pa, pb, lerp(col, {0,0,0}, 0.5f), thick + 2.f, off);
+        // Halo sélection
+        if (isHov)
+            drawThickLine(p, pa, pb,
+                          QColor(255,220,50, int(40.f + pulse*60.f)),
+                          thick + 10.f, off);
 
-        // Wagons individuels (slots)
+        // Ombre + ballast
+        drawThickLine(p, pa, pb, QColor(0,0,0,100), thick + 4.f, off + 2.f);
+        drawThickLine(p, pa, pb, lerp(col, Qt::black, 0.5f), thick + 2.f, off);
+
+        // Wagons individuels
         for (int seg = 0; seg < poids; seg++) {
-            float t0 = (static_cast<float>(seg) + 0.08f) / static_cast<float>(poids);
-            float t1 = (static_cast<float>(seg) + 0.92f) / static_cast<float>(poids);
-            sf::Vector2f a2 = pa + d * t0 + perp * off;
-            sf::Vector2f b2 = pa + d * t1 + perp * off;
-            float segLen = std::sqrt((b2-a2).x*(b2-a2).x + (b2-a2).y*(b2-a2).y);
+            float t0 = (float(seg) + 0.08f) / float(poids);
+            float t1 = (float(seg) + 0.92f) / float(poids);
+            QPointF a2 = pa + d*t0 + perp*off;
+            QPointF b2 = pa + d*t1 + perp*off;
+            double segLen = std::sqrt((b2-a2).x()*(b2-a2).x()+(b2-a2).y()*(b2-a2).y());
 
-            sf::RectangleShape slot({segLen, thick});
-            slot.setOrigin({0.f, thick / 2.f});
-            slot.setPosition(a2);
-            slot.setRotation(sf::radians(std::atan2(d.y, d.x)));
-
-            sf::Color slotCol = col;
+            QColor slotCol = col;
             if (owned) {
-                // Effet brillant sur wagon posé
-                float shimmer = (std::sin(time * 2.f + static_cast<float>(seg) * 0.8f) + 1.f) * 0.5f;
-                slotCol = lerp(col, lerp(col, {255,255,255}, 0.3f), shimmer * 0.4f);
+                float shimmer = (std::sin(time*2.f + float(seg)*0.8f)+1.f)*0.5f;
+                slotCol = lerp(col, lerp(col, Qt::white, 0.3f), shimmer*0.4f);
             }
-            if (isHov) slotCol = lerp(col, {255,255,200}, 0.3f + 0.2f * pulse);
-            slot.setFillColor(slotCol);
+            if (isHov) slotCol = lerp(col, QColor(255,255,200), 0.3f + 0.2f*pulse);
 
-            // Reflet supérieur sur chaque wagon
-            sf::RectangleShape shine({segLen, 2.5f});
-            shine.setOrigin({0.f, 0.f});
-            shine.setPosition(a2 + perp * (thick / 2.f - 3.f));
-            shine.setRotation(sf::radians(std::atan2(d.y, d.x)));
-            shine.setFillColor({255, 255, 255, static_cast<uint8_t>(owned ? 50u : 25u)});
-            w.draw(shine);
-            w.draw(slot);
-        }
-
-        // Halo de sélection
-        if (isHov) {
-            drawLine(w, pa, pb,
-                     {255, 220, 50, static_cast<uint8_t>(40.f + pulse * 60.f)},
-                     thick + 10.f, off);
+            double angleDeg = std::atan2(d.y(), d.x()) * 180.0 / M_PI;
+            p.save();
+            p.translate(a2);
+            p.rotate(angleDeg);
+            p.fillRect(QRectF(0, -thick/2.0, segLen, thick), slotCol);
+            // Reflet
+            p.fillRect(QRectF(0, -thick/2.0, segLen, 2.5),
+                       QColor(255,255,255, owned ? 50 : 25));
+            p.restore();
         }
     }
+    p.restore();
 
-    // ── Villes ──────────────────────────────────────────────────────────────
+    // Villes
+    p.save();
+    p.setPen(Qt::NoPen);
     for (auto& kv : CITY_POS) {
-        const sf::Vector2f& pos = kv.second;
-        bool isOuest = std::find(COTE_OUEST.begin(), COTE_OUEST.end(), kv.first)
-                       != COTE_OUEST.end();
-        bool isEst   = std::find(COTE_EST.begin(),   COTE_EST.end(),   kv.first)
-                       != COTE_EST.end();
-        bool isTicket = false;
-        for (auto t : gs.cur()->getMissions()){
-            if (t->getVilleDepart()->getNom() == kv.first ||
-                t->getVilleArrivee()->getNom() == kv.first)
-                { isTicket = true; break; }
+        QPointF pos = kv.second;
+        bool isOuest = std::find(COTE_OUEST.begin(), COTE_OUEST.end(), kv.first) != COTE_OUEST.end();
+        bool isEst   = std::find(COTE_EST.begin(),   COTE_EST.end(),   kv.first) != COTE_EST.end();
+        bool isTicket= false;
+        if (!gs.joueurs.empty()) {
+            for (auto t : gs.cur()->getMissions())
+                if (t->getVilleDepart()->getNom()==kv.first ||
+                    t->getVilleArrivee()->getNom()==kv.first)
+                    { isTicket=true; break; }
         }
 
-        float p = (std::sin(time * 2.f + pos.x * 0.04f) + 1.f) * 0.5f;
+        float pp = (std::sin(time*2.f + float(pos.x())*0.04f)+1.f)*0.5f;
 
-        // Halo animé grande amplitude pour villes côtières
         if (isTicket) {
-            float r1 = 18.f + p * 8.f;
-            sf::CircleShape outer(r1);
-            outer.setOrigin({r1, r1});
-            outer.setPosition(pos);
-            sf::Color hc = sfJoueur(gs.cur()->getCouleur());
-            hc.a = static_cast<uint8_t>(80.f + p * 100.f);
-            outer.setFillColor(hc);
-            w.draw(outer);
+            float r1 = 18.f + pp*8.f;
+            QColor hc = qJoueur(gs.cur()->getCouleur());
+            hc.setAlpha(int(80.f + pp*100.f));
+            p.setBrush(hc);
+            p.drawEllipse(QPointF(pos.x(), pos.y()), double(r1), double(r1));
         }
 
         // Anneau extérieur
-        sf::CircleShape ring(11.f);
-        ring.setOrigin({11.f, 11.f});
-        ring.setPosition(pos);
-        ring.setFillColor({0, 0, 0, 0});
-        ring.setOutlineColor({180, 155, 80, 200});
-        ring.setOutlineThickness(2.f);
-        w.draw(ring);
+        p.setPen(QPen(QColor(180,155,80,200), 2.f));
+        p.setBrush(Qt::NoBrush);
+        p.drawEllipse(QPointF(pos.x(), pos.y()), 11.0, 11.0);
 
         // Disque principal
-        sf::CircleShape disc(8.f);
-        disc.setOrigin({8.f, 8.f});
-        disc.setPosition(pos);
-        disc.setFillColor(isOuest ? sf::Color{30, 100, 200} :
-                          isEst   ? sf::Color{180, 130, 0}  :
-                                    sf::Color{60, 90, 55});
-        disc.setOutlineColor({220, 195, 120});
-        disc.setOutlineThickness(1.5f);
-        w.draw(disc);
+        p.setPen(QPen(QColor(220,195,120), 1.5f));
+        QColor dc = isOuest ? QColor(30,100,200) : isEst ? QColor(180,130,0) : QColor(60,90,55);
+        p.setBrush(dc);
+        p.drawEllipse(QPointF(pos.x(), pos.y()), 8.0, 8.0);
 
-        // Point central brillant
-        {
-            sf::CircleShape dot3(3.5f);
-            dot3.setOrigin({3.5f, 3.5f});
-            dot3.setPosition(pos);
-            dot3.setFillColor({255, 248, 210, 230});
-            w.draw(dot3);
+        // Point central
+        p.setPen(Qt::NoPen);
+        p.setBrush(QColor(255,248,210,230));
+        p.drawEllipse(QPointF(pos.x(), pos.y()), 3.5, 3.5);
+
+        // Étiquette
+        QString lbl = QString::fromStdString(kv.first);
+        QFont f = mkFont(10);
+        p.setFont(f);
+        QFontMetrics fm(f);
+        int tw = fm.horizontalAdvance(lbl);
+        float lx = float(pos.x()) - tw/2.f;
+        float ly = float(pos.y()) + 13.f;
+        // Ombre triple
+        for (auto [dx,dy] : vector<pair<float,float>>{{1,1},{-1,1},{0,1.5f}}) {
+            p.setPen(QColor(0,0,0,160));
+            p.drawText(QPointF(lx+dx, ly+dy+fm.ascent()), lbl);
         }
-
-        // Étiquette : ombre triple + texte blanc
-        auto drawLabel = [&](const string& s, float lx, float ly) {
-            for (auto [dx, dy] : vector<pair<float,float>>{
-                    {1.f,1.f}, {-1.f,1.f}, {0.f,1.5f}}) {
-                sf::Text sh(font, sfStr(s), 10u);
-                sh.setFillColor({0, 0, 0, 160});
-                auto b = sh.getLocalBounds();
-                sh.setOrigin({b.position.x + b.size.x/2.f, 0.f});
-                sh.setPosition({lx + dx, ly + dy});
-                w.draw(sh);
-            }
-            sf::Text lbl(font, sfStr(s), 10u);
-            lbl.setFillColor({230, 220, 185});
-            auto b = lbl.getLocalBounds();
-            lbl.setOrigin({b.position.x + b.size.x/2.f, 0.f});
-            lbl.setPosition({lx, ly});
-            w.draw(lbl);
-        };
-        drawLabel(kv.first, pos.x, pos.y + 13.f);
+        p.setPen(QColor(230,220,185));
+        p.drawText(QPointF(lx, ly+fm.ascent()), lbl);
     }
-}
-
-// Champ d'étoiles déterministe (aucun état mutable)
-static void drawStarfield(sf::RenderWindow& w, float time,
-                          float areaW = 808.f, float areaH = 720.f)
-{
-    for (int i = 0; i < 90; i++) {
-        float seed = static_cast<float>(i) * 137.508f;
-        float sx   = std::fmod(seed * 4.13f, areaW);
-        float sy   = std::fmod(seed * 2.97f, areaH);
-        float twinkle = (std::sin(time * 1.2f + seed * 0.05f) + 1.f) * 0.5f;
-        float r2   = 0.8f + twinkle * 1.8f;
-        sf::CircleShape star(r2);
-        star.setOrigin({r2, r2});
-        star.setPosition({sx, sy});
-        uint8_t a = static_cast<uint8_t>(25.f + twinkle * 110.f);
-        // Quelques étoiles dorées
-        if (i % 11 == 0) star.setFillColor({255, 220, 100, a});
-        else              star.setFillColor({180, 200, 255, a});
-        w.draw(star);
-    }
-}
-
-// Rails de train décoratifs (animation de défilement)
-static void drawTrainTrack(sf::RenderWindow& w, float y, float time, float alpha01)
-{
-    uint8_t a = static_cast<uint8_t>(alpha01 * 30.f);
-    if (a == 0) return;
-    // Rail haut
-    sf::RectangleShape r1({808.f, 2.f});
-    r1.setPosition({0.f, y - 5.f});
-    r1.setFillColor({200, 170, 100, a});
-    w.draw(r1);
-    // Rail bas
-    sf::RectangleShape r2({808.f, 2.f});
-    r2.setPosition({0.f, y + 5.f});
-    r2.setFillColor({200, 170, 100, a});
-    w.draw(r2);
-    // Traverses (défilent)
-    float offset = std::fmod(time * 40.f, 44.f);
-    for (float tx = -44.f + offset; tx < 808.f; tx += 44.f) {
-        sf::RectangleShape tie({6.f, 14.f});
-        tie.setOrigin({3.f, 7.f});
-        tie.setPosition({tx, y});
-        tie.setFillColor({170, 130, 70, static_cast<uint8_t>(a * 9 / 10)});
-        w.draw(tie);
-    }
-}
-
-// Cercle centré (helper)
-static void drawCircle(sf::RenderWindow& w, float cx, float cy,
-                       float r, sf::Color col)
-{
-    sf::CircleShape c(r);
-    c.setOrigin({r, r});
-    c.setPosition({cx, cy});
-    c.setFillColor(col);
-    w.draw(c);
-}
-
-// Dessine le logo SEC/AI centré dans une zone donnée (cx,cy = centre)
-static void drawLogo(sf::RenderWindow& w, const GS& gs,
-                     float cx, float cy, float maxW, float maxH,
-                     uint8_t alpha = 255u)
-{
-    if (!gs.logoTex.has_value()) return;
-    sf::Sprite logo(*gs.logoTex);
-    auto sz = gs.logoTex->getSize();
-    float scale = std::min(maxW / static_cast<float>(sz.x),
-                           maxH / static_cast<float>(sz.y));
-    logo.setScale({scale, scale});
-    float lw = static_cast<float>(sz.x) * scale;
-    float lh = static_cast<float>(sz.y) * scale;
-    logo.setPosition({cx - lw / 2.f, cy - lh / 2.f});
-    logo.setColor({255, 255, 255, alpha});
-    w.draw(logo);
+    p.restore();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 7 – Panneau latéral Bootstrap-dark
+// SECTION 7 – Panneau latéral
 // ═══════════════════════════════════════════════════════════════════════════════
-
-static void drawPanel(sf::RenderWindow& w, const sf::Font& font,
-                      GS& gs, sf::Vector2i click,
-                      sf::Vector2i mouse, float time, const sf::Clock& clk)
+/**
+ * @brief Dessine le panneau latéral
+ * 
+ * @param p 
+ * @param gs 
+ * @param click 
+ * @param mouse 
+ * @param time 
+ */
+static void drawPanel(QPainter& p, GS& gs, QPoint click, QPoint mouse, float time)
 {
-    const float PX = 808.f;
-    const float PW = 464.f;
+    const float PX = 808.f, PW = 464.f;
 
     // Fond panneau
-    sf::RectangleShape bg({PW, 720.f});
-    bg.setPosition({PX, 0.f});
-    bg.setFillColor(BS::DarkBg);
-    w.draw(bg);
-    // Séparateur gauche
-    sf::RectangleShape sep({2.f, 720.f});
-    sep.setPosition({PX, 0.f});
-    sep.setFillColor(BS::CardBdr);
-    w.draw(sep);
+    p.fillRect(QRectF(PX, 0, PW, 720), BS::DarkBg);
+    p.fillRect(QRectF(PX, 0, 2, 720), BS::CardBdr);
 
-    // ── SETUP : choix du nombre de joueurs ────────────────────────────────────
+    // ── SETUP : choix du nombre de joueurs ──────────────────────────────────
     if (gs.app == AppState::SETUP_NB) {
-        // ── Zone gauche : splash animé ────────────────────────────────────────
-        sf::RectangleShape leftBg({808.f, 720.f});
-        leftBg.setFillColor(BS::DarkBg);
-        w.draw(leftBg);
+        p.fillRect(QRectF(0,0,808,720), BS::DarkBg);
+        drawStarfield(p, time);
+        drawTrainTrack(p, 160.f, time, 0.7f);
+        drawTrainTrack(p, 560.f, time, 0.5f);
 
-        // Étoiles
-        drawStarfield(w, time);
+        float pulse = (std::sin(time*1.5f)+1.f)*0.5f;
 
-        // Rails décoratifs qui défilent
-        drawTrainTrack(w, 160.f, time, 0.7f);
-        drawTrainTrack(w, 560.f, time, 0.5f);
-
-        float pulse = (std::sin(time * 1.5f) + 1.f) * 0.5f;
-
-        // Halos concentriques pulsants derrière le logo
+        // Halos concentriques
+        p.save();
+        p.setPen(Qt::NoPen);
         for (int ring = 4; ring >= 0; ring--) {
-            float fr = static_cast<float>(ring);
-            float pr = (std::sin(time * 1.2f + fr * 0.6f) + 1.f) * 0.5f;
-            float r  = 80.f + fr * 42.f + pr * 12.f;
-            drawCircle(w, 404.f, 290.f, r,
-                {static_cast<uint8_t>(55 - ring*8),
-                 static_cast<uint8_t>(120 - ring*10),
-                 static_cast<uint8_t>(255 - ring*12),
-                 static_cast<uint8_t>(8.f + pr * 10.f)});
+            float fr = float(ring);
+            float pr = (std::sin(time*1.2f + fr*0.6f)+1.f)*0.5f;
+            float r  = 80.f + fr*42.f + pr*12.f;
+            p.setBrush(QColor(55-ring*8, 120-ring*10, 255-ring*12, int(8.f+pr*10.f)));
+            p.drawEllipse(QPointF(404, 290), double(r), double(r));
         }
+        p.restore();
 
-        // Logo centré grand format
-        drawLogo(w, gs, 404.f, 285.f, 460.f, 420.f, 240u);
+        // Logo
+        if (!gs.logoPix.isNull()) {
+            float maxW=460.f, maxH=420.f;
+            float scale = qMin(maxW/gs.logoPix.width(), maxH/gs.logoPix.height());
+            float lw = gs.logoPix.width()*scale, lh = gs.logoPix.height()*scale;
+            QPixmap scaled = gs.logoPix.scaled(int(lw), int(lh), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            p.setOpacity(240.0/255.0);
+            p.drawPixmap(QPointF(404.f-lw/2.f, 285.f-lh/2.f), scaled);
+            p.setOpacity(1.0);
+        }
 
         // Séparateur doré
-        {
-            float sw = 180.f + pulse * 30.f;
-            sf::RectangleShape sep({sw, 2.f});
-            sep.setOrigin({sw/2.f, 1.f});
-            sep.setPosition({404.f, 535.f});
-            sep.setFillColor(lerp(BS::Gold, BS::GoldLight, pulse));
-            w.draw(sep);
-        }
+        float sw = 180.f + pulse*30.f;
+        p.fillRect(QRectF(404.f-sw/2.f, 535.f, sw, 2.f), lerp(BS::Gold, BS::GoldLight, pulse));
 
-        // Titre principal
+        // Titre
         {
-            sf::Text title(font, sfStr("Aventuriers du Rail"), 32u);
-            title.setFillColor(lerp(BS::Gold, BS::GoldLight, pulse));
-            auto tb = title.getLocalBounds();
-            title.setOrigin({tb.position.x + tb.size.x/2.f, 0.f});
-            title.setPosition({404.f, 548.f});
-            // Ombre titre
-            sf::Text shadow(font, sfStr("Aventuriers du Rail"), 32u);
-            shadow.setFillColor({0, 0, 0, 120});
-            shadow.setOrigin({tb.position.x + tb.size.x/2.f, 0.f});
-            shadow.setPosition({406.f, 550.f});
-            w.draw(shadow);
-            w.draw(title);
+            QFont f = mkFont(32);
+            p.setFont(f);
+            QFontMetrics fm(f);
+            QString title = "Aventuriers du Rail";
+            int tw = fm.horizontalAdvance(title);
+            QColor tc = lerp(BS::Gold, BS::GoldLight, pulse);
+            p.setPen(QColor(0,0,0,120));
+            p.drawText(QPointF(404.f - tw/2.f + 2, 548.f + fm.ascent() + 2), title);
+            p.setPen(tc);
+            p.drawText(QPointF(404.f - tw/2.f, 548.f + fm.ascent()), title);
         }
 
         // Sous-titre
         {
-            sf::Text sub(font, sfStr("Tickets \xe2\x80\xa2 Wagons \xe2\x80\xa2 Victoire"), 13u);
-            sub.setFillColor({BS::Muted.r, BS::Muted.g, BS::Muted.b, 200});
-            auto sb = sub.getLocalBounds();
-            sub.setOrigin({sb.position.x + sb.size.x/2.f, 0.f});
-            sub.setPosition({404.f, 592.f});
-            w.draw(sub);
+            QFont f = mkFont(13); p.setFont(f);
+            QFontMetrics fm(f);
+            QString sub = "Tickets \u2022 Wagons \u2022 Victoire";
+            int sw2 = fm.horizontalAdvance(sub);
+            p.setPen(QColor(BS::Muted.red(), BS::Muted.green(), BS::Muted.blue(), 200));
+            p.drawText(QPointF(404.f - sw2/2.f, 592.f + fm.ascent()), sub);
         }
 
-        // ── Zone droite : boutons ─────────────────────────────────────────────
-        drawCard(w, PX+20.f, 60.f, PW-40.f, 90.f, {20,26,44}, BS::Gold);
-        w.draw(mkText(font, "Aventuriers du Rail", 22u, BS::GoldLight, PX+30.f, 76.f));
-        w.draw(mkText(font, "Choisissez le nombre de joueurs", 12u, BS::Muted, PX+30.f, 108.f));
+        // Panneau droit
+        drawCard(p, PX+20.f, 60.f, PW-40.f, 90.f, QColor(20,26,44), BS::Gold);
+        p.setFont(mkFont(22)); p.setPen(BS::GoldLight);
+        p.drawText(QPointF(PX+30.f, 76.f + QFontMetrics(mkFont(22)).ascent()), "Aventuriers du Rail");
+        p.setFont(mkFont(12)); p.setPen(BS::Muted);
+        p.drawText(QPointF(PX+30.f, 108.f + QFontMetrics(mkFont(12)).ascent()), "Choisissez le nombre de joueurs");
 
-        w.draw(mkText(font, "Nombre de joueurs", 15u, BS::Light, PX+20.f, 178.f));
+        p.setFont(mkFont(15)); p.setPen(BS::Light);
+        p.drawText(QPointF(PX+20.f, 178.f + QFontMetrics(mkFont(15)).ascent()), "Nombre de joueurs");
+
         for (int n = 2; n <= 4; n++) {
-            float bx = PX + 20.f + static_cast<float>(n-2) * 130.f;
-            drawBtn(w, font, bx, 205.f, 115.f, 55.f, to_string(n) + "  joueurs",
-                    false, mouse, time);
+            float bx = PX + 20.f + float(n-2) * 130.f;
+            drawBtn(p, bx, 205.f, 115.f, 55.f,
+                    QString::number(n) + "  joueurs", false, mouse, time);
             if (btnHit(bx, 205.f, 115.f, 55.f, click)) {
                 gs.nbJ     = n;
                 gs.app     = AppState::SETUP_NAME;
@@ -981,85 +1022,78 @@ static void drawPanel(sf::RenderWindow& w, const sf::Font& font,
         return;
     }
 
-    // ── SETUP : saisie des noms ───────────────────────────────────────────────
+    // ── SETUP : saisie des noms ──────────────────────────────────────────────
     if (gs.app == AppState::SETUP_NAME) {
-        // ── Zone gauche : logo petit format + progression ─────────────────────
-        sf::RectangleShape leftBg2({808.f, 720.f});
-        leftBg2.setFillColor(BS::DarkBg);
-        w.draw(leftBg2);
+        p.fillRect(QRectF(0,0,808,720), BS::DarkBg);
+        float pulse2 = (std::sin(time*1.5f)+1.f)*0.5f;
+        QColor hc2 = qJoueur(static_cast<couleurJoueur>(gs.nameIdx));
+        hc2.setAlpha(int(15.f + pulse2*20.f));
+        float hr2 = 160.f + pulse2*10.f;
+        p.save(); p.setPen(Qt::NoPen); p.setBrush(hc2);
+        p.drawEllipse(QPointF(404,280), double(hr2), double(hr2));
+        p.restore();
 
-        float pulse2 = (std::sin(time * 1.5f) + 1.f) * 0.5f;
-        sf::CircleShape halo2(160.f + pulse2 * 10.f);
-        halo2.setOrigin({160.f + pulse2*10.f, 160.f + pulse2*10.f});
-        halo2.setPosition({404.f, 280.f});
-        halo2.setFillColor(sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)));
-        halo2.setFillColor({
-            sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)).r,
-            sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)).g,
-            sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)).b,
-            static_cast<uint8_t>(15.f + pulse2 * 20.f)
-        });
-        w.draw(halo2);
-
-        drawLogo(w, gs, 404.f, 260.f, 340.f, 320.f, 200u);
-
-        // Texte d'invitation centré
-        sf::Text inv(font, sfStr("Joueur " + to_string(gs.nameIdx+1) + " / " + to_string(gs.nbJ)), 22u);
-        inv.setFillColor(sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)));
-        auto ib = inv.getLocalBounds();
-        inv.setOrigin({ib.position.x + ib.size.x/2.f, 0.f});
-        inv.setPosition({404.f, 440.f});
-        w.draw(inv);
-
-        // Barre de progression des joueurs
-        for (int i = 0; i < gs.nbJ; i++) {
-            float px2 = 404.f - (static_cast<float>(gs.nbJ)*28.f)/2.f + static_cast<float>(i)*28.f;
-            sf::CircleShape dot2(10.f);
-            dot2.setOrigin({10.f, 10.f});
-            dot2.setPosition({px2, 490.f});
-            dot2.setFillColor(i < gs.nameIdx
-                ? sfJoueur(static_cast<couleurJoueur>(i))
-                : (i == gs.nameIdx ? lerp(sfJoueur(static_cast<couleurJoueur>(i)),
-                                         BS::Dark, 0.3f + 0.2f*pulse2)
-                                   : BS::CardBdr));
-            dot2.setOutlineColor({255,255,255, 60u});
-            dot2.setOutlineThickness(1.f);
-            w.draw(dot2);
+        if (!gs.logoPix.isNull()) {
+            float maxW=340.f, maxH=320.f;
+            float scale = qMin(maxW/gs.logoPix.width(), maxH/gs.logoPix.height());
+            float lw = gs.logoPix.width()*scale, lh = gs.logoPix.height()*scale;
+            QPixmap scaled = gs.logoPix.scaled(int(lw), int(lh), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+            p.setOpacity(200.0/255.0);
+            p.drawPixmap(QPointF(404.f-lw/2.f, 260.f-lh/2.f), scaled);
+            p.setOpacity(1.0);
         }
 
-        drawCard(w, PX+20.f, 50.f, PW-40.f, 220.f, {20,26,44});
+        {
+            QFont f = mkFont(22); p.setFont(f);
+            QFontMetrics fm(f);
+            QString inv = "Joueur " + QString::number(gs.nameIdx+1) + " / " + QString::number(gs.nbJ);
+            int tw = fm.horizontalAdvance(inv);
+            p.setPen(qJoueur(static_cast<couleurJoueur>(gs.nameIdx)));
+            p.drawText(QPointF(404.f - tw/2.f, 440.f + fm.ascent()), inv);
+        }
 
-        // Badge couleur joueur
-        sf::RectangleShape badge({PW-40.f, 4.f});
-        badge.setPosition({PX+20.f, 50.f});
-        badge.setFillColor(sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)));
-        w.draw(badge);
+        // Progression
+        p.save(); p.setPen(QPen(QColor(255,255,255,60), 1.f));
+        for (int i = 0; i < gs.nbJ; i++) {
+            float px2 = 404.f - float(gs.nbJ)*14.f + float(i)*28.f;
+            QColor dc2 = (i < gs.nameIdx) ? qJoueur(static_cast<couleurJoueur>(i))
+                       : (i == gs.nameIdx) ? lerp(qJoueur(static_cast<couleurJoueur>(i)), BS::Dark, 0.3f+0.2f*pulse2)
+                       : BS::CardBdr;
+            p.setBrush(dc2);
+            p.drawEllipse(QPointF(px2, 490.f), 10.0, 10.0);
+        }
+        p.restore();
 
-        w.draw(mkText(font,
-            "Joueur " + to_string(gs.nameIdx+1) + " / " + to_string(gs.nbJ),
-            20u, sfJoueur(static_cast<couleurJoueur>(gs.nameIdx)), PX+30.f, 66.f));
-        w.draw(mkText(font, "Entrez votre nom :", 13u, BS::Muted, PX+30.f, 96.f));
+        drawCard(p, PX+20.f, 50.f, PW-40.f, 220.f, QColor(20,26,44));
+        p.fillRect(QRectF(PX+20.f, 50.f, PW-40.f, 4.f),
+                   qJoueur(static_cast<couleurJoueur>(gs.nameIdx)));
 
-        // Champ de saisie animé
-        bool active = true;
-        sf::RectangleShape field({PW-60.f, 38.f});
-        field.setPosition({PX+30.f, 118.f});
-        field.setFillColor({30, 38, 60});
-        field.setOutlineColor(active ? BS::Primary : BS::CardBdr);
-        field.setOutlineThickness(2.f);
-        w.draw(field);
+        {
+            QFont f = mkFont(20); p.setFont(f); p.setPen(qJoueur(static_cast<couleurJoueur>(gs.nameIdx)));
+            p.drawText(QPointF(PX+30.f, 66.f + QFontMetrics(f).ascent()),
+                       "Joueur " + QString::number(gs.nameIdx+1) + " / " + QString::number(gs.nbJ));
+        }
+        p.setFont(mkFont(13)); p.setPen(BS::Muted);
+        p.drawText(QPointF(PX+30.f, 96.f + QFontMetrics(mkFont(13)).ascent()), "Entrez votre nom :");
 
-        bool showCur = static_cast<int>(clk.getElapsedTime().asSeconds() * 2) % 2 == 0;
-        w.draw(mkText(font, gs.inputBuf + (showCur ? "|" : " "),
-                      15u, sf::Color::White, PX+38.f, 126.f));
+        // Champ de saisie
+        p.save();
+        p.fillRect(QRectF(PX+30.f, 118.f, PW-60.f, 38.f), QColor(30,38,60));
+        p.setPen(QPen(BS::Primary, 2.f)); p.setBrush(Qt::NoBrush);
+        p.drawRect(QRectF(PX+30.f, 118.f, PW-60.f, 38.f));
+        p.restore();
 
-        drawBtn(w, font, PX+30.f, 172.f, PW-60.f, 42.f,
-                "Valider  [Entrée]",
+        bool showCur = (int(time * 2.f) % 2 == 0);
+        QString buf = QString::fromStdString(gs.inputBuf) + (showCur ? "|" : " ");
+        p.setFont(mkFont(15)); p.setPen(Qt::white);
+        p.drawText(QPointF(PX+38.f, 126.f + QFontMetrics(mkFont(15)).ascent()), buf);
+
+        drawBtn(p, PX+30.f, 172.f, PW-60.f, 42.f, "Valider  [Entrée]",
                 gs.inputBuf.empty(), mouse, time, BS::Success);
+
         bool ok = !gs.inputBuf.empty() && btnHit(PX+30.f, 172.f, PW-60.f, 42.f, click);
         if (ok) {
-            gs.joueurs.push_back(
-                new Joueur(gs.inputBuf, static_cast<couleurJoueur>(gs.nameIdx)));
+            gs.joueurs.push_back(new Joueur(gs.inputBuf, static_cast<couleurJoueur>(gs.nameIdx)));
             gs.inputBuf.clear();
             gs.nameIdx++;
             if (gs.nameIdx >= gs.nbJ) initGame(gs);
@@ -1067,153 +1101,149 @@ static void drawPanel(sf::RenderWindow& w, const sf::Font& font,
         return;
     }
 
-    // ── FIN DE PARTIE ─────────────────────────────────────────────────────────
+    // ── FIN DE PARTIE ────────────────────────────────────────────────────────
     if (gs.app == AppState::GAME_OVER) {
-        // Bannière victoire animée
-        float p = (std::sin(time * 2.f) + 1.f) * 0.5f;
-        drawCard(w, PX+10.f, 30.f, PW-20.f, 80.f,
-                 lerp({40,30,5}, {20,26,44}, p));
-        sf::RectangleShape top({PW-20.f, 4.f});
-        top.setPosition({PX+10.f, 30.f});
-        top.setFillColor(lerp(BS::Warning, BS::Success, p));
-        w.draw(top);
-        w.draw(mkText(font, "=== FIN DE PARTIE ===", 20u, BS::Warning, PX+20.f, 44.f));
-        w.draw(mkText(font, "Résultats finaux", 13u, BS::Muted, PX+20.f, 74.f));
+        float pp = (std::sin(time*2.f)+1.f)*0.5f;
+        drawCard(p, PX+10.f, 30.f, PW-20.f, 80.f,
+                 lerp(QColor(40,30,5), QColor(20,26,44), pp));
+        p.fillRect(QRectF(PX+10.f, 30.f, PW-20.f, 4.f), lerp(BS::Warning, BS::Success, pp));
+
+        p.setFont(mkFont(20)); p.setPen(BS::Warning);
+        p.drawText(QPointF(PX+20.f, 44.f + QFontMetrics(mkFont(20)).ascent()), "=== FIN DE PARTIE ===");
+        p.setFont(mkFont(13)); p.setPen(BS::Muted);
+        p.drawText(QPointF(PX+20.f, 74.f + QFontMetrics(mkFont(13)).ascent()), "Résultats finaux");
 
         if (gs.gagnant) {
-            drawCard(w, PX+10.f, 125.f, PW-20.f, 60.f);
-            w.draw(mkText(font,
-                "Vainqueur : " + gs.gagnant->getNom(), 18u,
-                sfJoueur(gs.gagnant->getCouleur()), PX+20.f, 134.f));
-            w.draw(mkText(font,
-                to_string(gs.gagnant->getTicketFini()) + " tickets complétés",
-                13u, BS::Muted, PX+20.f, 160.f));
+            drawCard(p, PX+10.f, 125.f, PW-20.f, 60.f);
+            p.setFont(mkFont(18)); p.setPen(qJoueur(gs.gagnant->getCouleur()));
+            p.drawText(QPointF(PX+20.f, 134.f + QFontMetrics(mkFont(18)).ascent()),
+                       "Vainqueur : " + QString::fromStdString(gs.gagnant->getNom()));
+            p.setFont(mkFont(13)); p.setPen(BS::Muted);
+            p.drawText(QPointF(PX+20.f, 160.f + QFontMetrics(mkFont(13)).ascent()),
+                       QString::number(gs.gagnant->getTicketFini()) + " tickets complétés");
         }
+
         float ys = 210.f;
         for (auto j : gs.joueurs) {
-            drawCard(w, PX+10.f, ys, PW-20.f, 32.f);
-            // Badge couleur
-            sf::RectangleShape badge2({4.f, 32.f});
-            badge2.setPosition({PX+10.f, ys});
-            badge2.setFillColor(sfJoueur(j->getCouleur()));
-            w.draw(badge2);
-            w.draw(mkText(font,
-                j->getNom() + "  :  " + to_string(j->getTicketFini()) + " ticket(s)",
-                13u, sfJoueur(j->getCouleur()), PX+22.f, ys+8.f));
+            drawCard(p, PX+10.f, ys, PW-20.f, 32.f);
+            p.fillRect(QRectF(PX+10.f, ys, 4.f, 32.f), qJoueur(j->getCouleur()));
+            p.setFont(mkFont(13)); p.setPen(qJoueur(j->getCouleur()));
+            p.drawText(QPointF(PX+22.f, ys+8.f + QFontMetrics(mkFont(13)).ascent()),
+                       QString::fromStdString(j->getNom()) + "  :  " +
+                       QString::number(j->getTicketFini()) + " ticket(s)");
             ys += 38.f;
         }
-        drawBtn(w, font, PX+20.f, 540.f, PW-40.f, 48.f, "Quitter",
-                false, mouse, time, BS::Danger);
+
+        drawBtn(p, PX+20.f, 540.f, PW-40.f, 48.f, "Quitter", false, mouse, time, BS::Danger);
         if (btnHit(PX+20.f, 540.f, PW-40.f, 48.f, click))
             gs.shouldQuit = true;
         return;
     }
 
-    // ── JEU EN COURS ──────────────────────────────────────────────────────────
-    Joueur* j   = gs.cur();
-    sf::Color jc = sfJoueur(j->getCouleur());
+    // ── JEU EN COURS ─────────────────────────────────────────────────────────
+    Joueur* j  = gs.cur();
+    QColor  jc = qJoueur(j->getCouleur());
 
-    // ── En-tête joueur (card avec bande couleur) ──────────────────────────────
-    drawCard(w, PX+8.f, 6.f, PW-16.f, 72.f);
-    sf::RectangleShape jband({PW-16.f, 4.f});
-    jband.setPosition({PX+8.f, 6.f});
-    jband.setFillColor(jc);
-    w.draw(jband);
+    // En-tête joueur
+    drawCard(p, PX+8.f, 6.f, PW-16.f, 72.f);
+    p.fillRect(QRectF(PX+8.f, 6.f, PW-16.f, 4.f), jc);
 
-    // Petit logo SEC/AI dans le coin droit de l'en-tête
-    drawLogo(w, gs, PX + PW - 38.f, 42.f, 52.f, 52.f, 160u);
+    // Logo petit
+    if (!gs.logoPix.isNull()) {
+        float maxW=52.f, maxH=52.f;
+        float scale = qMin(maxW/gs.logoPix.width(), maxH/gs.logoPix.height());
+        float lw = gs.logoPix.width()*scale, lh = gs.logoPix.height()*scale;
+        QPixmap scaled = gs.logoPix.scaled(int(lw), int(lh), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        p.setOpacity(160.0/255.0);
+        p.drawPixmap(QPointF(PX+PW-38.f-lw/2.f, 42.f-lh/2.f), scaled);
+        p.setOpacity(1.0);
+    }
 
-    w.draw(mkText(font, j->getNom() + "  (" + nomJoueurCol(j->getCouleur()) + ")",
-                  17u, jc, PX+16.f, 16.f));
+    p.setFont(mkFont(17)); p.setPen(jc);
+    p.drawText(QPointF(PX+16.f, 16.f + QFontMetrics(mkFont(17)).ascent()),
+               QString::fromStdString(j->getNom() + "  (" + nomJoueurCol(j->getCouleur()) + ")"));
 
-    // Wagons & tickets (badges)
-    auto drawBadge = [&](float bx, float by, const string& txt, sf::Color col) {
-        sf::RectangleShape b({70.f, 22.f});
-        b.setPosition({bx, by});
-        b.setFillColor(col);
-        w.draw(b);
-        w.draw(mkText(font, txt, 12u, sf::Color::White, bx+5.f, by+4.f));
+    // Badges
+    auto drawBadge = [&](float bx, float by, const QString& txt, QColor col) {
+        p.fillRect(QRectF(bx, by, 70.f, 22.f), col);
+        p.setFont(mkFont(12)); p.setPen(Qt::white);
+        p.drawText(QPointF(bx+5.f, by+4.f + QFontMetrics(mkFont(12)).ascent()), txt);
     };
-    drawBadge(PX+16.f,  48.f, "Wagons: " + to_string(j->getNbWagons()),
+    drawBadge(PX+16.f, 48.f, "Wagons: " + QString::number(j->getNbWagons()),
               j->getNbWagons() <= 5 ? BS::Danger : BS::Secondary);
-    drawBadge(PX+100.f, 48.f, "Tickets: " + to_string(j->getTicketFini()) + "/6",
+    drawBadge(PX+100.f, 48.f, "Tickets: " + QString::number(j->getTicketFini()) + "/6",
               j->getTicketFini() >= 5 ? BS::Warning : BS::Success);
 
-    // ── Cartes en main ────────────────────────────────────────────────────────
-    drawCard(w, PX+8.f, 84.f, PW-16.f, 68.f);
-    w.draw(mkText(font, "Main", 11u, BS::Muted, PX+16.f, 88.f));
+    // Cartes en main
+    drawCard(p, PX+8.f, 84.f, PW-16.f, 68.f);
+    p.setFont(mkFont(11)); p.setPen(BS::Muted);
+    p.drawText(QPointF(PX+16.f, 88.f + QFontMetrics(mkFont(11)).ascent()), "Main");
+
     float cx = PX + 16.f;
     for (auto c : {couleurTrain::JAUNE, couleurTrain::ROUGE, couleurTrain::VERT,
                    couleurTrain::BLEU,  couleurTrain::BLANC, couleurTrain::NOIR,
                    couleurTrain::MULTI}) {
         int n = j->getNbCartes(c);
         if (n == 0) continue;
-
-        // Carte avec ombre
-        drawShadow(w, cx, 100.f, 42.f, 40.f, 60u);
-        sf::RectangleShape card({42.f, 40.f});
-        card.setPosition({cx, 100.f});
-        card.setFillColor(sfRoute(c));
-        card.setOutlineColor({255,255,255, 40u});
-        card.setOutlineThickness(1.f);
-        w.draw(card);
-        // Reflet en haut
-        sf::RectangleShape shine({42.f, 4.f});
-        shine.setPosition({cx, 100.f});
-        shine.setFillColor({255,255,255,30u});
-        w.draw(shine);
-
-        sf::Color tc = (c == couleurTrain::BLANC) ? sf::Color::Black : sf::Color::White;
-        w.draw(mkText(font, to_string(n), 14u, tc, cx + 4.f, 100.f));
-        w.draw(mkText(font, nomTrain(c).substr(0,3), 9u, tc, cx + 2.f, 116.f));
+        drawShadow(p, cx, 100.f, 42.f, 40.f, 60);
+        p.save();
+        p.fillRect(QRectF(cx, 100.f, 42.f, 40.f), qRoute(c));
+        p.setPen(QPen(QColor(255,255,255,40), 1.f));
+        p.setBrush(Qt::NoBrush);
+        p.drawRect(QRectF(cx, 100.f, 42.f, 40.f));
+        p.fillRect(QRectF(cx, 100.f, 42.f, 4.f), QColor(255,255,255,30));
+        QColor tc2 = (c == couleurTrain::BLANC) ? Qt::black : Qt::white;
+        p.setFont(mkFont(14)); p.setPen(tc2);
+        p.drawText(QPointF(cx+4.f, 100.f + QFontMetrics(mkFont(14)).ascent()), QString::number(n));
+        p.setFont(mkFont(9)); p.setPen(tc2);
+        p.drawText(QPointF(cx+2.f, 116.f + QFontMetrics(mkFont(9)).ascent()),
+                   QString::fromStdString(nomTrain(c).substr(0,3)));
+        p.restore();
         cx += 48.f;
         if (cx > PX + PW - 55.f) cx = PX + 16.f;
     }
 
-    // ── Missions ──────────────────────────────────────────────────────────────
+    // Missions
     const auto& ms = j->getMissions();
-    float mh = 24.f + static_cast<float>(ms.size()) * 18.f;
-    drawCard(w, PX+8.f, 158.f, PW-16.f, mh);
-    w.draw(mkText(font, "Missions", 11u, BS::Muted, PX+16.f, 162.f));
+    float mh = 24.f + float(ms.size()) * 18.f;
+    drawCard(p, PX+8.f, 158.f, PW-16.f, mh);
+    p.setFont(mkFont(11)); p.setPen(BS::Muted);
+    p.drawText(QPointF(PX+16.f, 162.f + QFontMetrics(mkFont(11)).ascent()), "Missions");
     float my = 178.f;
     for (auto tk : ms) {
-        // Icône flèche
-        w.draw(mkText(font, "> ", 11u, BS::Warning, PX+16.f, my));
-        w.draw(mkText(font,
-            tk->getVilleDepart()->getNom() + "  →  " + tk->getVilleArrivee()->getNom(),
-            12u, {230,230,130}, PX+30.f, my));
+        p.setFont(mkFont(11)); p.setPen(BS::Warning);
+        p.drawText(QPointF(PX+16.f, my + QFontMetrics(mkFont(11)).ascent()), "> ");
+        p.setPen(QColor(230,230,130));
+        p.drawText(QPointF(PX+30.f, my + QFontMetrics(mkFont(12)).ascent()),
+                   QString::fromStdString(tk->getVilleDepart()->getNom() + "  \u2192  " + tk->getVilleArrivee()->getNom()));
         my += 18.f;
     }
 
-    // ── Boutons d'actions ─────────────────────────────────────────────────────
-    float by2 = std::max(my + 10.f, 200.f);
+    // Boutons d'actions
+    float by2 = qMax(my + 10.f, 200.f);
     bool noTrains   = gs.trainLeft <= 0;
     bool noMissions = j->getMissions().empty();
 
     if (gs.action == ActionSt::MENU) {
-        drawBtn(w, font, PX+8.f, by2,       PW-16.f, 42.f,
+        drawBtn(p, PX+8.f, by2, PW-16.f, 42.f,
                 "  Piocher 2 cartes train",
                 noTrains, mouse, time,
                 noTrains ? BS::Secondary : BS::Primary);
 
-        drawBtn(w, font, PX+8.f, by2+50.f,  PW-16.f, 42.f,
+        drawBtn(p, PX+8.f, by2+50.f, PW-16.f, 42.f,
                 "  Poser wagons  (cliquer sur la carte)",
                 false, mouse, time, BS::Success);
 
-        drawBtn(w, font, PX+8.f, by2+100.f, PW-16.f, 42.f,
+        drawBtn(p, PX+8.f, by2+100.f, PW-16.f, 42.f,
                 "  Passer son tour  (défausser tickets)",
                 noMissions, mouse, time,
                 noMissions ? BS::Secondary : BS::Secondary);
 
         if (!noTrains && btnHit(PX+8.f, by2, PW-16.f, 42.f, click)) {
-            int nb = min(2, gs.trainLeft);
-            for (int i = 0; i < nb; i++) {
-                gs.partie->piocherTrain(*j);
-                gs.trainLeft--;
-            }
+            int nb = std::min(2, gs.trainLeft);
+            for (int i = 0; i < nb; i++) { gs.partie->piocherTrain(*j); gs.trainLeft--; }
             gs.addLog(j->getNom() + " pioche " + to_string(nb) + " carte(s).");
-            gs.statusMsg.clear();
-            gs.tourIdx++;
+            gs.statusMsg.clear(); gs.tourIdx++;
         }
         if (btnHit(PX+8.f, by2+50.f, PW-16.f, 42.f, click)) {
             gs.action = ActionSt::SELECT_ROUTE;
@@ -1225,26 +1255,24 @@ static void drawPanel(sf::RenderWindow& w, const sf::Font& font,
             gs.pioche->defausser(def);
             for (int i = 0; i < 2 && !gs.pioche->vide(); i++)
                 gs.pioche->piocher(*j, *gs.partie, gs.log);
-            gs.statusMsg.clear();
-            gs.tourIdx++;
+            gs.statusMsg.clear(); gs.tourIdx++;
         }
     } else {
-        // Mode sélection de voie
-        float pulse = (std::sin(time * 3.f) + 1.f) * 0.5f;
-        sf::RectangleShape hint({PW-16.f, 38.f});
-        hint.setPosition({PX+8.f, by2});
-        hint.setFillColor(lerp({60,55,5}, {40,38,5}, pulse));
-        hint.setOutlineColor(lerp(BS::Warning, {200,140,0}, pulse));
-        hint.setOutlineThickness(1.5f);
-        w.draw(hint);
-        w.draw(mkText(font, "  Cliquez sur une voie libre...",
-                      13u, BS::Warning, PX+12.f, by2+10.f));
+        float pulse = (std::sin(time*3.f)+1.f)*0.5f;
+        p.save();
+        p.fillRect(QRectF(PX+8.f, by2, PW-16.f, 38.f), lerp(QColor(60,55,5), QColor(40,38,5), pulse));
+        p.setPen(QPen(lerp(BS::Warning, QColor(200,140,0), pulse), 1.5f));
+        p.setBrush(Qt::NoBrush);
+        p.drawRect(QRectF(PX+8.f, by2, PW-16.f, 38.f));
+        p.setFont(mkFont(13)); p.setPen(BS::Warning);
+        p.drawText(QPointF(PX+12.f, by2+10.f + QFontMetrics(mkFont(13)).ascent()),
+                   "  Cliquez sur une voie libre...");
+        p.restore();
 
-        drawBtn(w, font, PX+8.f, by2+46.f, PW-16.f, 38.f,
-                "  Annuler", false, mouse, time, BS::Danger);
+        drawBtn(p, PX+8.f, by2+46.f, PW-16.f, 38.f, "  Annuler", false, mouse, time, BS::Danger);
         if (btnHit(PX+8.f, by2+46.f, PW-16.f, 38.f, click)) {
-            gs.action   = ActionSt::MENU;
-            gs.hovered  = nullptr;
+            gs.action = ActionSt::MENU;
+            gs.hovered = nullptr;
             gs.statusMsg.clear();
         }
     }
@@ -1252,70 +1280,80 @@ static void drawPanel(sf::RenderWindow& w, const sf::Font& font,
     // Message d'erreur
     if (!gs.statusMsg.empty()) {
         float ey = by2 + 152.f;
-        drawCard(w, PX+8.f, ey, PW-16.f, 30.f, BS::Danger);
-        w.draw(mkText(font, "  " + gs.statusMsg, 11u, {255,200,200}, PX+12.f, ey+7.f));
+        drawCard(p, PX+8.f, ey, PW-16.f, 30.f, BS::Danger);
+        p.setFont(mkFont(11)); p.setPen(QColor(255,200,200));
+        p.drawText(QPointF(PX+12.f, ey+7.f + QFontMetrics(mkFont(11)).ascent()),
+                   "  " + QString::fromStdString(gs.statusMsg));
     }
 
-    // ── Journal avec fondu animé ───────────────────────────────────────────────
+    // Journal
     const float logY = 575.f;
-    drawCard(w, PX+8.f, logY, PW-16.f, 140.f, {14,18,30});
-    sf::RectangleShape logTop({PW-16.f, 3.f});
-    logTop.setPosition({PX+8.f, logY});
-    logTop.setFillColor(BS::Primary);
-    w.draw(logTop);
-    w.draw(mkText(font, "Journal", 11u, BS::Muted, PX+16.f, logY+5.f));
+    drawCard(p, PX+8.f, logY, PW-16.f, 140.f, QColor(14,18,30));
+    p.fillRect(QRectF(PX+8.f, logY, PW-16.f, 3.f), BS::Primary);
+    p.setFont(mkFont(11)); p.setPen(BS::Muted);
+    p.drawText(QPointF(PX+16.f, logY+5.f + QFontMetrics(mkFont(11)).ascent()), "Journal");
 
     for (size_t i = 0; i < gs.log.size(); i++) {
         float age     = gs.now - (i < gs.logTimes.size() ? gs.logTimes[i] : 0.f);
-        float alpha01 = std::min(1.f, age / 0.4f);       // fondu entrée 0.4s
-        auto  alpha   = static_cast<uint8_t>(alpha01 * 210.f);
-        float slideX  = (1.f - alpha01) * 20.f;          // glissement horizontal
+        float alpha01 = qMin(1.f, age / 0.4f);
+        int   alpha   = int(alpha01 * 210.f);
+        float slideX  = (1.f - alpha01) * 20.f;
 
-        sf::Color col = {180,190,210, alpha};
-        if (gs.log[i].find("[Ticket!]") != string::npos) col = {255,215,0, alpha};
-        if (gs.log[i].find("[Grande")   != string::npos) col = {50,210,80, alpha};
-        if (gs.log[i].find("vide")      != string::npos) col = {220,60,60, alpha};
+        QColor col(180,190,210,alpha);
+        if (gs.log[i].find("[Ticket!]") != string::npos) col = QColor(255,215,0,alpha);
+        if (gs.log[i].find("[Grande")   != string::npos) col = QColor(50,210,80,alpha);
+        if (gs.log[i].find("vide")      != string::npos) col = QColor(220,60,60,alpha);
 
-        w.draw(mkText(font, gs.log[i], 11u, col,
-                      PX + 16.f + slideX,
-                      logY + 20.f + static_cast<float>(i) * 17.f));
+        p.setFont(mkFont(11)); p.setPen(col);
+        p.drawText(QPointF(PX+16.f+slideX,
+                           logY+20.f + float(i)*17.f + QFontMetrics(mkFont(11)).ascent()),
+                   QString::fromStdString(gs.log[i]));
     }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SECTION 8 – Interaction carte
 // ═══════════════════════════════════════════════════════════════════════════════
-
-static VoieFerree* findRoute(sf::Vector2f mp, const GS& gs)
+/**
+ * @brief Trouve la voie ferée la plus proche d'un point donné, dans un rayon de 14 pixels. Ignore les voies déjà prises ou mal positionnées.
+ * 
+ * @param mp 
+ * @param gs 
+ * @return VoieFerree* 
+ */
+static VoieFerree* findRoute(QPointF mp, const GS& gs)
 {
     VoieFerree* best = nullptr;
-    float bestD = 14.f;
+    double bestD = 14.0;
     for (auto v : gs.voies) {
         if (v->getJoueur()) continue;
         auto lv = v->getListeVille();
         if (!CITY_POS.count(lv[0]->getNom()) || !CITY_POS.count(lv[1]->getNom())) continue;
-        sf::Vector2f pa = CITY_POS.at(lv[0]->getNom());
-        sf::Vector2f pb = CITY_POS.at(lv[1]->getNom());
+        QPointF pa = CITY_POS.at(lv[0]->getNom());
+        QPointF pb = CITY_POS.at(lv[1]->getNom());
         float off = gs.offsets.count(v) ? gs.offsets.at(v) : 0.f;
-        sf::Vector2f d = pb - pa;
-        float len = std::sqrt(d.x*d.x + d.y*d.y);
-        sf::Vector2f perp = {-d.y/len, d.x/len};
-        float dist = distSeg(mp, pa + perp*off, pb + perp*off);
+        QPointF d  = pb - pa;
+        double  len = std::sqrt(d.x()*d.x() + d.y()*d.y());
+        QPointF perp = len > 0 ? QPointF(-d.y()/len, d.x()/len) : QPointF(0,0);
+        double dist = distSeg(mp, pa + perp*off, pb + perp*off);
         if (dist < bestD) { bestD = dist; best = v; }
     }
     return best;
 }
-
-static void handleMapClick(sf::Vector2i mousePos, GS& gs)
+/** @brief Gère le clic sur la carte
+ * 
+ * @param mousePos 
+ * @param gs 
+ */
+static void handleMapClick(QPoint mousePos, GS& gs)
 {
     if (gs.app != AppState::GAME || gs.action != ActionSt::SELECT_ROUTE) return;
-    sf::Vector2f mp = {static_cast<float>(mousePos.x),
-                       static_cast<float>(mousePos.y)};
+    QPointF mp = {double(mousePos.x()), double(mousePos.y())};
     VoieFerree* v = findRoute(mp, gs);
     if (!v) return;
 
-    Joueur* j    = gs.cur();
-    int  poids   = v->getPoids();
+    Joueur* j  = gs.cur();
+    int  poids = v->getPoids();
     couleurTrain c = v->getCouleur();
 
     if (j->getNbWagons() < poids) {
@@ -1357,100 +1395,127 @@ static void handleMapClick(sf::Vector2i mousePos, GS& gs)
         gs.tourIdx++;
     }
 }
-
-static void updateHover(sf::Vector2i mp, GS& gs)
+/**
+ * @brief Met à jour l'élément survolé par la souris
+ * 
+ * @param mp 
+ * @param gs 
+ */
+static void updateHover(QPoint mp, GS& gs)
 {
     if (gs.app != AppState::GAME || gs.action != ActionSt::SELECT_ROUTE)
         { gs.hovered = nullptr; return; }
-    sf::Vector2f p = {static_cast<float>(mp.x), static_cast<float>(mp.y)};
-    gs.hovered = findRoute(p, gs);
+    gs.hovered = findRoute({double(mp.x()), double(mp.y())}, gs);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 9 – main()
+// SECTION 9 – Widget Qt + main()
 // ═══════════════════════════════════════════════════════════════════════════════
-
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode({1280u, 720u}), "Aventuriers du Rail");
-    window.setFramerateLimit(60);
-
-    sf::Font font;
+/** @brief Widget principal du jeu
+ * 
+ */
+class GameWidget : public QWidget {
+public:
+    explicit GameWidget(QWidget* parent = nullptr) : QWidget(parent)
     {
-        const array<const char*, 5> paths = {
-            "/Library/Fonts/Arial.ttf",
-            "/System/Library/Fonts/Supplemental/Arial.ttf",
-            "/System/Library/Fonts/Helvetica.ttc",
-            "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
-            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-        };
-        for (const char* p : paths)
-            if (font.openFromFile(p)) break;
+        setFixedSize(1272, 720);
+        setWindowTitle("Aventuriers du Rail");
+        setMouseTracking(true);
+        setFocusPolicy(Qt::StrongFocus);
+
+        gs.logoPix.load(QString(FILES_DIR) + "/logo.png");
+
+        clock.start();
+
+        QTimer* timer = new QTimer(this);
+        connect(timer, &QTimer::timeout, this, [this](){
+            update();
+            if (gs.shouldQuit) close();
+        });
+        timer->start(16);
+    }
+/**
+ * @brief 
+ * 
+ */
+protected:
+    void paintEvent(QPaintEvent*) override
+    {
+        gs.now = float(clock.elapsed()) / 1000.f;
+
+        QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
+        p.setRenderHint(QPainter::TextAntialiasing);
+
+        p.fillRect(rect(), BS::DarkBg);
+
+        if (gs.app == AppState::GAME || gs.app == AppState::GAME_OVER)
+            drawMap(p, gs, gs.now);
+
+        drawPanel(p, gs, pendingClick, mousePos, gs.now);
+        pendingClick = QPoint(-1, -1);
     }
 
-    sf::Clock clock;
-    GS gs;
-
-    // Chargement du logo SEC/AI
+    void mousePressEvent(QMouseEvent* e) override
     {
-        sf::Texture tmpTex;
-        if (tmpTex.loadFromFile(string(FILES_DIR) + "/logo.png"))
-            gs.logoTex = std::move(tmpTex);
+        if (e->button() == Qt::LeftButton) {
+            pendingClick = e->pos();
+            if (e->pos().x() < 808)
+                handleMapClick(e->pos(), gs);
+        }
     }
 
-    while (window.isOpen()) {
-        gs.now = clock.getElapsedTime().asSeconds();
-        sf::Vector2i clickPos(-1, -1);
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+    void mouseMoveEvent(QMouseEvent* e) override
+    {
+        mousePos = e->pos();
+        updateHover(e->pos(), gs);
+    }
 
-        while (const auto event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
-                window.close();
-
-            if (const auto* e = event->getIf<sf::Event::MouseButtonReleased>()) {
-                if (e->button == sf::Mouse::Button::Left) {
-                    clickPos = {e->position.x, e->position.y};
-                    if (clickPos.x < 800)
-                        handleMapClick(clickPos, gs);
-                }
+    void keyPressEvent(QKeyEvent* e) override
+    {
+        if (gs.app != AppState::SETUP_NAME) return;
+        if (e->key() == Qt::Key_Backspace) {
+            if (!gs.inputBuf.empty()) gs.inputBuf.pop_back();
+        } else if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
+            if (!gs.inputBuf.empty()) {
+                gs.joueurs.push_back(
+                    new Joueur(gs.inputBuf, static_cast<couleurJoueur>(gs.nameIdx)));
+                gs.inputBuf.clear();
+                gs.nameIdx++;
+                if (gs.nameIdx >= gs.nbJ) initGame(gs);
             }
-
-            if (const auto* e = event->getIf<sf::Event::TextEntered>()) {
-                if (gs.app == AppState::SETUP_NAME) {
-                    auto ch = static_cast<uint32_t>(e->unicode);
-                    if      (ch == 8u  && !gs.inputBuf.empty())  gs.inputBuf.pop_back();
-                    else if (ch == 13u && !gs.inputBuf.empty()) {
-                        gs.joueurs.push_back(
-                            new Joueur(gs.inputBuf,
-                                       static_cast<couleurJoueur>(gs.nameIdx)));
-                        gs.inputBuf.clear();
-                        gs.nameIdx++;
-                        if (gs.nameIdx >= gs.nbJ) initGame(gs);
-                    }
-                    else if (ch >= 32u && ch < 127u)
-                        gs.inputBuf += static_cast<char>(ch);
-                }
+        } else {
+            QString text = e->text();
+            if (!text.isEmpty()) {
+                QChar ch = text[0];
+                if (ch.unicode() >= 32 && ch.unicode() < 127)
+                    gs.inputBuf += static_cast<char>(ch.toLatin1());
             }
         }
-
-        updateHover(mousePos, gs);
-
-        window.clear(BS::DarkBg);
-        if (gs.app == AppState::GAME || gs.app == AppState::GAME_OVER)
-            drawMap(window, font, gs, gs.now);
-
-        drawPanel(window, font, gs, clickPos, mousePos, gs.now, clock);
-        window.display();
-
-        if (gs.shouldQuit) window.close();
+        update();
     }
+/** @brief Widget principal du jeu
+ * 
+ */
+private:
+    GS            gs;
+    QElapsedTimer clock;
+    QPoint        mousePos   {0, 0};
+    QPoint        pendingClick{-1, -1};
+};
+/**
+ * @brief Fonction principale
+ * 
+ * @param argc 
+ * @param argv 
+ * @return int 
+ */
+int main(int argc, char* argv[])
+{
+    QApplication app(argc, argv);
+    GameWidget w;
+    w.show();
 
-    delete gs.partie;
-    delete gs.pioche;
-    for (auto v : gs.voies)   delete v;
-    for (auto v : gs.villes)  delete v;
-    for (auto j : gs.joueurs) delete j;
-    for (auto t : gs.tickets) delete t;
-    for (auto t : gs.trains)  delete t;
-    return 0;
+    // Cleanup on exit handled by destructor / process end
+    return app.exec();
 }

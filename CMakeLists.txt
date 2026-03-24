@@ -80,27 +80,39 @@ else()
     )
 endif()
 
-# ── Interface graphique SFML ───────────────────────────────────────────────────
-# Homebrew (Apple Silicon) installe SFML dans /opt/homebrew
+# ── Interface graphique Qt ─────────────────────────────────────────────────────
+# Homebrew (Apple Silicon) installe Qt dans /opt/homebrew
 list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew")
 
-find_package(SFML 3 QUIET COMPONENTS Graphics)
+set(CMAKE_AUTOMOC ON)
 
-if(SFML_FOUND)
+find_package(Qt6 QUIET COMPONENTS Core Widgets)
+if(NOT Qt6_FOUND)
+    find_package(Qt5 QUIET COMPONENTS Core Widgets)
+endif()
+
+if(Qt6_FOUND OR Qt5_FOUND)
+    set(QT_VERSION_MAJOR ${Qt6_FOUND} CACHE STRING "" FORCE)
+    if(Qt6_FOUND)
+        set(QT_LIBS Qt6::Core Qt6::Widgets)
+        message(STATUS "Qt6 trouvé – cible 'aventuriers_gui' disponible")
+    else()
+        set(QT_LIBS Qt5::Core Qt5::Widgets)
+        message(STATUS "Qt5 trouvé – cible 'aventuriers_gui' disponible")
+    endif()
+
     add_executable(aventuriers_gui src/gui_main.cpp)
-    target_link_libraries(aventuriers_gui
-        PRIVATE aventuriers_lib SFML::Graphics)
+    target_link_libraries(aventuriers_gui PRIVATE aventuriers_lib ${QT_LIBS})
     target_compile_definitions(aventuriers_gui PRIVATE
         FILES_DIR="${CMAKE_SOURCE_DIR}/files"
         ASCII_ART="${CMAKE_SOURCE_DIR}/ascii-art.txt"
     )
-    message(STATUS "SFML ${SFML_VERSION} trouvé – cible 'aventuriers_gui' disponible")
 else()
     message(WARNING
-        "SFML non trouvé – l'interface graphique ne sera pas compilée.\n"
-        "  macOS  : brew install sfml\n"
-        "  Linux  : sudo apt install libsfml-dev\n"
-        "  Windows: vcpkg install sfml"
+        "Qt non trouvé – l'interface graphique ne sera pas compilée.\n"
+        "  macOS  : brew install qt\n"
+        "  Linux  : sudo apt install qt6-base-dev\n"
+        "  Windows: https://www.qt.io/download"
     )
 endif()
 
