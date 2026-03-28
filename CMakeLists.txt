@@ -63,6 +63,16 @@ if(GTest_FOUND)
                 aventuriers_lib
         )
 
+        # Fixe le RPATH pour trouver les dylibs GTest au moment de l'exécution (macOS)
+        get_target_property(_gtest_loc GTest::gtest_main LOCATION)
+        if(_gtest_loc)
+            get_filename_component(_gtest_dir "${_gtest_loc}" DIRECTORY)
+            set_target_properties(run_tests PROPERTIES
+                BUILD_RPATH "${_gtest_dir}"
+                INSTALL_RPATH "${_gtest_dir}"
+            )
+        endif()
+
         # Découverte automatique des tests (cross-platform)
         gtest_discover_tests(run_tests
             WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
