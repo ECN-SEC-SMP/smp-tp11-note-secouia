@@ -111,13 +111,23 @@ class Plateau {
         
         /**
          * @brief Retourne la pioche de tickets
+         * 
+         * Charge les tickets depuis le fichier ./files/ticket.csv et retourne
+         * un vecteur de pointeurs sur les tickets créés.
+         * 
          * @return Vecteur des pointeurs sur Ticket disponibles
          */
         vector<Ticket*> getPiocheTickets();
         
         /**
          * @brief Retourne la pioche de trains
-         * @return Vecteur des pointeurs sur Train disponibles
+         * 
+         * Crée et retourne une pioche contenant :
+         * - 10 trains de chaque couleur (JAUNE, VERT, BLANC, NOIR, BLEU, ROUGE)
+         * - 12 locomotives MULTI
+         * Total : 72 trains
+         * 
+         * @return Vecteur des pointeurs sur Train disponibles (72 trains)
          */
         vector<Train*> getPiocheTrain();
 

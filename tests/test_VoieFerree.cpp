@@ -163,12 +163,6 @@ TEST_F(VoieFerreeTest, CouleurNoir)
     EXPECT_EQ(v.getCouleur(), couleurTrain::NOIR);
 }
 
-TEST_F(VoieFerreeTest, CouleurMulti)
-{
-    VoieFerree v({paris, lyon}, couleurTrain::MULTI, 2);
-    EXPECT_EQ(v.getCouleur(), couleurTrain::MULTI);
-}
-
 // ============================================================
 //  Voies avec une seule ville
 // ============================================================

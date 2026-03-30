@@ -167,3 +167,71 @@ vector<Ville *> Plateau::getListeVille() const
 {
     return this->listeVille;
 }
+
+vector<Ticket*> Plateau::getPiocheTickets() {
+    vector<Ticket*> piocheTickets;
+
+    ifstream fichier("./files/ticket.csv");
+
+    if(!fichier.is_open()){
+        cerr << "Erreur dans l'ouverture du fichier *ticket.csv*" << endl;
+    }
+
+    string ligne;
+
+    getline(fichier, ligne);
+
+
+    while (getline(fichier, ligne))
+    {
+        stringstream ss(ligne);
+        string ticketId;
+        string nom_villeA; 
+        string nom_villeB; 
+
+        getline(ss, ticketId, ',');
+        getline(ss, nom_villeA, ',');
+        getline(ss, nom_villeB, ',');
+
+        Ville* villeA = getVilleFromString(nom_villeA, this->getListeVille());
+        Ville* villeB = getVilleFromString(nom_villeB, this->getListeVille());
+
+        Ticket* tempTicket = new Ticket(villeA, villeB);
+
+        piocheTickets.push_back(tempTicket);
+
+    }
+
+    return piocheTickets;
+    
+}
+
+
+vector<Train*> Plateau::getPiocheTrain(){
+    vector<Train*> tempPioche; 
+
+    for(int i = 0; i < 10; i++){
+        //Création des cartes :
+        Train* trainJaune = new Train(couleurTrain::JAUNE);
+        Train* trainVert = new Train(couleurTrain::VERT);
+        Train* trainBlanc = new Train(couleurTrain::BLANC);
+        Train* trainNoir = new Train(couleurTrain::NOIR);
+        Train* trainBleu = new Train(couleurTrain::BLEU);
+        Train* trainRouge = new Train(couleurTrain::ROUGE);
+
+        tempPioche.push_back(trainJaune);
+        tempPioche.push_back(trainVert);
+        tempPioche.push_back(trainBlanc);
+        tempPioche.push_back(trainNoir);
+        tempPioche.push_back(trainBleu);
+        tempPioche.push_back(trainRouge);
+    }
+
+    for(int i = 0; i < 12; i++){
+        Train* locomotive = new Train(couleurTrain::MULTI);
+
+        tempPioche.push_back(locomotive);
+    }
+
+    return tempPioche;
+}
