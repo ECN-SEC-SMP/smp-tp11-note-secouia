@@ -8,7 +8,7 @@
  * @details
  * Toute la documentation contractuelle (pré/post-conditions, invariants,
  * complexité, valeurs de retour) se trouve dans `Joueur.hpp`. Ce fichier
- * ajoute, via `@copydoc` + `@details`, les notes d'implémentation pertinentes
+ * ajoute, via des blocs `@details`, les notes d'implémentation pertinentes
  * (choix d'algorithme, idiomes STL employés, subtilités de manipulation).
  *
  * @see Joueur.hpp
@@ -18,8 +18,6 @@
 #include <algorithm>
 
 /**
- * @copydoc Joueur::Joueur
- *
  * @details
  * `missions` et `mainCartes` sont laissés vides grâce au constructeur par
  * défaut de `std::vector`. L'ordre des initialiseurs respecte l'ordre de
@@ -31,27 +29,19 @@ Joueur::Joueur(const std::string &nom, couleurJoueur couleur)
 
 // ===== Accesseurs =====
 
-/** @copydoc Joueur::getNom */
 const std::string &Joueur::getNom() const { return nom; }
 
-/** @copydoc Joueur::getCouleur */
 couleurJoueur Joueur::getCouleur() const { return couleur; }
 
-/** @copydoc Joueur::getNbWagons */
 int Joueur::getNbWagons() const { return nbWagons; }
 
-/** @copydoc Joueur::getTicketFini */
 int Joueur::getTicketFini() const { return ticketFini; }
 
-/** @copydoc Joueur::getMissions */
 const std::vector<Ticket *> &Joueur::getMissions() const { return missions; }
 
-/** @copydoc Joueur::getMainCartes */
 const std::vector<Train *> &Joueur::getMainCartes() const { return mainCartes; }
 
 /**
- * @copydoc Joueur::getNbCartes
- *
  * @details
  * Parcours linéaire de la main : aucune structure indexée par couleur n'est
  * maintenue, la main restant suffisamment petite en pratique pour que la
@@ -66,9 +56,6 @@ int Joueur::getNbCartes(couleurTrain couleur) const
   return count;
 }
 
-/**
- * @copydoc Joueur::getNbCartesTotales
- */
 int Joueur::getNbCartesTotales() const
 {
   // NOTE: cast explicite size_t -> int pour éviter le warning -Wsign-compare.
@@ -77,15 +64,12 @@ int Joueur::getNbCartesTotales() const
 
 // ===== Gestion des cartes =====
 
-/** @copydoc Joueur::ajouterCarte */
 void Joueur::ajouterCarte(Train *carte)
 {
   mainCartes.push_back(carte);
 }
 
 /**
- * @copydoc Joueur::retirerCartes
- *
  * @details
  * Itère une unique fois sur la main et s'arrête dès que `quantite` cartes
  * ont été retirées. `std::vector::erase` invalide les itérateurs suivants :
@@ -108,15 +92,12 @@ bool Joueur::retirerCartes(couleurTrain couleur, int quantite)
   return count == quantite;
 }
 
-/** @copydoc Joueur::peutPrendreVoie */
 bool Joueur::peutPrendreVoie(couleurTrain couleurVoie, int longueur) const
 {
   return getNbCartes(couleurVoie) + getNbCartes(couleurTrain::MULTI) >= longueur;
 }
 
 /**
- * @copydoc Joueur::defausserCartesVoie
- *
  * @details
  * Stratégie : consommer d'abord les cartes de la couleur demandée (dans la
  * limite de `longueur`) puis compléter avec des @ref couleurTrain::MULTI.
@@ -135,7 +116,6 @@ bool Joueur::defausserCartesVoie(couleurTrain couleurVoie, int longueur)
 
 // ===== Gestion des wagons =====
 
-/** @copydoc Joueur::utiliserWagons */
 bool Joueur::utiliserWagons(int nb)
 {
   if (nbWagons < nb)
@@ -146,15 +126,12 @@ bool Joueur::utiliserWagons(int nb)
 
 // ===== Gestion des tickets =====
 
-/** @copydoc Joueur::ajouterTicket */
 void Joueur::ajouterTicket(Ticket *ticket)
 {
   missions.push_back(ticket);
 }
 
 /**
- * @copydoc Joueur::defausserTickets
- *
  * @details
  * Copie les pointeurs dans le vecteur retourné puis vide `missions`. Aucun
  * @ref Ticket n'est détruit : la propriété reste à @ref Partie.
@@ -167,8 +144,6 @@ std::vector<Ticket *> Joueur::defausserTickets()
 }
 
 /**
- * @copydoc Joueur::validerTicket
- *
  * @details
  * Utilise l'idiome *erase-remove* pour retirer `ticket` de @ref missions.
  * Si le pointeur n'y figure pas, `std::remove` renvoie `missions.end()` et
@@ -189,17 +164,13 @@ bool Joueur::validerTicket(Ticket *ticket, Plateau &plateau)
 
 // ===== Fin de partie =====
 
-/** @copydoc Joueur::aGagne */
 bool Joueur::aGagne() const { return ticketFini >= 6; }
 
-/** @copydoc Joueur::naPlusDeWagons */
 bool Joueur::naPlusDeWagons() const { return nbWagons <= 0; }
 
 // ===== Affichage =====
 
 /**
- * @copydoc Joueur::afficherMain
- *
  * @details
  * Chaque couleur est représentée par la valeur numérique de l'énumération
  * @ref couleurTrain (l'affichage détaillé par nom reste à implémenter côté UI).
@@ -212,7 +183,6 @@ void Joueur::afficherMain(std::ostream &os) const
   os << std::endl;
 }
 
-/** @copydoc operator<<(std::ostream&, const Joueur&) */
 std::ostream &operator<<(std::ostream &os, const Joueur &joueur)
 {
   os << "Joueur: " << joueur.getNom()
