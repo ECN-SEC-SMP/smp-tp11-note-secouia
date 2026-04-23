@@ -118,6 +118,7 @@ vgcore.*
 # ── Packages / vcpkg ─────────────────────────────────────────────────────────
 vcpkg_installed/
 
+CLAUDE.md
 .claude
 build
 *.log
