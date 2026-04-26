@@ -77,13 +77,14 @@ SEARCHENGINE           = YES
 SERVER_BASED_SEARCH    = NO
 GENERATE_HTMLHELP      = NO
 
-# Thème doxygen-awesome (sidebar-only) + extensions JS
-HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome.css \
-                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-sidebar-only.css
-HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-darkmode-toggle.js \
-                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-fragment-copy-button.js \
-                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-paragraph-link.js \
-                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-interactive-toc.js
+# Thème doxygen-awesome-css (submodule, sidebar-only) + extensions JS.
+# Le submodule est épinglé : `git submodule update --init` après clone.
+HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-css/doxygen-awesome.css \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-css/doxygen-awesome-sidebar-only.css
+HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-css/doxygen-awesome-fragment-copy-button.js \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-css/doxygen-awesome-paragraph-link.js \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-css/doxygen-awesome-interactive-toc.js
 HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/theme/header.html
 
 # ── Désactiver les autres formats ─────────────────────────────────────────────

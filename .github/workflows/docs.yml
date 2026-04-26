@@ -17,9 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupération du code source
+      # 1. Récupération du code source (avec le submodule du thème Doxygen)
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # 2. Installation des dépendances
       - name: Installer Doxygen + Graphviz
