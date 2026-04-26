@@ -1,16 +1,33 @@
+/**
+ * @file Joueur.cpp
+ * @author Thomas Metais (metais.thomas92@gmail.com)
+ * @brief Implémentation de la classe @ref Joueur.
+ * @version 1.0
+ * @date 2026-03-17
+ *
+ * @details
+ * Toute la documentation contractuelle (pré/post-conditions, invariants,
+ * complexité, valeurs de retour) se trouve dans `Joueur.hpp`. Ce fichier
+ * ajoute, via des blocs `@details`, les notes d'implémentation pertinentes
+ * (choix d'algorithme, idiomes STL employés, subtilités de manipulation).
+ *
+ * @see Joueur.hpp
+ */
 #include "Joueur.hpp"
 #include "Plateau.hpp"
 #include <algorithm>
 
-// CORRECTION : l'ordre d'initialisation doit correspondre à l'ordre de
-// déclaration dans le .hpp : ticketFini, nbWagons, missions, couleur, nom, mainCartes
+/**
+ * @details
+ * `missions` et `mainCartes` sont laissés vides grâce au constructeur par
+ * défaut de `std::vector`. L'ordre des initialiseurs respecte l'ordre de
+ * déclaration des membres dans `Joueur.hpp` afin d'éviter l'avertissement
+ * `-Wreorder-ctor`.
+ */
 Joueur::Joueur(const std::string &nom, couleurJoueur couleur)
     : ticketFini(0), nbWagons(20), couleur(couleur), nom(nom) {}
 
-// CORRECTION : suppression de Joueur::~Joueur() = default;
-// Le destructeur est déjà = default dans le .hpp, le redéfinir ici est une erreur.
-
-// ---- Getters ----
+// ===== Accesseurs =====
 
 const std::string &Joueur::getNom() const { return nom; }
 
@@ -24,6 +41,12 @@ const std::vector<Ticket *> &Joueur::getMissions() const { return missions; }
 
 const std::vector<Train *> &Joueur::getMainCartes() const { return mainCartes; }
 
+/**
+ * @details
+ * Parcours linéaire de la main : aucune structure indexée par couleur n'est
+ * maintenue, la main restant suffisamment petite en pratique pour que la
+ * simplicité d'implémentation l'emporte sur l'optimisation.
+ */
 int Joueur::getNbCartes(couleurTrain couleur) const
 {
   int count = 0;
@@ -33,19 +56,26 @@ int Joueur::getNbCartes(couleurTrain couleur) const
   return count;
 }
 
-// CORRECTION : cast explicite size_t -> int pour éviter le warning sign-compare
 int Joueur::getNbCartesTotales() const
 {
+  // NOTE: cast explicite size_t -> int pour éviter le warning -Wsign-compare.
   return static_cast<int>(mainCartes.size());
 }
 
-// ---- Gestion des cartes ----
+// ===== Gestion des cartes =====
 
 void Joueur::ajouterCarte(Train *carte)
 {
   mainCartes.push_back(carte);
 }
 
+/**
+ * @details
+ * Itère une unique fois sur la main et s'arrête dès que `quantite` cartes
+ * ont été retirées. `std::vector::erase` invalide les itérateurs suivants :
+ * on réutilise donc la valeur de retour de `erase`, qui pointe sur l'élément
+ * suivant, pour continuer le parcours sans revalider.
+ */
 bool Joueur::retirerCartes(couleurTrain couleur, int quantite)
 {
   int count = 0;
@@ -67,6 +97,12 @@ bool Joueur::peutPrendreVoie(couleurTrain couleurVoie, int longueur) const
   return getNbCartes(couleurVoie) + getNbCartes(couleurTrain::MULTI) >= longueur;
 }
 
+/**
+ * @details
+ * Stratégie : consommer d'abord les cartes de la couleur demandée (dans la
+ * limite de `longueur`) puis compléter avec des @ref couleurTrain::MULTI.
+ * Les MULTI étant des jokers rares, ils sont ainsi préservés au maximum.
+ */
 bool Joueur::defausserCartesVoie(couleurTrain couleurVoie, int longueur)
 {
   if (!peutPrendreVoie(couleurVoie, longueur))
@@ -78,7 +114,7 @@ bool Joueur::defausserCartesVoie(couleurTrain couleurVoie, int longueur)
   return true;
 }
 
-// ---- Gestion des wagons ----
+// ===== Gestion des wagons =====
 
 bool Joueur::utiliserWagons(int nb)
 {
@@ -88,13 +124,18 @@ bool Joueur::utiliserWagons(int nb)
   return true;
 }
 
-// ---- Gestion des tickets ----
+// ===== Gestion des tickets =====
 
 void Joueur::ajouterTicket(Ticket *ticket)
 {
   missions.push_back(ticket);
 }
 
+/**
+ * @details
+ * Copie les pointeurs dans le vecteur retourné puis vide `missions`. Aucun
+ * @ref Ticket n'est détruit : la propriété reste à @ref Partie.
+ */
 std::vector<Ticket *> Joueur::defausserTickets()
 {
   std::vector<Ticket *> defausse = missions;
@@ -102,6 +143,13 @@ std::vector<Ticket *> Joueur::defausserTickets()
   return defausse;
 }
 
+/**
+ * @details
+ * Utilise l'idiome *erase-remove* pour retirer `ticket` de @ref missions.
+ * Si le pointeur n'y figure pas, `std::remove` renvoie `missions.end()` et
+ * aucun élément n'est supprimé — la précondition documentée dans le header
+ * empêche toutefois ce cas.
+ */
 bool Joueur::validerTicket(Ticket *ticket, Plateau &plateau)
 {
   if (!plateau.existeChemin(ticket->getVilleDepart()->getNom(),
@@ -114,14 +162,19 @@ bool Joueur::validerTicket(Ticket *ticket, Plateau &plateau)
   return true;
 }
 
-// ---- Fin de partie ----
+// ===== Fin de partie =====
 
 bool Joueur::aGagne() const { return ticketFini >= 6; }
 
 bool Joueur::naPlusDeWagons() const { return nbWagons <= 0; }
 
-// ---- Affichage ----
+// ===== Affichage =====
 
+/**
+ * @details
+ * Chaque couleur est représentée par la valeur numérique de l'énumération
+ * @ref couleurTrain (l'affichage détaillé par nom reste à implémenter côté UI).
+ */
 void Joueur::afficherMain(std::ostream &os) const
 {
   os << "Main de " << nom << " (" << mainCartes.size() << " cartes) : ";

@@ -4,7 +4,8 @@ project(AventúriersDuRail CXX)
 # CMakeLists.txt pour le projet "Aventuriers du Rail"
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS OFF) # Désactive les extensions spécifiques au compilateur pour une meilleure portabilité
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Génère compile_commands.json pour les IDE et outils de linting
 
 # On définit une configuration de build par défaut (Debug) si aucune n'est spécifiée
 if(NOT CMAKE_BUILD_TYPE)
