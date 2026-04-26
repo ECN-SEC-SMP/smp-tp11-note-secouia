@@ -14,9 +14,11 @@ PROJECT_LOGO           =
 
 # ── Répertoires sources ───────────────────────────────────────────────────────
 INPUT                  = @CMAKE_SOURCE_DIR@/include \
-                         @CMAKE_SOURCE_DIR@/src
+                         @CMAKE_SOURCE_DIR@/src \
+                         @CMAKE_SOURCE_DIR@/docs/mainpage.md
 RECURSIVE              = YES
-FILE_PATTERNS          = *.hpp *.h *.cpp *.c
+FILE_PATTERNS          = *.hpp *.h *.cpp *.c *.md
+USE_MDFILE_AS_MAINPAGE = @CMAKE_SOURCE_DIR@/docs/mainpage.md
 
 # ── Sortie ────────────────────────────────────────────────────────────────────
 OUTPUT_DIRECTORY       = @CMAKE_SOURCE_DIR@/docs
@@ -41,27 +43,48 @@ CLASS_GRAPH            = YES
 COLLABORATION_GRAPH    = YES
 INCLUDE_GRAPH          = YES
 INCLUDED_BY_GRAPH      = YES
-CALL_GRAPH             = YES
-CALLER_GRAPH           = YES
+# Désactivés globalement : trop de graphes lourds pour chaque getter.
+# Activez-les ponctuellement avec \callgraph / \callergraph dans les commentaires
+# des méthodes intéressantes (par ex. existeChemin, placeWagon).
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
 GRAPHICAL_HIERARCHY    = YES
 DIRECTORY_GRAPH        = YES
 DOT_IMAGE_FORMAT       = svg
 INTERACTIVE_SVG        = YES
-DOT_TRANSPARENT        = YES
+# Style UML : compartiments attributs / méthodes avec types
+UML_LOOK               = YES
+UML_LIMIT_NUM_FIELDS   = 50
+DOT_UML_DETAILS        = YES
+DOT_WRAP_THRESHOLD     = 20
+TEMPLATE_RELATIONS     = YES
+DOT_GRAPH_MAX_NODES    = 100
+MAX_DOT_GRAPH_DEPTH    = 0
 
 # ── Sortie HTML ───────────────────────────────────────────────────────────────
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
-HTML_COLORSTYLE        = AUTO_LIGHT
+# Réglages requis par doxygen-awesome-css (cf. README du thème)
+HTML_COLORSTYLE        = LIGHT
 GENERATE_TREEVIEW      = YES
-TREEVIEW_WIDTH         = 260
+DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
+TREEVIEW_WIDTH         = 335
 HTML_DYNAMIC_SECTIONS  = YES
 HTML_INDEX_NUM_ENTRIES = 100
 SEARCHENGINE           = YES
 SERVER_BASED_SEARCH    = NO
 GENERATE_HTMLHELP      = NO
+
+# Thème doxygen-awesome (sidebar-only) + extensions JS
+HTML_EXTRA_STYLESHEET  = @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome.css \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-sidebar-only.css
+HTML_EXTRA_FILES       = @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-darkmode-toggle.js \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-fragment-copy-button.js \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-paragraph-link.js \
+                         @CMAKE_SOURCE_DIR@/docs/theme/doxygen-awesome-interactive-toc.js
+HTML_HEADER            = @CMAKE_SOURCE_DIR@/docs/theme/header.html
 
 # ── Désactiver les autres formats ─────────────────────────────────────────────
 GENERATE_LATEX         = NO
