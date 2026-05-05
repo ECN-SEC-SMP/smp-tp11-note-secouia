@@ -1,0 +1,23 @@
+<map id="Joueur" name="Joueur">
+<area shape="rect" id="Node000001" title="Représente un joueur d&#39;une partie des Aventuriers du Rail." alt="" coords="130,771,399,1511"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="383,643,546,708"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="454,709,409,813,404,811,449,707"/>
+<area shape="rect" id="Node000003" href="$classTicket.html" title="Représente un ticket dans le jeu." alt="" coords="531,411,721,580"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="582,582,551,621,535,635,531,631,547,617,578,579"/>
+<area shape="rect" id="Node000004" href="$classVille.html" title=" " alt="" coords="511,248,682,333"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="605,333,614,394,609,395,600,334"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="56,120,135,185"/>
+<area shape="poly" id="edge8_Node000001_Node000005" title=" " alt="" coords="90,186,81,235,77,289,77,677,80,732,91,788,106,842,126,895,121,897,101,844,86,789,75,733,71,677,71,289,76,234,85,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="136,160,283,196,471,245,496,253,495,258,469,251,282,201,134,166"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,5,185,71"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="98,85,98,120,93,120,93,85"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="385,463,507,528"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="453,541,464,642,459,643,448,542"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="187,643,342,708"/>
+<area shape="poly" id="edge11_Node000009_Node000007" title=" " alt="" coords="413,540,375,582,305,645,301,641,371,578,409,536"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="435,258,457,323"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="449,324,449,446,443,446,443,324"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="267,708,267,754,262,754,262,708"/>
+<area shape="rect" id="Node000010" href="$classTrain.html" title="Représente un train dans le jeu." alt="" coords="137,428,361,563"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="249,563,253,618,254,626,249,627,247,619,244,563"/>
+</map>

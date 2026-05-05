@@ -1,0 +1,159 @@
+<!-- HTML header for doxygen 1.9.8 — customisé pour doxygen-awesome-css -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Les Aventuriers du Rail:  Fichier source de src/Ticket.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<!-- ── doxygen-awesome extensions ─────────────────────────────────────────── -->
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init();
+  DoxygenAwesomeFragmentCopyButton.init();
+  DoxygenAwesomeParagraphLink.init();
+  DoxygenAwesomeInteractiveToc.init();
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Les Aventuriers du Rail<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">Implémentation C++ du jeu de société</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('Ticket_8cpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Ticket.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Ticket_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="Ticket_8hpp.html">Ticket.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">using namespace </span>std;</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classTicket.html#aeb258ca3e4b16f9f0e20745b485af992">    7</a></span><a class="code hl_function" href="classTicket.html#aeb258ca3e4b16f9f0e20745b485af992">Ticket::Ticket</a>(<a class="code hl_class" href="classVille.html">Ville</a>* villeDepart, <a class="code hl_class" href="classVille.html">Ville</a>* villeArrivee) : villeDepart(villeDepart), villeArrivee(villeArrivee) {}</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="}">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classTicket.html#a0acf9e1d74f108768d9d5a22f065da2d">   10</a></span><a class="code hl_function" href="classTicket.html#a0acf9e1d74f108768d9d5a22f065da2d">Ticket::~Ticket</a>(){</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="comment">// Destructeur vide, pas de ressources à libérer</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>}</div>
+</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="}">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classTicket.html#a88072fab8817e65aa623d3ec650397b1">   14</a></span><a class="code hl_class" href="classVille.html">Ville</a>* <a class="code hl_function" href="classTicket.html#a88072fab8817e65aa623d3ec650397b1">Ticket::getVilleDepart</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="classTicket.html#a43df17feeb3a514b04b287025dd66390">villeDepart</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
+</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="}">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classTicket.html#a3b54afc13d550b0cba40d3f8d182c6c5">   18</a></span><a class="code hl_class" href="classVille.html">Ville</a>* <a class="code hl_function" href="classTicket.html#a3b54afc13d550b0cba40d3f8d182c6c5">Ticket::getVilleArrivee</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="classTicket.html#a145bc91ac93412ca135cc91e6dd7d76c">villeArrivee</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}</div>
+</div>
+<div class="ttc" id="aTicket_8hpp_html"><div class="ttname"><a href="Ticket_8hpp.html">Ticket.hpp</a></div></div>
+<div class="ttc" id="aclassTicket_html_a0acf9e1d74f108768d9d5a22f065da2d"><div class="ttname"><a href="classTicket.html#a0acf9e1d74f108768d9d5a22f065da2d">Ticket::~Ticket</a></div><div class="ttdeci">~Ticket()</div><div class="ttdoc">Destroy the Ticket object.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8cpp_source.html#l00010">Ticket.cpp:10</a></div></div>
+<div class="ttc" id="aclassTicket_html_a145bc91ac93412ca135cc91e6dd7d76c"><div class="ttname"><a href="classTicket.html#a145bc91ac93412ca135cc91e6dd7d76c">Ticket::villeArrivee</a></div><div class="ttdeci">Ville * villeArrivee</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8hpp_source.html#l00014">Ticket.hpp:14</a></div></div>
+<div class="ttc" id="aclassTicket_html_a3b54afc13d550b0cba40d3f8d182c6c5"><div class="ttname"><a href="classTicket.html#a3b54afc13d550b0cba40d3f8d182c6c5">Ticket::getVilleArrivee</a></div><div class="ttdeci">Ville * getVilleArrivee() const</div><div class="ttdoc">Get the Ville Arrivee object.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8cpp_source.html#l00018">Ticket.cpp:18</a></div></div>
+<div class="ttc" id="aclassTicket_html_a43df17feeb3a514b04b287025dd66390"><div class="ttname"><a href="classTicket.html#a43df17feeb3a514b04b287025dd66390">Ticket::villeDepart</a></div><div class="ttdeci">Ville * villeDepart</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8hpp_source.html#l00013">Ticket.hpp:13</a></div></div>
+<div class="ttc" id="aclassTicket_html_a88072fab8817e65aa623d3ec650397b1"><div class="ttname"><a href="classTicket.html#a88072fab8817e65aa623d3ec650397b1">Ticket::getVilleDepart</a></div><div class="ttdeci">Ville * getVilleDepart() const</div><div class="ttdoc">Get the Ville Depart object.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8cpp_source.html#l00014">Ticket.cpp:14</a></div></div>
+<div class="ttc" id="aclassTicket_html_aeb258ca3e4b16f9f0e20745b485af992"><div class="ttname"><a href="classTicket.html#aeb258ca3e4b16f9f0e20745b485af992">Ticket::Ticket</a></div><div class="ttdeci">Ticket(Ville *villeDepart, Ville *villeArrivee)</div><div class="ttdoc">Construct a new Ticket object.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8cpp_source.html#l00007">Ticket.cpp:7</a></div></div>
+<div class="ttc" id="aclassVille_html"><div class="ttname"><a href="classVille.html">Ville</a></div><div class="ttdef"><b>Definition</b> <a href="Ville_8hpp_source.html#l00006">Ville.hpp:6</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="Ticket_8cpp.html">Ticket.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

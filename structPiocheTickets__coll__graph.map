@@ -1,0 +1,17 @@
+<map id="PiocheTickets" name="PiocheTickets">
+<area shape="rect" id="Node000001" title="Représente la pioche de tickets." alt="" coords="101,785,278,1113"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="108,643,271,708"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,708,192,769,187,769,187,708"/>
+<area shape="rect" id="Node000003" href="$classTicket.html" title="Représente un ticket dans le jeu." alt="" coords="5,411,195,580"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="138,579,157,617,162,627,158,630,152,620,133,581"/>
+<area shape="rect" id="Node000004" href="$classVille.html" title=" " alt="" coords="15,248,185,333"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="103,333,103,394,97,394,97,333"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="61,120,139,185"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="103,185,103,232,97,232,97,185"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="10,5,190,71"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="103,85,103,120,97,120,97,85"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="219,463,341,528"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="268,543,253,581,234,620,218,644,214,641,230,617,248,579,263,541"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="269,258,291,323"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="283,324,283,446,277,446,277,324"/>
+</map>

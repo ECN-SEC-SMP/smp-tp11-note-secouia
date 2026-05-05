@@ -1,0 +1,29 @@
+<map id="VoieFerree" name="VoieFerree">
+<area shape="rect" id="Node000001" title="Représente une voie ferrée reliant deux villes." alt="" coords="607,1573,833,1832"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="582,643,735,708"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="680,707,694,737,705,770,729,884,742,981,746,1068,745,1149,734,1319,730,1418,729,1535,729,1557,724,1557,724,1535,725,1418,729,1318,740,1149,741,1068,736,982,724,885,700,771,689,739,675,709"/>
+<area shape="rect" id="Node000003" href="$classVille.html" title=" " alt="" coords="568,248,739,333"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="657,334,661,626,655,626,651,334"/>
+<area shape="rect" id="Node000010" href="$classTicket.html" title="Représente un ticket dans le jeu." alt="" coords="416,411,605,580"/>
+<area shape="poly" id="edge10_Node000010_Node000003" title=" " alt="" coords="576,335,553,359,533,396,528,394,549,356,572,332"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="677,120,755,185"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="704,187,682,234,677,232,699,184"/>
+<area shape="rect" id="Node000008" href="$classJoueur.html" title="Représente un joueur d&#39;une partie des Aventuriers du Rail." alt="" coords="421,771,691,1511"/>
+<area shape="poly" id="edge12_Node000008_Node000004" title=" " alt="" coords="742,184,768,232,778,260,781,289,781,677,779,694,773,708,754,727,729,745,702,770,698,766,725,740,751,723,769,705,774,693,776,677,776,289,773,261,764,234,738,187"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="626,5,806,71"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="719,85,719,120,713,120,713,85"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="270,463,391,528"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="361,538,398,581,421,600,447,616,479,629,506,632,534,634,570,640,583,644,581,649,569,645,534,639,506,637,478,634,444,621,418,605,395,584,357,541"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="395,643,557,708"/>
+<area shape="poly" id="edge11_Node000009_Node000006" title=" " alt="" coords="324,542,324,581,328,600,337,617,363,641,396,657,393,662,360,646,333,620,323,602,318,582,318,542"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="148,643,303,708"/>
+<area shape="poly" id="edge15_Node000011_Node000006" title=" " alt="" coords="286,540,251,576,229,605,224,623,224,642,218,642,219,623,224,603,247,572,282,536"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="319,258,342,323"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="333,324,333,446,328,446,328,324"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="667,1510,680,1557,675,1559,662,1512"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="484,708,492,754,487,754,479,709"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="534,580,533,600,528,620,523,630,518,628,523,618,528,599,529,580"/>
+<area shape="poly" id="edge13_Node000008_Node000011" title=" " alt="" coords="250,707,414,935,409,939,246,710"/>
+<area shape="rect" id="Node000012" href="$classTrain.html" title="Représente un train dans le jeu." alt="" coords="5,428,229,563"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="122,562,130,591,142,617,153,630,149,634,138,620,125,593,117,564"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Graphe hiérarchique des classes" name="Graphe hiérarchique des classes">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,84,31"/>
+<area shape="rect" id="Node000001" href="$classGameWidget.html" title="Widget principal du jeu." alt="" coords="132,5,239,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="98,15,132,15,132,21,98,21"/>
+</map>

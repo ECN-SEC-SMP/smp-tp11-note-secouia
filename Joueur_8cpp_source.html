@@ -1,0 +1,384 @@
+<!-- HTML header for doxygen 1.9.8 — customisé pour doxygen-awesome-css -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Les Aventuriers du Rail:  Fichier source de src/Joueur.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<!-- ── doxygen-awesome extensions ─────────────────────────────────────────── -->
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init();
+  DoxygenAwesomeFragmentCopyButton.init();
+  DoxygenAwesomeParagraphLink.init();
+  DoxygenAwesomeInteractiveToc.init();
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Les Aventuriers du Rail<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">Implémentation C++ du jeu de société</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('Joueur_8cpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Joueur.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Joueur_8cpp.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * @file Joueur.cpp</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * @author Thomas Metais (metais.thomas92@gmail.com)</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * @brief Implémentation de la classe @ref Joueur.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> * @version 1.0</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> * @date 2026-03-17</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> * Toute la documentation contractuelle (pré/post-conditions, invariants,</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> * complexité, valeurs de retour) se trouve dans `Joueur.hpp`. Ce fichier</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> * ajoute, via des blocs `@details`, les notes d&#39;implémentation pertinentes</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> * (choix d&#39;algorithme, idiomes STL employés, subtilités de manipulation).</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> *</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> * @see Joueur.hpp</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="Joueur_8hpp.html">Joueur.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;<a class="code" href="Plateau_8hpp.html">Plateau.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment"></span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * `missions` et `mainCartes` sont laissés vides grâce au constructeur par</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> * défaut de `std::vector`. L&#39;ordre des initialiseurs respecte l&#39;ordre de</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> * déclaration des membres dans `Joueur.hpp` afin d&#39;éviter l&#39;avertissement</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * `-Wreorder-ctor`.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classJoueur.html#ad5f6a7dd4034c3f4ce940f62ee0fc113">   27</a></span><a class="code hl_function" href="classJoueur.html#ad5f6a7dd4034c3f4ce940f62ee0fc113">Joueur::Joueur</a>(<span class="keyword">const</span> std::string &amp;nom, <a class="code hl_enumeration" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a> couleur)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    : ticketFini(0), nbWagons(20), couleur(couleur), nom(nom) {}</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">// ===== Accesseurs =====</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classJoueur.html#a0f4db808171ab38b7ef250e6e83c8c7c">   32</a></span><span class="keyword">const</span> std::string &amp;<a class="code hl_function" href="classJoueur.html#a0f4db808171ab38b7ef250e6e83c8c7c">Joueur::getNom</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#abaee0b4f259181bf66dbab54bef971bb">nom</a>; }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classJoueur.html#a3e92564098dded2578b794743ec0a1cd">   34</a></span><a class="code hl_enumeration" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a> <a class="code hl_function" href="classJoueur.html#a3e92564098dded2578b794743ec0a1cd">Joueur::getCouleur</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#afd7c0040c5e9a5f64c5a2293a709d6c6">couleur</a>; }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classJoueur.html#a8c56ec0714d85fab78b9321ea1219070">   36</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="classJoueur.html#a8c56ec0714d85fab78b9321ea1219070">Joueur::getNbWagons</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#aef090f7e994a1461c9fc083216752851">nbWagons</a>; }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classJoueur.html#a6ee77f15533f3964bc0bad525a8c3c22">   38</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="classJoueur.html#a6ee77f15533f3964bc0bad525a8c3c22">Joueur::getTicketFini</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#aeb69af1c7ccdc5480d7fa589941c74f1">ticketFini</a>; }</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classJoueur.html#aec55b18e94355a1896a46175cea30a92">   40</a></span><span class="keyword">const</span> std::vector&lt;Ticket *&gt; &amp;<a class="code hl_function" href="classJoueur.html#aec55b18e94355a1896a46175cea30a92">Joueur::getMissions</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>; }</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classJoueur.html#af3412f04724cf0a6631318696669eefe">   42</a></span><span class="keyword">const</span> std::vector&lt;Train *&gt; &amp;<a class="code hl_function" href="classJoueur.html#af3412f04724cf0a6631318696669eefe">Joueur::getMainCartes</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>; }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"></span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment"> * Parcours linéaire de la main : aucune structure indexée par couleur n&#39;est</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment"> * maintenue, la main restant suffisamment petite en pratique pour que la</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="comment"> * simplicité d&#39;implémentation l&#39;emporte sur l&#39;optimisation.</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00050" data-start="{" data-end="}">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classJoueur.html#a89a7a5fd1e798015321d2ee7647d47c3">   50</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="classJoueur.html#a89a7a5fd1e798015321d2ee7647d47c3">Joueur::getNbCartes</a>(<a class="code hl_enumeration" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> couleur)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;carte : <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordflow">if</span> (carte-&gt;getCouleurTrain() == <a class="code hl_variable" href="classJoueur.html#afd7c0040c5e9a5f64c5a2293a709d6c6">couleur</a>)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>      count++;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordflow">return</span> count;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="foldopen" id="foldopen00059" data-start="{" data-end="}">
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classJoueur.html#abfaaa489ed4b13ce3bee3061b6329791">   59</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="classJoueur.html#abfaaa489ed4b13ce3bee3061b6329791">Joueur::getNbCartesTotales</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="comment">// NOTE: cast explicite size_t -&gt; int pour éviter le warning -Wsign-compare.</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>.size());</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>}</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="comment">// ===== Gestion des cartes =====</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classJoueur.html#a439d69f5af4bfec5425f513d36df0fa6">   67</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classJoueur.html#a439d69f5af4bfec5425f513d36df0fa6">Joueur::ajouterCarte</a>(<a class="code hl_class" href="classTrain.html">Train</a> *carte)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>{</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>.push_back(carte);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}</div>
+</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="comment"></span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="comment"> * Itère une unique fois sur la main et s&#39;arrête dès que `quantite` cartes</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="comment"> * ont été retirées. `std::vector::erase` invalide les itérateurs suivants :</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="comment"> * on réutilise donc la valeur de retour de `erase`, qui pointe sur l&#39;élément</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="comment"> * suivant, pour continuer le parcours sans revalider.</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="}">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classJoueur.html#a2a406f789b3fd4dd4d7f7e74abeb8049">   79</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#a2a406f789b3fd4dd4d7f7e74abeb8049">Joueur::retirerCartes</a>(<a class="code hl_enumeration" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> couleur, <span class="keywordtype">int</span> quantite)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>{</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <span class="keywordtype">int</span> count = 0;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>.begin(); it != <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>.end() &amp;&amp; count &lt; quantite;)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">if</span> ((*it)-&gt;getCouleurTrain() == <a class="code hl_variable" href="classJoueur.html#afd7c0040c5e9a5f64c5a2293a709d6c6">couleur</a>)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      it = <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>.erase(it);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>      count++;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      ++it;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  }</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>  <span class="keywordflow">return</span> count == quantite;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
+</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classJoueur.html#a47752c49bba1453d0b1e76c77df8190a">   95</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#a47752c49bba1453d0b1e76c77df8190a">Joueur::peutPrendreVoie</a>(<a class="code hl_enumeration" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> couleurVoie, <span class="keywordtype">int</span> longueur)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="keywordflow">return</span> <a class="code hl_function" href="classJoueur.html#a89a7a5fd1e798015321d2ee7647d47c3">getNbCartes</a>(couleurVoie) + <a class="code hl_function" href="classJoueur.html#a89a7a5fd1e798015321d2ee7647d47c3">getNbCartes</a>(<a class="code hl_enumvalue" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">couleurTrain::MULTI</a>) &gt;= longueur;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="comment"></span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="comment"> * Stratégie : consommer d&#39;abord les cartes de la couleur demandée (dans la</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="comment"> * limite de `longueur`) puis compléter avec des @ref couleurTrain::MULTI.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="comment"> * Les MULTI étant des jokers rares, ils sont ainsi préservés au maximum.</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00106" data-start="{" data-end="}">
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classJoueur.html#a691929d8cd4ae00a5c625aaf4cd2e586">  106</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#a691929d8cd4ae00a5c625aaf4cd2e586">Joueur::defausserCartesVoie</a>(<a class="code hl_enumeration" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> couleurVoie, <span class="keywordtype">int</span> longueur)</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>{</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="keywordflow">if</span> (!<a class="code hl_function" href="classJoueur.html#a47752c49bba1453d0b1e76c77df8190a">peutPrendreVoie</a>(couleurVoie, longueur))</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="keywordtype">int</span> nbCouleur = std::min(<a class="code hl_function" href="classJoueur.html#a89a7a5fd1e798015321d2ee7647d47c3">getNbCartes</a>(couleurVoie), longueur);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <a class="code hl_function" href="classJoueur.html#a2a406f789b3fd4dd4d7f7e74abeb8049">retirerCartes</a>(couleurVoie, nbCouleur);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <a class="code hl_function" href="classJoueur.html#a2a406f789b3fd4dd4d7f7e74abeb8049">retirerCartes</a>(<a class="code hl_enumvalue" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">couleurTrain::MULTI</a>, longueur - nbCouleur);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
+</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="comment">// ===== Gestion des wagons =====</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="classJoueur.html#a89d0c280052ee830bd31b1603297003c">  119</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#a89d0c280052ee830bd31b1603297003c">Joueur::utiliserWagons</a>(<span class="keywordtype">int</span> nb)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>{</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classJoueur.html#aef090f7e994a1461c9fc083216752851">nbWagons</a> &lt; nb)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>  <a class="code hl_variable" href="classJoueur.html#aef090f7e994a1461c9fc083216752851">nbWagons</a> -= nb;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
+</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment">// ===== Gestion des tickets =====</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="foldopen" id="foldopen00129" data-start="{" data-end="}">
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classJoueur.html#ae0c4fea2f1e1e886d052c3869775cda2">  129</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classJoueur.html#ae0c4fea2f1e1e886d052c3869775cda2">Joueur::ajouterTicket</a>(<a class="code hl_class" href="classTicket.html">Ticket</a> *ticket)</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>{</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>  <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>.push_back(ticket);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
+</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="comment"></span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment"> * Copie les pointeurs dans le vecteur retourné puis vide `missions`. Aucun</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="comment"> * @ref Ticket n&#39;est détruit : la propriété reste à @ref Partie.</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00139" data-start="{" data-end="}">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classJoueur.html#ab16993fa081a309e8033be07ede7d682">  139</a></span>std::vector&lt;Ticket *&gt; <a class="code hl_function" href="classJoueur.html#ab16993fa081a309e8033be07ede7d682">Joueur::defausserTickets</a>()</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>{</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  std::vector&lt;Ticket *&gt; defausse = <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>  <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>.clear();</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="keywordflow">return</span> defausse;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>}</div>
+</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="comment"></span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="comment"> * Utilise l&#39;idiome *erase-remove* pour retirer `ticket` de @ref missions.</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="comment"> * Si le pointeur n&#39;y figure pas, `std::remove` renvoie `missions.end()` et</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="comment"> * aucun élément n&#39;est supprimé — la précondition documentée dans le header</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"> * empêche toutefois ce cas.</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00153" data-start="{" data-end="}">
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classJoueur.html#a9596ae95317a70b9b1e73904b5508668">  153</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#a9596ae95317a70b9b1e73904b5508668">Joueur::validerTicket</a>(<a class="code hl_class" href="classTicket.html">Ticket</a> *ticket, <a class="code hl_class" href="classPlateau.html">Plateau</a> &amp;plateau)</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>{</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>  <span class="keywordflow">if</span> (!plateau.<a class="code hl_function" href="classPlateau.html#aaa4de1eb62dc1762111b7b96c3bfd299">existeChemin</a>(ticket-&gt;<a class="code hl_function" href="classTicket.html#a88072fab8817e65aa623d3ec650397b1">getVilleDepart</a>()-&gt;<a class="code hl_function" href="classVille.html#a04294d0fce38d1a4c9fac29ced9d5020">getNom</a>(),</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                            ticket-&gt;<a class="code hl_function" href="classTicket.html#a3b54afc13d550b0cba40d3f8d182c6c5">getVilleArrivee</a>()-&gt;<a class="code hl_function" href="classVille.html#a04294d0fce38d1a4c9fac29ced9d5020">getNom</a>(),</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                            <span class="keyword">this</span>))</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  <a class="code hl_variable" href="classJoueur.html#aeb69af1c7ccdc5480d7fa589941c74f1">ticketFini</a>++;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>.erase(std::remove(<a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>.begin(), <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>.end(), ticket), <a class="code hl_variable" href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">missions</a>.end());</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>}</div>
+</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="comment">// ===== Fin de partie =====</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="classJoueur.html#ae2ead87c6f7fedc9a857f39848267577">  167</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#ae2ead87c6f7fedc9a857f39848267577">Joueur::aGagne</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#aeb69af1c7ccdc5480d7fa589941c74f1">ticketFini</a> &gt;= 6; }</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="classJoueur.html#a49e20bed293e27adee76be46f1b4f042">  169</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="classJoueur.html#a49e20bed293e27adee76be46f1b4f042">Joueur::naPlusDeWagons</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="classJoueur.html#aef090f7e994a1461c9fc083216752851">nbWagons</a> &lt;= 0; }</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="comment">// ===== Affichage =====</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="comment"></span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="comment">/**</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="comment"> * @details</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="comment"> * Chaque couleur est représentée par la valeur numérique de l&#39;énumération</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="comment"> * @ref couleurTrain (l&#39;affichage détaillé par nom reste à implémenter côté UI).</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="comment"> */</span></div>
+<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classJoueur.html#aa3869f2f2c500a73c21b4c949ce5e1b3">  178</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classJoueur.html#aa3869f2f2c500a73c21b4c949ce5e1b3">Joueur::afficherMain</a>(std::ostream &amp;os)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>  os &lt;&lt; <span class="stringliteral">&quot;Main de &quot;</span> &lt;&lt; <a class="code hl_variable" href="classJoueur.html#abaee0b4f259181bf66dbab54bef971bb">nom</a> &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>.size() &lt;&lt; <span class="stringliteral">&quot; cartes) : &quot;</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;carte : <a class="code hl_variable" href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">mainCartes</a>)</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    os &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(carte-&gt;getCouleurTrain()) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>  os &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>}</div>
+</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+<div class="foldopen" id="foldopen00186" data-start="{" data-end="}">
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="Joueur_8hpp.html#ae4130293a90bd06bac00572a8221d34a">  186</a></span>std::ostream &amp;<a class="code hl_function" href="Joueur_8cpp.html#ae4130293a90bd06bac00572a8221d34a">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code hl_class" href="classJoueur.html">Joueur</a> &amp;joueur)</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>{</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  os &lt;&lt; <span class="stringliteral">&quot;Joueur: &quot;</span> &lt;&lt; joueur.<a class="code hl_function" href="classJoueur.html#a0f4db808171ab38b7ef250e6e83c8c7c">getNom</a>()</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>     &lt;&lt; <span class="stringliteral">&quot; | Couleur: &quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(joueur.<a class="code hl_function" href="classJoueur.html#a3e92564098dded2578b794743ec0a1cd">getCouleur</a>())</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>     &lt;&lt; <span class="stringliteral">&quot; | Wagons: &quot;</span> &lt;&lt; joueur.<a class="code hl_function" href="classJoueur.html#a8c56ec0714d85fab78b9321ea1219070">getNbWagons</a>()</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>     &lt;&lt; <span class="stringliteral">&quot; | Tickets: &quot;</span> &lt;&lt; joueur.<a class="code hl_function" href="classJoueur.html#a6ee77f15533f3964bc0bad525a8c3c22">getTicketFini</a>();</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  <span class="keywordflow">return</span> os;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>}</div>
+</div>
+<div class="ttc" id="aJoueur_8cpp_html_ae4130293a90bd06bac00572a8221d34a"><div class="ttname"><a href="Joueur_8cpp.html#ae4130293a90bd06bac00572a8221d34a">operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;os, const Joueur &amp;joueur)</div><div class="ttdoc">Opérateur d'insertion stream : résumé compact d'un Joueur.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00186">Joueur.cpp:186</a></div></div>
+<div class="ttc" id="aJoueur_8hpp_html"><div class="ttname"><a href="Joueur_8hpp.html">Joueur.hpp</a></div><div class="ttdoc">Déclaration de la classe Joueur, participant à une partie des Aventuriers du Rail.</div></div>
+<div class="ttc" id="aPlateau_8hpp_html"><div class="ttname"><a href="Plateau_8hpp.html">Plateau.hpp</a></div><div class="ttdoc">Classe Plateau – Gère le plateau de jeu avec villes et voies ferrées.</div></div>
+<div class="ttc" id="aclassJoueur_html"><div class="ttname"><a href="classJoueur.html">Joueur</a></div><div class="ttdoc">Représente un joueur d'une partie des Aventuriers du Rail.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00081">Joueur.hpp:82</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a0f4db808171ab38b7ef250e6e83c8c7c"><div class="ttname"><a href="classJoueur.html#a0f4db808171ab38b7ef250e6e83c8c7c">Joueur::getNom</a></div><div class="ttdeci">const std::string &amp; getNom() const</div><div class="ttdoc">Renvoie le nom du joueur.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00032">Joueur.cpp:32</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a2a406f789b3fd4dd4d7f7e74abeb8049"><div class="ttname"><a href="classJoueur.html#a2a406f789b3fd4dd4d7f7e74abeb8049">Joueur::retirerCartes</a></div><div class="ttdeci">bool retirerCartes(couleurTrain couleur, int quantite)</div><div class="ttdoc">Retire jusqu'à quantite cartes d'une couleur donnée.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00079">Joueur.cpp:79</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a3e92564098dded2578b794743ec0a1cd"><div class="ttname"><a href="classJoueur.html#a3e92564098dded2578b794743ec0a1cd">Joueur::getCouleur</a></div><div class="ttdeci">couleurJoueur getCouleur() const</div><div class="ttdoc">Renvoie la couleur d'équipe du joueur.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00034">Joueur.cpp:34</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a439d69f5af4bfec5425f513d36df0fa6"><div class="ttname"><a href="classJoueur.html#a439d69f5af4bfec5425f513d36df0fa6">Joueur::ajouterCarte</a></div><div class="ttdeci">void ajouterCarte(Train *carte)</div><div class="ttdoc">Ajoute une carte Train à la main du joueur.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00067">Joueur.cpp:67</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a47752c49bba1453d0b1e76c77df8190a"><div class="ttname"><a href="classJoueur.html#a47752c49bba1453d0b1e76c77df8190a">Joueur::peutPrendreVoie</a></div><div class="ttdeci">bool peutPrendreVoie(couleurTrain couleurVoie, int longueur) const</div><div class="ttdoc">Teste si le joueur dispose d'assez de cartes pour prendre une voie.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00095">Joueur.cpp:95</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a49e20bed293e27adee76be46f1b4f042"><div class="ttname"><a href="classJoueur.html#a49e20bed293e27adee76be46f1b4f042">Joueur::naPlusDeWagons</a></div><div class="ttdeci">bool naPlusDeWagons() const</div><div class="ttdoc">Indique si le joueur n'a plus de wagons disponibles.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00169">Joueur.cpp:169</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a691929d8cd4ae00a5c625aaf4cd2e586"><div class="ttname"><a href="classJoueur.html#a691929d8cd4ae00a5c625aaf4cd2e586">Joueur::defausserCartesVoie</a></div><div class="ttdeci">bool defausserCartesVoie(couleurTrain couleurVoie, int longueur)</div><div class="ttdoc">Défausse les cartes nécessaires à la prise d'une voie.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00106">Joueur.cpp:106</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a6ee77f15533f3964bc0bad525a8c3c22"><div class="ttname"><a href="classJoueur.html#a6ee77f15533f3964bc0bad525a8c3c22">Joueur::getTicketFini</a></div><div class="ttdeci">int getTicketFini() const</div><div class="ttdoc">Renvoie le nombre de Ticket que le joueur a validés.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00038">Joueur.cpp:38</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a70e9c7b35eec1807376d8417789d80a9"><div class="ttname"><a href="classJoueur.html#a70e9c7b35eec1807376d8417789d80a9">Joueur::missions</a></div><div class="ttdeci">std::vector&lt; Ticket * &gt; missions</div><div class="ttdoc">Missions en cours : Ticket détenus mais non encore validés. Pointeurs non propriétaires.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00086">Joueur.hpp:86</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a89a7a5fd1e798015321d2ee7647d47c3"><div class="ttname"><a href="classJoueur.html#a89a7a5fd1e798015321d2ee7647d47c3">Joueur::getNbCartes</a></div><div class="ttdeci">int getNbCartes(couleurTrain couleur) const</div><div class="ttdoc">Compte les cartes d'une couleur précise dans la main.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00050">Joueur.cpp:50</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a89d0c280052ee830bd31b1603297003c"><div class="ttname"><a href="classJoueur.html#a89d0c280052ee830bd31b1603297003c">Joueur::utiliserWagons</a></div><div class="ttdeci">bool utiliserWagons(int nb)</div><div class="ttdoc">Consomme un certain nombre de wagons dans la réserve du joueur.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00119">Joueur.cpp:119</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a8c56ec0714d85fab78b9321ea1219070"><div class="ttname"><a href="classJoueur.html#a8c56ec0714d85fab78b9321ea1219070">Joueur::getNbWagons</a></div><div class="ttdeci">int getNbWagons() const</div><div class="ttdoc">Renvoie le nombre de wagons restants dans la réserve.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00036">Joueur.cpp:36</a></div></div>
+<div class="ttc" id="aclassJoueur_html_a9596ae95317a70b9b1e73904b5508668"><div class="ttname"><a href="classJoueur.html#a9596ae95317a70b9b1e73904b5508668">Joueur::validerTicket</a></div><div class="ttdeci">bool validerTicket(Ticket *ticket, Plateau &amp;plateau)</div><div class="ttdoc">Tente de valider un ticket en vérifiant la connexion de ses deux villes.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00153">Joueur.cpp:153</a></div></div>
+<div class="ttc" id="aclassJoueur_html_aa3869f2f2c500a73c21b4c949ce5e1b3"><div class="ttname"><a href="classJoueur.html#aa3869f2f2c500a73c21b4c949ce5e1b3">Joueur::afficherMain</a></div><div class="ttdeci">void afficherMain(std::ostream &amp;os) const</div><div class="ttdoc">Affiche la main du joueur (taille et couleurs) sur un flux.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00178">Joueur.cpp:178</a></div></div>
+<div class="ttc" id="aclassJoueur_html_aa63e8975f85024ac0b12fc13731b68be"><div class="ttname"><a href="classJoueur.html#aa63e8975f85024ac0b12fc13731b68be">Joueur::mainCartes</a></div><div class="ttdeci">std::vector&lt; Train * &gt; mainCartes</div><div class="ttdoc">Main courante de cartes Train. Pointeurs non propriétaires.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00089">Joueur.hpp:89</a></div></div>
+<div class="ttc" id="aclassJoueur_html_ab16993fa081a309e8033be07ede7d682"><div class="ttname"><a href="classJoueur.html#ab16993fa081a309e8033be07ede7d682">Joueur::defausserTickets</a></div><div class="ttdeci">std::vector&lt; Ticket * &gt; defausserTickets()</div><div class="ttdoc">Vide la liste des missions en cours et la renvoie à l'appelant.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00139">Joueur.cpp:139</a></div></div>
+<div class="ttc" id="aclassJoueur_html_abaee0b4f259181bf66dbab54bef971bb"><div class="ttname"><a href="classJoueur.html#abaee0b4f259181bf66dbab54bef971bb">Joueur::nom</a></div><div class="ttdeci">std::string nom</div><div class="ttdoc">Nom affiché du joueur, fixé à la construction.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00088">Joueur.hpp:88</a></div></div>
+<div class="ttc" id="aclassJoueur_html_abfaaa489ed4b13ce3bee3061b6329791"><div class="ttname"><a href="classJoueur.html#abfaaa489ed4b13ce3bee3061b6329791">Joueur::getNbCartesTotales</a></div><div class="ttdeci">int getNbCartesTotales() const</div><div class="ttdoc">Renvoie la taille totale de la main, toutes couleurs confondues.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00059">Joueur.cpp:59</a></div></div>
+<div class="ttc" id="aclassJoueur_html_ad5f6a7dd4034c3f4ce940f62ee0fc113"><div class="ttname"><a href="classJoueur.html#ad5f6a7dd4034c3f4ce940f62ee0fc113">Joueur::Joueur</a></div><div class="ttdeci">Joueur(const std::string &amp;nom, couleurJoueur couleur)</div><div class="ttdoc">Construit un nouveau joueur prêt à entrer en partie.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00027">Joueur.cpp:27</a></div></div>
+<div class="ttc" id="aclassJoueur_html_ae0c4fea2f1e1e886d052c3869775cda2"><div class="ttname"><a href="classJoueur.html#ae0c4fea2f1e1e886d052c3869775cda2">Joueur::ajouterTicket</a></div><div class="ttdeci">void ajouterTicket(Ticket *ticket)</div><div class="ttdoc">Ajoute un Ticket à la liste des missions en cours.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00129">Joueur.cpp:129</a></div></div>
+<div class="ttc" id="aclassJoueur_html_ae2ead87c6f7fedc9a857f39848267577"><div class="ttname"><a href="classJoueur.html#ae2ead87c6f7fedc9a857f39848267577">Joueur::aGagne</a></div><div class="ttdeci">bool aGagne() const</div><div class="ttdoc">Indique si le joueur a satisfait la condition de victoire principale.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00167">Joueur.cpp:167</a></div></div>
+<div class="ttc" id="aclassJoueur_html_aeb69af1c7ccdc5480d7fa589941c74f1"><div class="ttname"><a href="classJoueur.html#aeb69af1c7ccdc5480d7fa589941c74f1">Joueur::ticketFini</a></div><div class="ttdeci">int ticketFini</div><div class="ttdoc">Nombre de Ticket validés (monotone croissant, jamais décrémenté).</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00084">Joueur.hpp:84</a></div></div>
+<div class="ttc" id="aclassJoueur_html_aec55b18e94355a1896a46175cea30a92"><div class="ttname"><a href="classJoueur.html#aec55b18e94355a1896a46175cea30a92">Joueur::getMissions</a></div><div class="ttdeci">const std::vector&lt; Ticket * &gt; &amp; getMissions() const</div><div class="ttdoc">Renvoie la liste des missions en cours.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00040">Joueur.cpp:40</a></div></div>
+<div class="ttc" id="aclassJoueur_html_aef090f7e994a1461c9fc083216752851"><div class="ttname"><a href="classJoueur.html#aef090f7e994a1461c9fc083216752851">Joueur::nbWagons</a></div><div class="ttdeci">int nbWagons</div><div class="ttdoc">Wagons restants dans la réserve du joueur (initialement 20).</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00085">Joueur.hpp:85</a></div></div>
+<div class="ttc" id="aclassJoueur_html_af3412f04724cf0a6631318696669eefe"><div class="ttname"><a href="classJoueur.html#af3412f04724cf0a6631318696669eefe">Joueur::getMainCartes</a></div><div class="ttdeci">const std::vector&lt; Train * &gt; &amp; getMainCartes() const</div><div class="ttdoc">Renvoie la main complète du joueur.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8cpp_source.html#l00042">Joueur.cpp:42</a></div></div>
+<div class="ttc" id="aclassJoueur_html_afd7c0040c5e9a5f64c5a2293a709d6c6"><div class="ttname"><a href="classJoueur.html#afd7c0040c5e9a5f64c5a2293a709d6c6">Joueur::couleur</a></div><div class="ttdeci">couleurJoueur couleur</div><div class="ttdoc">Couleur d'équipe du joueur, fixée à la construction.</div><div class="ttdef"><b>Definition</b> <a href="Joueur_8hpp_source.html#l00087">Joueur.hpp:87</a></div></div>
+<div class="ttc" id="aclassPlateau_html"><div class="ttname"><a href="classPlateau.html">Plateau</a></div><div class="ttdoc">Représente le plateau de jeu avec les villes et les voies ferrées.</div><div class="ttdef"><b>Definition</b> <a href="Plateau_8hpp_source.html#l00026">Plateau.hpp:26</a></div></div>
+<div class="ttc" id="aclassPlateau_html_aaa4de1eb62dc1762111b7b96c3bfd299"><div class="ttname"><a href="classPlateau.html#aaa4de1eb62dc1762111b7b96c3bfd299">Plateau::existeChemin</a></div><div class="ttdeci">bool existeChemin(string villeA, string villeB, Joueur *joueur) const</div><div class="ttdoc">Vérifie s'il existe un chemin entre deux villes pour un joueur.</div><div class="ttdef"><b>Definition</b> <a href="Plateau_8cpp_source.html#l00103">Plateau.cpp:103</a></div></div>
+<div class="ttc" id="aclassTicket_html"><div class="ttname"><a href="classTicket.html">Ticket</a></div><div class="ttdoc">Représente un ticket dans le jeu.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8hpp_source.html#l00011">Ticket.hpp:11</a></div></div>
+<div class="ttc" id="aclassTicket_html_a3b54afc13d550b0cba40d3f8d182c6c5"><div class="ttname"><a href="classTicket.html#a3b54afc13d550b0cba40d3f8d182c6c5">Ticket::getVilleArrivee</a></div><div class="ttdeci">Ville * getVilleArrivee() const</div><div class="ttdoc">Get the Ville Arrivee object.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8cpp_source.html#l00018">Ticket.cpp:18</a></div></div>
+<div class="ttc" id="aclassTicket_html_a88072fab8817e65aa623d3ec650397b1"><div class="ttname"><a href="classTicket.html#a88072fab8817e65aa623d3ec650397b1">Ticket::getVilleDepart</a></div><div class="ttdeci">Ville * getVilleDepart() const</div><div class="ttdoc">Get the Ville Depart object.</div><div class="ttdef"><b>Definition</b> <a href="Ticket_8cpp_source.html#l00014">Ticket.cpp:14</a></div></div>
+<div class="ttc" id="aclassTrain_html"><div class="ttname"><a href="classTrain.html">Train</a></div><div class="ttdoc">Représente un train dans le jeu.</div><div class="ttdef"><b>Definition</b> <a href="Train_8hpp_source.html#l00011">Train.hpp:11</a></div></div>
+<div class="ttc" id="aclassVille_html_a04294d0fce38d1a4c9fac29ced9d5020"><div class="ttname"><a href="classVille.html#a04294d0fce38d1a4c9fac29ced9d5020">Ville::getNom</a></div><div class="ttdeci">string getNom() const</div><div class="ttdoc">Getter nom de la ville.</div><div class="ttdef"><b>Definition</b> <a href="Ville_8cpp_source.html#l00007">Ville.cpp:7</a></div></div>
+<div class="ttc" id="acouleurEnum_8hpp_html_a0ca305eea9991fbe93bfe4f312d21612"><div class="ttname"><a href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a></div><div class="ttdeci">couleurTrain</div><div class="ttdef"><b>Definition</b> <a href="couleurEnum_8hpp_source.html#l00003">couleurEnum.hpp:4</a></div></div>
+<div class="ttc" id="acouleurEnum_8hpp_html_a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb"><div class="ttname"><a href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">couleurTrain::MULTI</a></div><div class="ttdeci">@ MULTI</div></div>
+<div class="ttc" id="acouleurEnum_8hpp_html_ac0e199888e468f9d18cc7a063cacde08"><div class="ttname"><a href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a></div><div class="ttdeci">couleurJoueur</div><div class="ttdef"><b>Definition</b> <a href="couleurEnum_8hpp_source.html#l00014">couleurEnum.hpp:15</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="Joueur_8cpp.html">Joueur.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

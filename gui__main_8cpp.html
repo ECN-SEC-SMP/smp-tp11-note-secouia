@@ -1,0 +1,2247 @@
+<!-- HTML header for doxygen 1.9.8 — customisé pour doxygen-awesome-css -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Les Aventuriers du Rail: Référence du fichier src/gui_main.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<!-- ── doxygen-awesome extensions ─────────────────────────────────────────── -->
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeDarkModeToggle.init();
+  DoxygenAwesomeFragmentCopyButton.init();
+  DoxygenAwesomeParagraphLink.init();
+  DoxygenAwesomeInteractiveToc.init();
+</script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Les Aventuriers du Rail<span id="projectnumber">&#160;0.1</span>
+   </div>
+   <div id="projectbrief">Implémentation C++ du jeu de société</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('gui__main_8cpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Espaces de nommage</a> &#124;
+<a href="#enum-members">Énumérations</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier gui_main.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;QApplication&gt;</code><br />
+<code>#include &lt;QWidget&gt;</code><br />
+<code>#include &lt;QPainter&gt;</code><br />
+<code>#include &lt;QPainterPath&gt;</code><br />
+<code>#include &lt;QTimer&gt;</code><br />
+<code>#include &lt;QElapsedTimer&gt;</code><br />
+<code>#include &lt;QMouseEvent&gt;</code><br />
+<code>#include &lt;QKeyEvent&gt;</code><br />
+<code>#include &lt;QFont&gt;</code><br />
+<code>#include &lt;QFontMetrics&gt;</code><br />
+<code>#include &lt;QColor&gt;</code><br />
+<code>#include &lt;QPixmap&gt;</code><br />
+<code>#include &lt;QRectF&gt;</code><br />
+<code>#include &lt;QPointF&gt;</code><br />
+<code>#include &lt;QString&gt;</code><br />
+<code>#include &lt;QPen&gt;</code><br />
+<code>#include &lt;QBrush&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;array&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
+<code>#include &lt;set&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;random&gt;</code><br />
+<code>#include &quot;<a class="el" href="Partie_8hpp_source.html">Partie.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Joueur_8hpp_source.html">Joueur.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Ticket_8hpp_source.html">Ticket.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Train_8hpp_source.html">Train.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="VoieFerree_8hpp_source.html">VoieFerree.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="Ville_8hpp_source.html">Ville.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="couleurEnum_8hpp_source.html">couleurEnum.hpp</a>&quot;</code><br />
+</div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Graphe des dépendances par inclusion de gui_main.cpp:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="gui__main_8cpp__incl.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+</div>
+</div>
+<p><a href="gui__main_8cpp_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameWidget.html">GameWidget</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Widget principal du jeu.  <a href="classGameWidget.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structGS.html">GS</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure contenant l'état global du jeu.  <a href="structGS.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPiocheTickets.html">PiocheTickets</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Représente la pioche de tickets.  <a href="structPiocheTickets.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espaces de nommage</h2></td></tr>
+<tr class="memitem:namespaceBS" id="r_namespaceBS"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html">BS</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Énumérations</h2></td></tr>
+<tr class="memitem:a0c6b97e8f0f73048e9ec772f39e8cb19" id="r_a0c6b97e8f0f73048e9ec772f39e8cb19"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19">ActionSt</a> { <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19a3ed53fbeb1eab0443561b68ca0c0b5cf">MENU</a>
+, <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673">SELECT_ROUTE</a>
+ }</td></tr>
+<tr class="separator:a0c6b97e8f0f73048e9ec772f39e8cb19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83fc559664fc7c7e310c93586457b428" id="r_a83fc559664fc7c7e310c93586457b428"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428">AppState</a> { <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428a4066f6b1152cde090a9958f0bd14a15c">SETUP_NB</a>
+, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428aa0e86d853428d8b69ea0c9823927d664">SETUP_NAME</a>
+, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428a4504e1ed59cd9732b8a844e5424e6f13">GAME</a>
+, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428af8454a27e1df41397bf42444fe5aa45b">GAME_OVER</a>
+ }</td></tr>
+<tr class="separator:a83fc559664fc7c7e310c93586457b428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a6c72d5433ba2afacd0829b410faa9004" id="r_a6c72d5433ba2afacd0829b410faa9004"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a6c72d5433ba2afacd0829b410faa9004">btnHit</a> (float bx, float by, float bw, float bh, QPoint pt)</td></tr>
+<tr class="memdesc:a6c72d5433ba2afacd0829b410faa9004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vérifie si un point est dans un bouton.  <br /></td></tr>
+<tr class="separator:a6c72d5433ba2afacd0829b410faa9004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a381e471f6ef3d8077a987ce2116ea9f3" id="r_a381e471f6ef3d8077a987ce2116ea9f3"><td class="memItemLeft" align="right" valign="top">static map&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> *, float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a381e471f6ef3d8077a987ce2116ea9f3">calcOffsets</a> (const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;voies)</td></tr>
+<tr class="memdesc:a381e471f6ef3d8077a987ce2116ea9f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule les offsets pour les voies parallèles.  <br /></td></tr>
+<tr class="separator:a381e471f6ef3d8077a987ce2116ea9f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e57e4dce02790549cf22116bccfbb0b" id="r_a6e57e4dce02790549cf22116bccfbb0b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a6e57e4dce02790549cf22116bccfbb0b">chargerMap</a> (const string &amp;fichier, vector&lt; <a class="el" href="classVille.html">Ville</a> * &gt; &amp;villes, vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;voies)</td></tr>
+<tr class="memdesc:a6e57e4dce02790549cf22116bccfbb0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Charge la carte à partir d'un fichier CSV et remplit les villes et voies.  <br /></td></tr>
+<tr class="separator:a6e57e4dce02790549cf22116bccfbb0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6edb4554124b2ac459a506f866eff39" id="r_aa6edb4554124b2ac459a506f866eff39"><td class="memItemLeft" align="right" valign="top">static vector&lt; <a class="el" href="classTicket.html">Ticket</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#aa6edb4554124b2ac459a506f866eff39">chargerTickets</a> (const string &amp;fichier, const vector&lt; <a class="el" href="classVille.html">Ville</a> * &gt; &amp;villes)</td></tr>
+<tr class="memdesc:aa6edb4554124b2ac459a506f866eff39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Charge les tickets à partir d'un fichier CSV.  <br /></td></tr>
+<tr class="separator:aa6edb4554124b2ac459a506f866eff39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a950688a1865fd0fcf7d1cc8e301ea0cf" id="r_a950688a1865fd0fcf7d1cc8e301ea0cf"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a950688a1865fd0fcf7d1cc8e301ea0cf">couleurFromString</a> (const string &amp;s)</td></tr>
+<tr class="memdesc:a950688a1865fd0fcf7d1cc8e301ea0cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit une chaîne de caractères en couleur de train.  <br /></td></tr>
+<tr class="separator:a950688a1865fd0fcf7d1cc8e301ea0cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab579c1806a7fe1b42c9299d78f57f56d" id="r_ab579c1806a7fe1b42c9299d78f57f56d"><td class="memItemLeft" align="right" valign="top">static vector&lt; <a class="el" href="classTrain.html">Train</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ab579c1806a7fe1b42c9299d78f57f56d">creerTrains</a> ()</td></tr>
+<tr class="memdesc:ab579c1806a7fe1b42c9299d78f57f56d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crée les trains pour la partie.  <br /></td></tr>
+<tr class="separator:ab579c1806a7fe1b42c9299d78f57f56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb9b29f7c0f9e7fd186f82c5d4d4a23a" id="r_abb9b29f7c0f9e7fd186f82c5d4d4a23a"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#abb9b29f7c0f9e7fd186f82c5d4d4a23a">distSeg</a> (QPointF pt, QPointF a, QPointF b)</td></tr>
+<tr class="memdesc:abb9b29f7c0f9e7fd186f82c5d4d4a23a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calcule la distance d'un point à un segment.  <br /></td></tr>
+<tr class="separator:abb9b29f7c0f9e7fd186f82c5d4d4a23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af821f8f05e0b9430b6f9158828216151" id="r_af821f8f05e0b9430b6f9158828216151"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#af821f8f05e0b9430b6f9158828216151">drawBtn</a> (QPainter &amp;p, float x, float y, float bw, float bh, const QString &amp;label, bool disabled, QPoint mouse, float time, QColor base=<a class="el" href="namespaceBS.html#a24217a1e15dfb21bed1ecb2a04a1f54e">BS::Primary</a>, QColor hoverCol=<a class="el" href="namespaceBS.html#a43ed80794c78f2bc6e0111f6a457571c">BS::PrimaryH</a>)</td></tr>
+<tr class="memdesc:af821f8f05e0b9430b6f9158828216151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine un bouton.  <br /></td></tr>
+<tr class="separator:af821f8f05e0b9430b6f9158828216151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b9c6072e5484345eed245c5ae7e2493" id="r_a4b9c6072e5484345eed245c5ae7e2493"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a4b9c6072e5484345eed245c5ae7e2493">drawCard</a> (QPainter &amp;p, float x, float y, float cw, float ch, QColor bg=<a class="el" href="namespaceBS.html#a88fad96377d72f95c7f344d517f386ab">BS::Card</a>, QColor topAccent=Qt::transparent)</td></tr>
+<tr class="memdesc:a4b9c6072e5484345eed245c5ae7e2493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine une carte.  <br /></td></tr>
+<tr class="separator:a4b9c6072e5484345eed245c5ae7e2493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56d56de1168ca58fc710e9abef59ff68" id="r_a56d56de1168ca58fc710e9abef59ff68"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a56d56de1168ca58fc710e9abef59ff68">drawMap</a> (QPainter &amp;p, const <a class="el" href="structGS.html">GS</a> &amp;gs, float time)</td></tr>
+<tr class="memdesc:a56d56de1168ca58fc710e9abef59ff68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine la carte.  <br /></td></tr>
+<tr class="separator:a56d56de1168ca58fc710e9abef59ff68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95631d8911e0ef70a8a13cbb083cd782" id="r_a95631d8911e0ef70a8a13cbb083cd782"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a95631d8911e0ef70a8a13cbb083cd782">drawPanel</a> (QPainter &amp;p, <a class="el" href="structGS.html">GS</a> &amp;gs, QPoint click, QPoint mouse, float time)</td></tr>
+<tr class="memdesc:a95631d8911e0ef70a8a13cbb083cd782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine le panneau latéral.  <br /></td></tr>
+<tr class="separator:a95631d8911e0ef70a8a13cbb083cd782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0098c3de498487cb0073558274aa4e7b" id="r_a0098c3de498487cb0073558274aa4e7b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a0098c3de498487cb0073558274aa4e7b">drawShadow</a> (QPainter &amp;p, float x, float y, float bw, float bh, int alpha=90)</td></tr>
+<tr class="memdesc:a0098c3de498487cb0073558274aa4e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine une ombre portée.  <br /></td></tr>
+<tr class="separator:a0098c3de498487cb0073558274aa4e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c4d65e220231299e8931bbd1412c804" id="r_a1c4d65e220231299e8931bbd1412c804"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a1c4d65e220231299e8931bbd1412c804">drawStarfield</a> (QPainter &amp;p, float time, float areaW=808.f, float areaH=720.f)</td></tr>
+<tr class="memdesc:a1c4d65e220231299e8931bbd1412c804"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine un champ d'étoiles en arrière-plan.  <br /></td></tr>
+<tr class="separator:a1c4d65e220231299e8931bbd1412c804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0470f1ccf2997552aa7d443cdf4bccd" id="r_ad0470f1ccf2997552aa7d443cdf4bccd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ad0470f1ccf2997552aa7d443cdf4bccd">drawThickLine</a> (QPainter &amp;p, QPointF a, QPointF b, QColor color, float thick, float perpOff=0.f)</td></tr>
+<tr class="memdesc:ad0470f1ccf2997552aa7d443cdf4bccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine une ligne épaisse (rectangle tourné)  <br /></td></tr>
+<tr class="separator:ad0470f1ccf2997552aa7d443cdf4bccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade2316cb03f1db0fc9b1032c3fb0f7c5" id="r_ade2316cb03f1db0fc9b1032c3fb0f7c5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ade2316cb03f1db0fc9b1032c3fb0f7c5">drawTrainTrack</a> (QPainter &amp;p, float y, float time, float alpha01)</td></tr>
+<tr class="memdesc:ade2316cb03f1db0fc9b1032c3fb0f7c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dessine les rails d'un train.  <br /></td></tr>
+<tr class="separator:ade2316cb03f1db0fc9b1032c3fb0f7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c6e2b101ee7cd2f98578d22e20ba8a" id="r_ac0c6e2b101ee7cd2f98578d22e20ba8a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ac0c6e2b101ee7cd2f98578d22e20ba8a">estConnecte</a> (const string &amp;a, const string &amp;b, const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;voies, <a class="el" href="classJoueur.html">Joueur</a> *joueur)</td></tr>
+<tr class="memdesc:ac0c6e2b101ee7cd2f98578d22e20ba8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vérifie si deux villes sont connectées par des voies de train appartenant à un joueur.  <br /></td></tr>
+<tr class="separator:ac0c6e2b101ee7cd2f98578d22e20ba8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f98d995de69813a034d74af48521c4" id="r_a42f98d995de69813a034d74af48521c4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classVoieFerree.html">VoieFerree</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a42f98d995de69813a034d74af48521c4">findRoute</a> (QPointF mp, const <a class="el" href="structGS.html">GS</a> &amp;gs)</td></tr>
+<tr class="memdesc:a42f98d995de69813a034d74af48521c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trouve la voie ferée la plus proche d'un point donné, dans un rayon de 14 pixels. Ignore les voies déjà prises ou mal positionnées.  <br /></td></tr>
+<tr class="separator:a42f98d995de69813a034d74af48521c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fbc3cd451908e4e04c0180c3045142f" id="r_a5fbc3cd451908e4e04c0180c3045142f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classVille.html">Ville</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a5fbc3cd451908e4e04c0180c3045142f">getOuCreer</a> (const string &amp;nom, vector&lt; <a class="el" href="classVille.html">Ville</a> * &gt; &amp;villes)</td></tr>
+<tr class="memdesc:a5fbc3cd451908e4e04c0180c3045142f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche la main d'un joueur.  <br /></td></tr>
+<tr class="separator:a5fbc3cd451908e4e04c0180c3045142f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8489d5f5e3f27776a943029dc90dfe67" id="r_a8489d5f5e3f27776a943029dc90dfe67"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a8489d5f5e3f27776a943029dc90dfe67">handleMapClick</a> (QPoint mousePos, <a class="el" href="structGS.html">GS</a> &amp;gs)</td></tr>
+<tr class="memdesc:a8489d5f5e3f27776a943029dc90dfe67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gère le clic sur la carte.  <br /></td></tr>
+<tr class="separator:a8489d5f5e3f27776a943029dc90dfe67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61fa2d45fe0605aa1aca003d2cfd8115" id="r_a61fa2d45fe0605aa1aca003d2cfd8115"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a61fa2d45fe0605aa1aca003d2cfd8115">initGame</a> (<a class="el" href="structGS.html">GS</a> &amp;gs)</td></tr>
+<tr class="memdesc:a61fa2d45fe0605aa1aca003d2cfd8115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise le jeu.  <br /></td></tr>
+<tr class="separator:a61fa2d45fe0605aa1aca003d2cfd8115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07e33e391fe72be954c1cf152e015290" id="r_a07e33e391fe72be954c1cf152e015290"><td class="memItemLeft" align="right" valign="top">static QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a07e33e391fe72be954c1cf152e015290">lerp</a> (QColor a, QColor b, float t)</td></tr>
+<tr class="memdesc:a07e33e391fe72be954c1cf152e015290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpole entre deux couleurs.  <br /></td></tr>
+<tr class="separator:a07e33e391fe72be954c1cf152e015290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97" id="r_a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a0ddf1224851353fc92bfbff6f499fa97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction principale.  <br /></td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac0b3c0f14e509a489900b151130631" id="r_a7ac0b3c0f14e509a489900b151130631"><td class="memItemLeft" align="right" valign="top">static QFont&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a7ac0b3c0f14e509a489900b151130631">mkFont</a> (int pixelSize)</td></tr>
+<tr class="memdesc:a7ac0b3c0f14e509a489900b151130631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Crée une police de caractères.  <br /></td></tr>
+<tr class="separator:a7ac0b3c0f14e509a489900b151130631"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3556a5b6750448a675a129b03123bb86" id="r_a3556a5b6750448a675a129b03123bb86"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a3556a5b6750448a675a129b03123bb86">nomJoueurCol</a> (<a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a> c)</td></tr>
+<tr class="memdesc:a3556a5b6750448a675a129b03123bb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne le nom d'un joueur en fonction de sa couleur.  <br /></td></tr>
+<tr class="separator:a3556a5b6750448a675a129b03123bb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a724a4dea8c79219489461eefd31b2e6d" id="r_a724a4dea8c79219489461eefd31b2e6d"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a724a4dea8c79219489461eefd31b2e6d">nomTrain</a> (<a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> c)</td></tr>
+<tr class="memdesc:a724a4dea8c79219489461eefd31b2e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retourne le nom d'un train en fonction de sa couleur.  <br /></td></tr>
+<tr class="separator:a724a4dea8c79219489461eefd31b2e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fb481c6ebaaa3bcba663397c0755ac2" id="r_a5fb481c6ebaaa3bcba663397c0755ac2"><td class="memItemLeft" align="right" valign="top">static QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a5fb481c6ebaaa3bcba663397c0755ac2">qJoueur</a> (<a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a> c)</td></tr>
+<tr class="memdesc:a5fb481c6ebaaa3bcba663397c0755ac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit une couleur de joueur en couleur Qt.  <br /></td></tr>
+<tr class="separator:a5fb481c6ebaaa3bcba663397c0755ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36cb379941eb497dcbe15a7fb49a32ec" id="r_a36cb379941eb497dcbe15a7fb49a32ec"><td class="memItemLeft" align="right" valign="top">static QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a36cb379941eb497dcbe15a7fb49a32ec">qRoute</a> (<a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> c)</td></tr>
+<tr class="memdesc:a36cb379941eb497dcbe15a7fb49a32ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit une couleur de train en couleur Qt.  <br /></td></tr>
+<tr class="separator:a36cb379941eb497dcbe15a7fb49a32ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9be53ef6e9ae845fb2f7b7c666c1cef" id="r_ab9be53ef6e9ae845fb2f7b7c666c1cef"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ab9be53ef6e9ae845fb2f7b7c666c1cef">trimStr</a> (string &amp;s)</td></tr>
+<tr class="memdesc:ab9be53ef6e9ae845fb2f7b7c666c1cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affiche la main d'un joueur.  <br /></td></tr>
+<tr class="separator:ab9be53ef6e9ae845fb2f7b7c666c1cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a236fcbb6871698d3a396bd4cd3e09361" id="r_a236fcbb6871698d3a396bd4cd3e09361"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a236fcbb6871698d3a396bd4cd3e09361">updateHover</a> (QPoint mp, <a class="el" href="structGS.html">GS</a> &amp;gs)</td></tr>
+<tr class="memdesc:a236fcbb6871698d3a396bd4cd3e09361"><td class="mdescLeft">&#160;</td><td class="mdescRight">Met à jour l'élément survolé par la souris.  <br /></td></tr>
+<tr class="separator:a236fcbb6871698d3a396bd4cd3e09361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8513e24ad78bd7090bf802cb653d1bc" id="r_ad8513e24ad78bd7090bf802cb653d1bc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ad8513e24ad78bd7090bf802cb653d1bc">validerTickets</a> (<a class="el" href="classJoueur.html">Joueur</a> *j, const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;voies, <a class="el" href="classPlateau.html">Plateau</a> *plateau, <a class="el" href="structPiocheTickets.html">PiocheTickets</a> &amp;pioche, <a class="el" href="classPartie.html">Partie</a> &amp;partie, vector&lt; string &gt; &amp;log)</td></tr>
+<tr class="memdesc:ad8513e24ad78bd7090bf802cb653d1bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valide les tickets d'un joueur.  <br /></td></tr>
+<tr class="separator:ad8513e24ad78bd7090bf802cb653d1bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab28b303a3f5a0c94d9efe1d833b42406" id="r_ab28b303a3f5a0c94d9efe1d833b42406"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#ab28b303a3f5a0c94d9efe1d833b42406">verifierGrandeTraversee</a> (<a class="el" href="classJoueur.html">Joueur</a> *j, const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;voies)</td></tr>
+<tr class="memdesc:ab28b303a3f5a0c94d9efe1d833b42406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vérifie si un joueur a accompli une grande traversée.  <br /></td></tr>
+<tr class="separator:ab28b303a3f5a0c94d9efe1d833b42406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a88fad96377d72f95c7f344d517f386ab" id="r_a88fad96377d72f95c7f344d517f386ab"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a88fad96377d72f95c7f344d517f386ab">BS::Card</a> = { 16, 20, 46}</td></tr>
+<tr class="separator:a88fad96377d72f95c7f344d517f386ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8559dfbe94bd68606ac3c80ff23deea" id="r_aa8559dfbe94bd68606ac3c80ff23deea"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#aa8559dfbe94bd68606ac3c80ff23deea">BS::CardBdr</a> = { 38, 50, 95}</td></tr>
+<tr class="separator:aa8559dfbe94bd68606ac3c80ff23deea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a780c43d29d843557f256b63249d22137" id="r_a780c43d29d843557f256b63249d22137"><td class="memItemLeft" align="right" valign="top">static const map&lt; string, QPointF &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a780c43d29d843557f256b63249d22137">CITY_POS</a></td></tr>
+<tr class="memdesc:a780c43d29d843557f256b63249d22137"><td class="mdescLeft">&#160;</td><td class="mdescRight">Positions des villes sur la carte.  <br /></td></tr>
+<tr class="separator:a780c43d29d843557f256b63249d22137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0dd2effe9464718a86ab57d4840e574" id="r_af0dd2effe9464718a86ab57d4840e574"><td class="memItemLeft" align="right" valign="top">static const vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#af0dd2effe9464718a86ab57d4840e574">COTE_EST</a> = {&quot;New York&quot;,&quot;Washington&quot;,&quot;Miami&quot;,&quot;Montreal&quot;}</td></tr>
+<tr class="separator:af0dd2effe9464718a86ab57d4840e574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aafd746403eadc4134a7ca5e0dbd78b" id="r_a3aafd746403eadc4134a7ca5e0dbd78b"><td class="memItemLeft" align="right" valign="top">static const vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gui__main_8cpp.html#a3aafd746403eadc4134a7ca5e0dbd78b">COTE_OUEST</a> = {&quot;Seattle&quot;,&quot;San Francisco&quot;,&quot;Los Angeles&quot;}</td></tr>
+<tr class="separator:a3aafd746403eadc4134a7ca5e0dbd78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0b97315c8ec56be67fa40deb40436c0" id="r_ad0b97315c8ec56be67fa40deb40436c0"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#ad0b97315c8ec56be67fa40deb40436c0">BS::Danger</a> = {218, 50, 70}</td></tr>
+<tr class="separator:ad0b97315c8ec56be67fa40deb40436c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3800f9b3113106319cb177796710889" id="r_aa3800f9b3113106319cb177796710889"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#aa3800f9b3113106319cb177796710889">BS::Dark</a> = { 22, 26, 48}</td></tr>
+<tr class="separator:aa3800f9b3113106319cb177796710889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81a268ecab3170b8aa8de45c0aaaf3a4" id="r_a81a268ecab3170b8aa8de45c0aaaf3a4"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a81a268ecab3170b8aa8de45c0aaaf3a4">BS::DarkBg</a> = { 6, 8, 20}</td></tr>
+<tr class="separator:a81a268ecab3170b8aa8de45c0aaaf3a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b1fd79278a066356881b23c3b1f6326" id="r_a4b1fd79278a066356881b23c3b1f6326"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a4b1fd79278a066356881b23c3b1f6326">BS::Gold</a> = {212,168, 22}</td></tr>
+<tr class="separator:a4b1fd79278a066356881b23c3b1f6326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf5cb9566151afb1c3348238d42cf956" id="r_adf5cb9566151afb1c3348238d42cf956"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#adf5cb9566151afb1c3348238d42cf956">BS::GoldLight</a> = {255,220, 80}</td></tr>
+<tr class="separator:adf5cb9566151afb1c3348238d42cf956"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4227c67643197af4449d7ea3969e2050" id="r_a4227c67643197af4449d7ea3969e2050"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a4227c67643197af4449d7ea3969e2050">BS::Light</a> = {215,222,245}</td></tr>
+<tr class="separator:a4227c67643197af4449d7ea3969e2050"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8564a030bb1a78511d5d327830d94591" id="r_a8564a030bb1a78511d5d327830d94591"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a8564a030bb1a78511d5d327830d94591">BS::MapBg1</a> = { 18, 52, 35}</td></tr>
+<tr class="separator:a8564a030bb1a78511d5d327830d94591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64690706859a671dc73aa5c28fc22c23" id="r_a64690706859a671dc73aa5c28fc22c23"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a64690706859a671dc73aa5c28fc22c23">BS::MapMtn</a> = { 38, 55, 45}</td></tr>
+<tr class="separator:a64690706859a671dc73aa5c28fc22c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52ba1ab4b6d3b0793f26457b1c59ec5b" id="r_a52ba1ab4b6d3b0793f26457b1c59ec5b"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a52ba1ab4b6d3b0793f26457b1c59ec5b">BS::MapOcean</a> = { 12, 30, 65}</td></tr>
+<tr class="separator:a52ba1ab4b6d3b0793f26457b1c59ec5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb5096d7101cacc7e058423283dd755" id="r_a0eb5096d7101cacc7e058423283dd755"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a0eb5096d7101cacc7e058423283dd755">BS::Muted</a> = { 85, 98,135}</td></tr>
+<tr class="separator:a0eb5096d7101cacc7e058423283dd755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24217a1e15dfb21bed1ecb2a04a1f54e" id="r_a24217a1e15dfb21bed1ecb2a04a1f54e"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a24217a1e15dfb21bed1ecb2a04a1f54e">BS::Primary</a> = { 55,120,255}</td></tr>
+<tr class="separator:a24217a1e15dfb21bed1ecb2a04a1f54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ed80794c78f2bc6e0111f6a457571c" id="r_a43ed80794c78f2bc6e0111f6a457571c"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a43ed80794c78f2bc6e0111f6a457571c">BS::PrimaryH</a> = { 88,152,255}</td></tr>
+<tr class="separator:a43ed80794c78f2bc6e0111f6a457571c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8adc34f5105e8912fe3c29d181d7daf9" id="r_a8adc34f5105e8912fe3c29d181d7daf9"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a8adc34f5105e8912fe3c29d181d7daf9">BS::Secondary</a> = { 72, 85,120}</td></tr>
+<tr class="separator:a8adc34f5105e8912fe3c29d181d7daf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a4aba8b8218770931df55ba4ebdb301" id="r_a3a4aba8b8218770931df55ba4ebdb301"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a3a4aba8b8218770931df55ba4ebdb301">BS::Success</a> = { 0,178,120}</td></tr>
+<tr class="separator:a3a4aba8b8218770931df55ba4ebdb301"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3db2b63d551a014b76ce530ed58eb557" id="r_a3db2b63d551a014b76ce530ed58eb557"><td class="memItemLeft" align="right" valign="top">const QColor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceBS.html#a3db2b63d551a014b76ce530ed58eb557">BS::Warning</a> = {255,190, 0}</td></tr>
+<tr class="separator:a3db2b63d551a014b76ce530ed58eb557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation du type de l'énumération</h2>
+<a id="a0c6b97e8f0f73048e9ec772f39e8cb19" name="a0c6b97e8f0f73048e9ec772f39e8cb19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c6b97e8f0f73048e9ec772f39e8cb19">&#9670;&#160;</a></span>ActionSt</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19">ActionSt</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Valeurs énumérées</th></tr><tr><td class="fieldname"><a id="a0c6b97e8f0f73048e9ec772f39e8cb19a3ed53fbeb1eab0443561b68ca0c0b5cf" name="a0c6b97e8f0f73048e9ec772f39e8cb19a3ed53fbeb1eab0443561b68ca0c0b5cf"></a>MENU&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673" name="a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673"></a>SELECT_ROUTE&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00640">640</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a83fc559664fc7c7e310c93586457b428" name="a83fc559664fc7c7e310c93586457b428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83fc559664fc7c7e310c93586457b428">&#9670;&#160;</a></span>AppState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428">AppState</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Valeurs énumérées</th></tr><tr><td class="fieldname"><a id="a83fc559664fc7c7e310c93586457b428a4066f6b1152cde090a9958f0bd14a15c" name="a83fc559664fc7c7e310c93586457b428a4066f6b1152cde090a9958f0bd14a15c"></a>SETUP_NB&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a83fc559664fc7c7e310c93586457b428aa0e86d853428d8b69ea0c9823927d664" name="a83fc559664fc7c7e310c93586457b428aa0e86d853428d8b69ea0c9823927d664"></a>SETUP_NAME&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a83fc559664fc7c7e310c93586457b428a4504e1ed59cd9732b8a844e5424e6f13" name="a83fc559664fc7c7e310c93586457b428a4504e1ed59cd9732b8a844e5424e6f13"></a>GAME&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a83fc559664fc7c7e310c93586457b428af8454a27e1df41397bf42444fe5aa45b" name="a83fc559664fc7c7e310c93586457b428af8454a27e1df41397bf42444fe5aa45b"></a>GAME_OVER&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00639">639</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a6c72d5433ba2afacd0829b410faa9004" name="a6c72d5433ba2afacd0829b410faa9004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c72d5433ba2afacd0829b410faa9004">&#9670;&#160;</a></span>btnHit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool btnHit </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>by</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>pt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Vérifie si un point est dans un bouton. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bx</td><td></td></tr>
+    <tr><td class="paramname">by</td><td></td></tr>
+    <tr><td class="paramname">bw</td><td></td></tr>
+    <tr><td class="paramname">bh</td><td></td></tr>
+    <tr><td class="paramname">pt</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00464">464</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00507">drawBtn()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a381e471f6ef3d8077a987ce2116ea9f3" name="a381e471f6ef3d8077a987ce2116ea9f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a381e471f6ef3d8077a987ce2116ea9f3">&#9670;&#160;</a></span>calcOffsets()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static map&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> *, float &gt; calcOffsets </td>
+          <td>(</td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>voies</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule les offsets pour les voies parallèles. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">voies</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>map&lt;VoieFerree*, float&gt; </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00615">615</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00697">initGame()</a>.</p>
+
+</div>
+</div>
+<a id="a6e57e4dce02790549cf22116bccfbb0b" name="a6e57e4dce02790549cf22116bccfbb0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e57e4dce02790549cf22116bccfbb0b">&#9670;&#160;</a></span>chargerMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void chargerMap </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>fichier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="classVille.html">Ville</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>villes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>voies</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Charge la carte à partir d'un fichier CSV et remplit les villes et voies. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fichier</td><td></td></tr>
+    <tr><td class="paramname">villes</td><td></td></tr>
+    <tr><td class="paramname">voies</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00125">125</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00050">couleurFromString()</a>, <a class="el" href="gui__main_8cpp_source.html#l00113">getOuCreer()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00101">trimStr()</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00697">initGame()</a>.</p>
+
+</div>
+</div>
+<a id="aa6edb4554124b2ac459a506f866eff39" name="aa6edb4554124b2ac459a506f866eff39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6edb4554124b2ac459a506f866eff39">&#9670;&#160;</a></span>chargerTickets()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static vector&lt; <a class="el" href="classTicket.html">Ticket</a> * &gt; chargerTickets </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>fichier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classVille.html">Ville</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>villes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Charge les tickets à partir d'un fichier CSV. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fichier</td><td></td></tr>
+    <tr><td class="paramname">villes</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>vector&lt;Ticket*&gt; </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00152">152</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00101">trimStr()</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00697">initGame()</a>.</p>
+
+</div>
+</div>
+<a id="a950688a1865fd0fcf7d1cc8e301ea0cf" name="a950688a1865fd0fcf7d1cc8e301ea0cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a950688a1865fd0fcf7d1cc8e301ea0cf">&#9670;&#160;</a></span>couleurFromString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a> couleurFromString </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convertit une chaîne de caractères en couleur de train. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>couleurTrain </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00050">50</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a83f1f43f9506507c9399f1d2db047d25">BLANC</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a6a317e5a1612b2df627cd32f4929b4d3">NOIR</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, et <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a08072cedaca1a44e7509d89da8f8db33">VERT</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00125">chargerMap()</a>.</p>
+
+</div>
+</div>
+<a id="ab579c1806a7fe1b42c9299d78f57f56d" name="ab579c1806a7fe1b42c9299d78f57f56d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab579c1806a7fe1b42c9299d78f57f56d">&#9670;&#160;</a></span>creerTrains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static vector&lt; <a class="el" href="classTrain.html">Train</a> * &gt; creerTrains </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Crée les trains pour la partie. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>vector&lt;Train*&gt; </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00177">177</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a83f1f43f9506507c9399f1d2db047d25">BLANC</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">MULTI</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a6a317e5a1612b2df627cd32f4929b4d3">NOIR</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, et <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a08072cedaca1a44e7509d89da8f8db33">VERT</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00697">initGame()</a>.</p>
+
+</div>
+</div>
+<a id="abb9b29f7c0f9e7fd186f82c5d4d4a23a" name="abb9b29f7c0f9e7fd186f82c5d4d4a23a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb9b29f7c0f9e7fd186f82c5d4d4a23a">&#9670;&#160;</a></span>distSeg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static double distSeg </td>
+          <td>(</td>
+          <td class="paramtype">QPointF&#160;</td>
+          <td class="paramname"><em>pt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPointF&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPointF&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calcule la distance d'un point à un segment. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pt</td><td></td></tr>
+    <tr><td class="paramname">a</td><td></td></tr>
+    <tr><td class="paramname">b</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>double </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00601">601</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01324">findRoute()</a>.</p>
+
+</div>
+</div>
+<a id="af821f8f05e0b9430b6f9158828216151" name="af821f8f05e0b9430b6f9158828216151"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af821f8f05e0b9430b6f9158828216151">&#9670;&#160;</a></span>drawBtn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawBtn </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>disabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>mouse</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>base</em> = <code><a class="el" href="namespaceBS.html#a24217a1e15dfb21bed1ecb2a04a1f54e">BS::Primary</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>hoverCol</em> = <code><a class="el" href="namespaceBS.html#a43ed80794c78f2bc6e0111f6a457571c">BS::PrimaryH</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine un bouton. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">x</td><td></td></tr>
+    <tr><td class="paramname">y</td><td></td></tr>
+    <tr><td class="paramname">bw</td><td></td></tr>
+    <tr><td class="paramname">bh</td><td></td></tr>
+    <tr><td class="paramname">label</td><td></td></tr>
+    <tr><td class="paramname">disabled</td><td></td></tr>
+    <tr><td class="paramname">mouse</td><td></td></tr>
+    <tr><td class="paramname">time</td><td></td></tr>
+    <tr><td class="paramname">base</td><td></td></tr>
+    <tr><td class="paramname">hoverCol</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00507">507</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00464">btnHit()</a>, <a class="el" href="gui__main_8cpp_source.html#l00446">drawShadow()</a>, <a class="el" href="gui__main_8cpp_source.html#l00334">BS::Gold</a>, <a class="el" href="gui__main_8cpp_source.html#l00335">BS::GoldLight</a>, <a class="el" href="gui__main_8cpp_source.html#l00355">lerp()</a>, <a class="el" href="gui__main_8cpp_source.html#l00431">mkFont()</a>, <a class="el" href="gui__main_8cpp_source.html#l00343">BS::Muted</a>, et <a class="el" href="gui__main_8cpp_source.html#l00341">BS::Secondary</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a4b9c6072e5484345eed245c5ae7e2493" name="a4b9c6072e5484345eed245c5ae7e2493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b9c6072e5484345eed245c5ae7e2493">&#9670;&#160;</a></span>drawCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawCard </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>cw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>bg</em> = <code><a class="el" href="namespaceBS.html#a88fad96377d72f95c7f344d517f386ab">BS::Card</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>topAccent</em> = <code>Qt::transparent</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine une carte. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">x</td><td></td></tr>
+    <tr><td class="paramname">y</td><td></td></tr>
+    <tr><td class="paramname">cw</td><td></td></tr>
+    <tr><td class="paramname">ch</td><td></td></tr>
+    <tr><td class="paramname">bg</td><td></td></tr>
+    <tr><td class="paramname">topAccent</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00479">479</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00332">BS::CardBdr</a>, et <a class="el" href="gui__main_8cpp_source.html#l00446">drawShadow()</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a56d56de1168ca58fc710e9abef59ff68" name="a56d56de1168ca58fc710e9abef59ff68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56d56de1168ca58fc710e9abef59ff68">&#9670;&#160;</a></span>drawMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawMap </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structGS.html">GS</a> &amp;&#160;</td>
+          <td class="paramname"><em>gs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine la carte. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">gs</td><td></td></tr>
+    <tr><td class="paramname">time</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00765">765</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00662">GS::action</a>, <a class="el" href="gui__main_8cpp_source.html#l00401">CITY_POS</a>, <a class="el" href="gui__main_8cpp_source.html#l00219">COTE_EST</a>, <a class="el" href="gui__main_8cpp_source.html#l00218">COTE_OUEST</a>, <a class="el" href="gui__main_8cpp_source.html#l00686">GS::cur()</a>, <a class="el" href="gui__main_8cpp_source.html#l00576">drawThickLine()</a>, <a class="el" href="Joueur_8cpp_source.html#l00034">Joueur::getCouleur()</a>, <a class="el" href="Joueur_8cpp_source.html#l00040">Joueur::getMissions()</a>, <a class="el" href="gui__main_8cpp_source.html#l00681">GS::hovered</a>, <a class="el" href="gui__main_8cpp_source.html#l00651">GS::joueurs</a>, <a class="el" href="gui__main_8cpp_source.html#l00355">lerp()</a>, <a class="el" href="gui__main_8cpp_source.html#l00344">BS::MapBg1</a>, <a class="el" href="gui__main_8cpp_source.html#l00346">BS::MapMtn</a>, <a class="el" href="gui__main_8cpp_source.html#l00345">BS::MapOcean</a>, <a class="el" href="gui__main_8cpp_source.html#l00431">mkFont()</a>, <a class="el" href="gui__main_8cpp_source.html#l00682">GS::offsets</a>, <a class="el" href="gui__main_8cpp_source.html#l00388">qJoueur()</a>, <a class="el" href="gui__main_8cpp_source.html#l00370">qRoute()</a>, <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673">SELECT_ROUTE</a>, et <a class="el" href="gui__main_8cpp_source.html#l00652">GS::voies</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01442">GameWidget::paintEvent()</a>.</p>
+
+</div>
+</div>
+<a id="a95631d8911e0ef70a8a13cbb083cd782" name="a95631d8911e0ef70a8a13cbb083cd782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95631d8911e0ef70a8a13cbb083cd782">&#9670;&#160;</a></span>drawPanel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawPanel </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structGS.html">GS</a> &amp;&#160;</td>
+          <td class="paramname"><em>gs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>click</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>mouse</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine le panneau latéral. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">gs</td><td></td></tr>
+    <tr><td class="paramname">click</td><td></td></tr>
+    <tr><td class="paramname">mouse</td><td></td></tr>
+    <tr><td class="paramname">time</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00933">933</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00662">GS::action</a>, <a class="el" href="gui__main_8cpp_source.html#l00675">GS::addLog()</a>, <a class="el" href="gui__main_8cpp_source.html#l00646">GS::app</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a83f1f43f9506507c9399f1d2db047d25">BLANC</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="gui__main_8cpp_source.html#l00464">btnHit()</a>, <a class="el" href="gui__main_8cpp_source.html#l00332">BS::CardBdr</a>, <a class="el" href="gui__main_8cpp_source.html#l00686">GS::cur()</a>, <a class="el" href="gui__main_8cpp_source.html#l00340">BS::Danger</a>, <a class="el" href="gui__main_8cpp_source.html#l00333">BS::Dark</a>, <a class="el" href="gui__main_8cpp_source.html#l00330">BS::DarkBg</a>, <a class="el" href="gui__main_8cpp_source.html#l00297">PiocheTickets::defausser()</a>, <a class="el" href="Joueur_8cpp_source.html#l00139">Joueur::defausserTickets()</a>, <a class="el" href="gui__main_8cpp_source.html#l00507">drawBtn()</a>, <a class="el" href="gui__main_8cpp_source.html#l00479">drawCard()</a>, <a class="el" href="gui__main_8cpp_source.html#l00446">drawShadow()</a>, <a class="el" href="gui__main_8cpp_source.html#l00722">drawStarfield()</a>, <a class="el" href="gui__main_8cpp_source.html#l00744">drawTrainTrack()</a>, <a class="el" href="gui__main_8cpp_source.html#l00663">GS::gagnant</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428af8454a27e1df41397bf42444fe5aa45b">GAME_OVER</a>, <a class="el" href="Joueur_8cpp_source.html#l00034">Joueur::getCouleur()</a>, <a class="el" href="Joueur_8cpp_source.html#l00040">Joueur::getMissions()</a>, <a class="el" href="Joueur_8cpp_source.html#l00050">Joueur::getNbCartes()</a>, <a class="el" href="Joueur_8cpp_source.html#l00036">Joueur::getNbWagons()</a>, <a class="el" href="Joueur_8cpp_source.html#l00032">Joueur::getNom()</a>, <a class="el" href="Joueur_8cpp_source.html#l00038">Joueur::getTicketFini()</a>, <a class="el" href="gui__main_8cpp_source.html#l00334">BS::Gold</a>, <a class="el" href="gui__main_8cpp_source.html#l00335">BS::GoldLight</a>, <a class="el" href="gui__main_8cpp_source.html#l00681">GS::hovered</a>, <a class="el" href="gui__main_8cpp_source.html#l00697">initGame()</a>, <a class="el" href="gui__main_8cpp_source.html#l00649">GS::inputBuf</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="gui__main_8cpp_source.html#l00651">GS::joueurs</a>, <a class="el" href="gui__main_8cpp_source.html#l00355">lerp()</a>, <a class="el" href="gui__main_8cpp_source.html#l00342">BS::Light</a>, <a class="el" href="gui__main_8cpp_source.html#l00667">GS::log</a>, <a class="el" href="gui__main_8cpp_source.html#l00684">GS::logoPix</a>, <a class="el" href="gui__main_8cpp_source.html#l00668">GS::logTimes</a>, <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19a3ed53fbeb1eab0443561b68ca0c0b5cf">MENU</a>, <a class="el" href="gui__main_8cpp_source.html#l00431">mkFont()</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">MULTI</a>, <a class="el" href="gui__main_8cpp_source.html#l00343">BS::Muted</a>, <a class="el" href="gui__main_8cpp_source.html#l00648">GS::nameIdx</a>, <a class="el" href="gui__main_8cpp_source.html#l00647">GS::nbJ</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a6a317e5a1612b2df627cd32f4929b4d3">NOIR</a>, <a class="el" href="gui__main_8cpp_source.html#l00086">nomJoueurCol()</a>, <a class="el" href="gui__main_8cpp_source.html#l00067">nomTrain()</a>, <a class="el" href="gui__main_8cpp_source.html#l00669">GS::now</a>, <a class="el" href="gui__main_8cpp_source.html#l00656">GS::partie</a>, <a class="el" href="gui__main_8cpp_source.html#l00657">GS::pioche</a>, <a class="el" href="gui__main_8cpp_source.html#l00268">PiocheTickets::piocher()</a>, <a class="el" href="Partie_8cpp_source.html#l00042">Partie::piocherTrain()</a>, <a class="el" href="gui__main_8cpp_source.html#l00337">BS::Primary</a>, <a class="el" href="gui__main_8cpp_source.html#l00388">qJoueur()</a>, <a class="el" href="gui__main_8cpp_source.html#l00370">qRoute()</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, <a class="el" href="gui__main_8cpp_source.html#l00341">BS::Secondary</a>, <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673">SELECT_ROUTE</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428aa0e86d853428d8b69ea0c9823927d664">SETUP_NAME</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428a4066f6b1152cde090a9958f0bd14a15c">SETUP_NB</a>, <a class="el" href="gui__main_8cpp_source.html#l00665">GS::shouldQuit</a>, <a class="el" href="gui__main_8cpp_source.html#l00664">GS::statusMsg</a>, <a class="el" href="gui__main_8cpp_source.html#l00339">BS::Success</a>, <a class="el" href="gui__main_8cpp_source.html#l00660">GS::tourIdx</a>, <a class="el" href="gui__main_8cpp_source.html#l00659">GS::trainLeft</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a08072cedaca1a44e7509d89da8f8db33">VERT</a>, <a class="el" href="gui__main_8cpp_source.html#l00258">PiocheTickets::vide()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00336">BS::Warning</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01442">GameWidget::paintEvent()</a>.</p>
+
+</div>
+</div>
+<a id="a0098c3de498487cb0073558274aa4e7b" name="a0098c3de498487cb0073558274aa4e7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0098c3de498487cb0073558274aa4e7b">&#9670;&#160;</a></span>drawShadow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawShadow </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>bh</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>90</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine une ombre portée. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">x</td><td></td></tr>
+    <tr><td class="paramname">y</td><td></td></tr>
+    <tr><td class="paramname">bw</td><td></td></tr>
+    <tr><td class="paramname">bh</td><td></td></tr>
+    <tr><td class="paramname">alpha</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00446">446</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00507">drawBtn()</a>, <a class="el" href="gui__main_8cpp_source.html#l00479">drawCard()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a1c4d65e220231299e8931bbd1412c804" name="a1c4d65e220231299e8931bbd1412c804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c4d65e220231299e8931bbd1412c804">&#9670;&#160;</a></span>drawStarfield()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawStarfield </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>areaW</em> = <code>808.f</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>areaH</em> = <code>720.f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine un champ d'étoiles en arrière-plan. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">time</td><td></td></tr>
+    <tr><td class="paramname">areaW</td><td></td></tr>
+    <tr><td class="paramname">areaH</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00722">722</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="ad0470f1ccf2997552aa7d443cdf4bccd" name="ad0470f1ccf2997552aa7d443cdf4bccd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0470f1ccf2997552aa7d443cdf4bccd">&#9670;&#160;</a></span>drawThickLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawThickLine </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPointF&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QPointF&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>color</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>thick</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>perpOff</em> = <code>0.f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine une ligne épaisse (rectangle tourné) </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">a</td><td></td></tr>
+    <tr><td class="paramname">b</td><td></td></tr>
+    <tr><td class="paramname">color</td><td></td></tr>
+    <tr><td class="paramname">thick</td><td></td></tr>
+    <tr><td class="paramname">perpOff</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00576">576</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>.</p>
+
+</div>
+</div>
+<a id="ade2316cb03f1db0fc9b1032c3fb0f7c5" name="ade2316cb03f1db0fc9b1032c3fb0f7c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade2316cb03f1db0fc9b1032c3fb0f7c5">&#9670;&#160;</a></span>drawTrainTrack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void drawTrainTrack </td>
+          <td>(</td>
+          <td class="paramtype">QPainter &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>alpha01</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dessine les rails d'un train. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td></td></tr>
+    <tr><td class="paramname">y</td><td></td></tr>
+    <tr><td class="paramname">time</td><td></td></tr>
+    <tr><td class="paramname">alpha01</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00744">744</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="ac0c6e2b101ee7cd2f98578d22e20ba8a" name="ac0c6e2b101ee7cd2f98578d22e20ba8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c6e2b101ee7cd2f98578d22e20ba8a">&#9670;&#160;</a></span>estConnecte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool estConnecte </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>voies</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classJoueur.html">Joueur</a> *&#160;</td>
+          <td class="paramname"><em>joueur</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Vérifie si deux villes sont connectées par des voies de train appartenant à un joueur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td></td></tr>
+    <tr><td class="paramname">b</td><td></td></tr>
+    <tr><td class="paramname">voies</td><td></td></tr>
+    <tr><td class="paramname">joueur</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00196">196</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00310">validerTickets()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00229">verifierGrandeTraversee()</a>.</p>
+
+</div>
+</div>
+<a id="a42f98d995de69813a034d74af48521c4" name="a42f98d995de69813a034d74af48521c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42f98d995de69813a034d74af48521c4">&#9670;&#160;</a></span>findRoute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classVoieFerree.html">VoieFerree</a> * findRoute </td>
+          <td>(</td>
+          <td class="paramtype">QPointF&#160;</td>
+          <td class="paramname"><em>mp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structGS.html">GS</a> &amp;&#160;</td>
+          <td class="paramname"><em>gs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Trouve la voie ferée la plus proche d'un point donné, dans un rayon de 14 pixels. Ignore les voies déjà prises ou mal positionnées. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mp</td><td></td></tr>
+    <tr><td class="paramname">gs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>VoieFerree* </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l01324">1324</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00401">CITY_POS</a>, <a class="el" href="gui__main_8cpp_source.html#l00601">distSeg()</a>, <a class="el" href="VoieFerree_8cpp_source.html#l00014">VoieFerree::getListeVille()</a>, <a class="el" href="gui__main_8cpp_source.html#l00682">GS::offsets</a>, et <a class="el" href="gui__main_8cpp_source.html#l00652">GS::voies</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01348">handleMapClick()</a>, et <a class="el" href="gui__main_8cpp_source.html#l01404">updateHover()</a>.</p>
+
+</div>
+</div>
+<a id="a5fbc3cd451908e4e04c0180c3045142f" name="a5fbc3cd451908e4e04c0180c3045142f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fbc3cd451908e4e04c0180c3045142f">&#9670;&#160;</a></span>getOuCreer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classVille.html">Ville</a> * getOuCreer </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>nom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; <a class="el" href="classVille.html">Ville</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>villes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Affiche la main d'un joueur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nom</td><td></td></tr>
+    <tr><td class="paramname">villes</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Ville* </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00113">113</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00125">chargerMap()</a>.</p>
+
+</div>
+</div>
+<a id="a8489d5f5e3f27776a943029dc90dfe67" name="a8489d5f5e3f27776a943029dc90dfe67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8489d5f5e3f27776a943029dc90dfe67">&#9670;&#160;</a></span>handleMapClick()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void handleMapClick </td>
+          <td>(</td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>mousePos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structGS.html">GS</a> &amp;&#160;</td>
+          <td class="paramname"><em>gs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gère le clic sur la carte. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mousePos</td><td></td></tr>
+    <tr><td class="paramname">gs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l01348">1348</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00662">GS::action</a>, <a class="el" href="gui__main_8cpp_source.html#l00675">GS::addLog()</a>, <a class="el" href="Joueur_8cpp_source.html#l00167">Joueur::aGagne()</a>, <a class="el" href="gui__main_8cpp_source.html#l00646">GS::app</a>, <a class="el" href="gui__main_8cpp_source.html#l00686">GS::cur()</a>, <a class="el" href="Joueur_8cpp_source.html#l00106">Joueur::defausserCartesVoie()</a>, <a class="el" href="gui__main_8cpp_source.html#l01324">findRoute()</a>, <a class="el" href="gui__main_8cpp_source.html#l00663">GS::gagnant</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428a4504e1ed59cd9732b8a844e5424e6f13">GAME</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428af8454a27e1df41397bf42444fe5aa45b">GAME_OVER</a>, <a class="el" href="VoieFerree_8cpp_source.html#l00026">VoieFerree::getCouleur()</a>, <a class="el" href="VoieFerree_8cpp_source.html#l00014">VoieFerree::getListeVille()</a>, <a class="el" href="Joueur_8cpp_source.html#l00050">Joueur::getNbCartes()</a>, <a class="el" href="Joueur_8cpp_source.html#l00036">Joueur::getNbWagons()</a>, <a class="el" href="Joueur_8cpp_source.html#l00032">Joueur::getNom()</a>, <a class="el" href="Partie_8cpp_source.html#l00048">Partie::getPlateau()</a>, <a class="el" href="VoieFerree_8cpp_source.html#l00022">VoieFerree::getPoids()</a>, <a class="el" href="gui__main_8cpp_source.html#l00661">GS::grandeTrav</a>, <a class="el" href="gui__main_8cpp_source.html#l00681">GS::hovered</a>, <a class="el" href="gui__main_8cpp_source.html#l00667">GS::log</a>, <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19a3ed53fbeb1eab0443561b68ca0c0b5cf">MENU</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">MULTI</a>, <a class="el" href="Joueur_8cpp_source.html#l00169">Joueur::naPlusDeWagons()</a>, <a class="el" href="gui__main_8cpp_source.html#l00067">nomTrain()</a>, <a class="el" href="gui__main_8cpp_source.html#l00656">GS::partie</a>, <a class="el" href="Joueur_8cpp_source.html#l00095">Joueur::peutPrendreVoie()</a>, <a class="el" href="gui__main_8cpp_source.html#l00657">GS::pioche</a>, <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673">SELECT_ROUTE</a>, <a class="el" href="VoieFerree_8cpp_source.html#l00030">VoieFerree::setJoueur()</a>, <a class="el" href="gui__main_8cpp_source.html#l00664">GS::statusMsg</a>, <a class="el" href="gui__main_8cpp_source.html#l00660">GS::tourIdx</a>, <a class="el" href="Joueur_8cpp_source.html#l00119">Joueur::utiliserWagons()</a>, <a class="el" href="Joueur_8cpp_source.html#l00153">Joueur::validerTicket()</a>, <a class="el" href="gui__main_8cpp_source.html#l00310">validerTickets()</a>, <a class="el" href="gui__main_8cpp_source.html#l00229">verifierGrandeTraversee()</a>, <a class="el" href="gui__main_8cpp_source.html#l00653">GS::villes</a>, et <a class="el" href="gui__main_8cpp_source.html#l00652">GS::voies</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01459">GameWidget::mousePressEvent()</a>.</p>
+
+</div>
+</div>
+<a id="a61fa2d45fe0605aa1aca003d2cfd8115" name="a61fa2d45fe0605aa1aca003d2cfd8115"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61fa2d45fe0605aa1aca003d2cfd8115">&#9670;&#160;</a></span>initGame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void initGame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structGS.html">GS</a> &amp;&#160;</td>
+          <td class="paramname"><em>gs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initialise le jeu. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00697">697</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00675">GS::addLog()</a>, <a class="el" href="gui__main_8cpp_source.html#l00646">GS::app</a>, <a class="el" href="gui__main_8cpp_source.html#l00615">calcOffsets()</a>, <a class="el" href="gui__main_8cpp_source.html#l00125">chargerMap()</a>, <a class="el" href="gui__main_8cpp_source.html#l00152">chargerTickets()</a>, <a class="el" href="gui__main_8cpp_source.html#l00177">creerTrains()</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428a4504e1ed59cd9732b8a844e5424e6f13">GAME</a>, <a class="el" href="gui__main_8cpp_source.html#l00651">GS::joueurs</a>, <a class="el" href="gui__main_8cpp_source.html#l00647">GS::nbJ</a>, <a class="el" href="gui__main_8cpp_source.html#l00682">GS::offsets</a>, <a class="el" href="gui__main_8cpp_source.html#l00656">GS::partie</a>, <a class="el" href="gui__main_8cpp_source.html#l00657">GS::pioche</a>, <a class="el" href="gui__main_8cpp_source.html#l00658">GS::rng</a>, <a class="el" href="gui__main_8cpp_source.html#l00655">GS::tickets</a>, <a class="el" href="gui__main_8cpp_source.html#l00659">GS::trainLeft</a>, <a class="el" href="gui__main_8cpp_source.html#l00654">GS::trains</a>, <a class="el" href="gui__main_8cpp_source.html#l00653">GS::villes</a>, et <a class="el" href="gui__main_8cpp_source.html#l00652">GS::voies</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>, et <a class="el" href="gui__main_8cpp_source.html#l01474">GameWidget::keyPressEvent()</a>.</p>
+
+</div>
+</div>
+<a id="a07e33e391fe72be954c1cf152e015290" name="a07e33e391fe72be954c1cf152e015290"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07e33e391fe72be954c1cf152e015290">&#9670;&#160;</a></span>lerp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static QColor lerp </td>
+          <td>(</td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QColor&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Interpole entre deux couleurs. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td></td></tr>
+    <tr><td class="paramname">b</td><td></td></tr>
+    <tr><td class="paramname">t</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>QColor </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00355">355</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00507">drawBtn()</a>, <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a0ddf1224851353fc92bfbff6f499fa97" name="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction principale. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td></td></tr>
+    <tr><td class="paramname">argv</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>int </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l01513">1513</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7ac0b3c0f14e509a489900b151130631" name="a7ac0b3c0f14e509a489900b151130631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ac0b3c0f14e509a489900b151130631">&#9670;&#160;</a></span>mkFont()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static QFont mkFont </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pixelSize</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Crée une police de caractères. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pixelSize</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>QFont </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00431">431</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00507">drawBtn()</a>, <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a3556a5b6750448a675a129b03123bb86" name="a3556a5b6750448a675a129b03123bb86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3556a5b6750448a675a129b03123bb86">&#9670;&#160;</a></span>nomJoueurCol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string nomJoueurCol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a>&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne le nom d'un joueur en fonction de sa couleur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>string </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00086">86</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, et <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08a08072cedaca1a44e7509d89da8f8db33">VERT</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a724a4dea8c79219489461eefd31b2e6d" name="a724a4dea8c79219489461eefd31b2e6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a724a4dea8c79219489461eefd31b2e6d">&#9670;&#160;</a></span>nomTrain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string nomTrain </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a>&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retourne le nom d'un train en fonction de sa couleur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>string </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00067">67</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a83f1f43f9506507c9399f1d2db047d25">BLANC</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">MULTI</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a6a317e5a1612b2df627cd32f4929b4d3">NOIR</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, et <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a08072cedaca1a44e7509d89da8f8db33">VERT</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>, et <a class="el" href="gui__main_8cpp_source.html#l01348">handleMapClick()</a>.</p>
+
+</div>
+</div>
+<a id="a5fb481c6ebaaa3bcba663397c0755ac2" name="a5fb481c6ebaaa3bcba663397c0755ac2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb481c6ebaaa3bcba663397c0755ac2">&#9670;&#160;</a></span>qJoueur()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static QColor qJoueur </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08">couleurJoueur</a>&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convertit une couleur de joueur en couleur Qt. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>QColor </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00388">388</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, et <a class="el" href="couleurEnum_8hpp.html#ac0e199888e468f9d18cc7a063cacde08a08072cedaca1a44e7509d89da8f8db33">VERT</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="a36cb379941eb497dcbe15a7fb49a32ec" name="a36cb379941eb497dcbe15a7fb49a32ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36cb379941eb497dcbe15a7fb49a32ec">&#9670;&#160;</a></span>qRoute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static QColor qRoute </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612">couleurTrain</a>&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convertit une couleur de train en couleur Qt. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>QColor </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00370">370</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a83f1f43f9506507c9399f1d2db047d25">BLANC</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a1048c42fdd8c5f1a3ce18b1cf01d9711">BLEU</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612acb0c84b380051fccadc170ca96d281fd">JAUNE</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612af26be970aac1b06fa62b87562bc73deb">MULTI</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a6a317e5a1612b2df627cd32f4929b4d3">NOIR</a>, <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612ab1db34a69cd8bc04eda5a1138dc0e530">ROUGE</a>, et <a class="el" href="couleurEnum_8hpp.html#a0ca305eea9991fbe93bfe4f312d21612a08072cedaca1a44e7509d89da8f8db33">VERT</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00933">drawPanel()</a>.</p>
+
+</div>
+</div>
+<a id="ab9be53ef6e9ae845fb2f7b7c666c1cef" name="ab9be53ef6e9ae845fb2f7b7c666c1cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9be53ef6e9ae845fb2f7b7c666c1cef">&#9670;&#160;</a></span>trimStr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void trimStr </td>
+          <td>(</td>
+          <td class="paramtype">string &amp;&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Affiche la main d'un joueur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00101">101</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00125">chargerMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00152">chargerTickets()</a>.</p>
+
+</div>
+</div>
+<a id="a236fcbb6871698d3a396bd4cd3e09361" name="a236fcbb6871698d3a396bd4cd3e09361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a236fcbb6871698d3a396bd4cd3e09361">&#9670;&#160;</a></span>updateHover()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void updateHover </td>
+          <td>(</td>
+          <td class="paramtype">QPoint&#160;</td>
+          <td class="paramname"><em>mp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structGS.html">GS</a> &amp;&#160;</td>
+          <td class="paramname"><em>gs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Met à jour l'élément survolé par la souris. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mp</td><td></td></tr>
+    <tr><td class="paramname">gs</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l01404">1404</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00662">GS::action</a>, <a class="el" href="gui__main_8cpp_source.html#l00646">GS::app</a>, <a class="el" href="gui__main_8cpp_source.html#l01324">findRoute()</a>, <a class="el" href="gui__main_8cpp.html#a83fc559664fc7c7e310c93586457b428a4504e1ed59cd9732b8a844e5424e6f13">GAME</a>, <a class="el" href="gui__main_8cpp_source.html#l00681">GS::hovered</a>, et <a class="el" href="gui__main_8cpp.html#a0c6b97e8f0f73048e9ec772f39e8cb19adc94d2c79d29b3a22e8c4ccc3702b673">SELECT_ROUTE</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01468">GameWidget::mouseMoveEvent()</a>.</p>
+
+</div>
+</div>
+<a id="ad8513e24ad78bd7090bf802cb653d1bc" name="ad8513e24ad78bd7090bf802cb653d1bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8513e24ad78bd7090bf802cb653d1bc">&#9670;&#160;</a></span>validerTickets()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void validerTickets </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classJoueur.html">Joueur</a> *&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>voies</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classPlateau.html">Plateau</a> *&#160;</td>
+          <td class="paramname"><em>plateau</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structPiocheTickets.html">PiocheTickets</a> &amp;&#160;</td>
+          <td class="paramname"><em>pioche</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classPartie.html">Partie</a> &amp;&#160;</td>
+          <td class="paramname"><em>partie</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>log</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Valide les tickets d'un joueur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">j</td><td></td></tr>
+    <tr><td class="paramname">voies</td><td></td></tr>
+    <tr><td class="paramname">plateau</td><td></td></tr>
+    <tr><td class="paramname">pioche</td><td></td></tr>
+    <tr><td class="paramname">partie</td><td></td></tr>
+    <tr><td class="paramname">log</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00310">310</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00196">estConnecte()</a>, <a class="el" href="Joueur_8cpp_source.html#l00040">Joueur::getMissions()</a>, <a class="el" href="gui__main_8cpp_source.html#l00268">PiocheTickets::piocher()</a>, et <a class="el" href="Joueur_8cpp_source.html#l00153">Joueur::validerTicket()</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01348">handleMapClick()</a>.</p>
+
+</div>
+</div>
+<a id="ab28b303a3f5a0c94d9efe1d833b42406" name="ab28b303a3f5a0c94d9efe1d833b42406"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab28b303a3f5a0c94d9efe1d833b42406">&#9670;&#160;</a></span>verifierGrandeTraversee()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool verifierGrandeTraversee </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classJoueur.html">Joueur</a> *&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const vector&lt; <a class="el" href="classVoieFerree.html">VoieFerree</a> * &gt; &amp;&#160;</td>
+          <td class="paramname"><em>voies</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Vérifie si un joueur a accompli une grande traversée. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">j</td><td></td></tr>
+    <tr><td class="paramname">voies</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>true </dd>
+<dd>
+false </dd></dl>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00229">229</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Références <a class="el" href="gui__main_8cpp_source.html#l00219">COTE_EST</a>, <a class="el" href="gui__main_8cpp_source.html#l00218">COTE_OUEST</a>, et <a class="el" href="gui__main_8cpp_source.html#l00196">estConnecte()</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l01348">handleMapClick()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a id="a780c43d29d843557f256b63249d22137" name="a780c43d29d843557f256b63249d22137"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a780c43d29d843557f256b63249d22137">&#9670;&#160;</a></span>CITY_POS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const map&lt;string, QPointF&gt; CITY_POS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Valeur initiale :</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    {<span class="stringliteral">&quot;Seattle&quot;</span>,         { 85.f,  90.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Calgary&quot;</span>,         {215.f,  60.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Helena&quot;</span>,          {295.f, 155.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Winnipeg&quot;</span>,        {425.f,  70.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Duluth&quot;</span>,          {525.f, 180.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Montreal&quot;</span>,        {650.f, 100.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;San Francisco&quot;</span>,   { 70.f, 295.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Salt Lake City&quot;</span>,  {235.f, 270.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Denver&quot;</span>,          {315.f, 335.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Kansas City&quot;</span>,     {440.f, 340.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Chicago&quot;</span>,         {535.f, 245.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Washington&quot;</span>,      {660.f, 280.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Los Angeles&quot;</span>,     { 80.f, 420.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Albuquerque&quot;</span>,     {250.f, 425.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Dallas&quot;</span>,          {380.f, 470.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;New Orleans&quot;</span>,     {485.f, 510.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Atlanta&quot;</span>,         {565.f, 450.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;New York&quot;</span>,        {675.f, 220.f}},</div>
+<div class="line">    {<span class="stringliteral">&quot;Miami&quot;</span>,           {620.f, 560.f}}</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Positions des villes sur la carte. </p>
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00401">401</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l01324">findRoute()</a>.</p>
+
+</div>
+</div>
+<a id="af0dd2effe9464718a86ab57d4840e574" name="af0dd2effe9464718a86ab57d4840e574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0dd2effe9464718a86ab57d4840e574">&#9670;&#160;</a></span>COTE_EST</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const vector&lt;string&gt; COTE_EST = {&quot;New York&quot;,&quot;Washington&quot;,&quot;Miami&quot;,&quot;Montreal&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00219">219</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00229">verifierGrandeTraversee()</a>.</p>
+
+</div>
+</div>
+<a id="a3aafd746403eadc4134a7ca5e0dbd78b" name="a3aafd746403eadc4134a7ca5e0dbd78b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aafd746403eadc4134a7ca5e0dbd78b">&#9670;&#160;</a></span>COTE_OUEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const vector&lt;string&gt; COTE_OUEST = {&quot;Seattle&quot;,&quot;San Francisco&quot;,&quot;Los Angeles&quot;}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Définition à la ligne <a class="el" href="gui__main_8cpp_source.html#l00218">218</a> du fichier <a class="el" href="gui__main_8cpp_source.html">gui_main.cpp</a>.</p>
+
+<p class="reference">Référencé par <a class="el" href="gui__main_8cpp_source.html#l00765">drawMap()</a>, et <a class="el" href="gui__main_8cpp_source.html#l00229">verifierGrandeTraversee()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="gui__main_8cpp.html">gui_main.cpp</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+<map id="GameWidget" name="GameWidget">
+<area shape="rect" id="Node000001" title="Widget principal du jeu." alt="" coords="5,119,279,397"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="107,5,177,71"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,84,145,118,139,118,139,84"/>
+</map>
