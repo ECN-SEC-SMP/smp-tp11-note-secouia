@@ -53,7 +53,7 @@ voie peut ne pas avoir de propriétaire). Les nœuds sont cliquables.
 | Classe          | Rôle |
 |-----------------|------|
 | @ref Partie     | Orchestre une session : pioches, tours, fin de partie. |
-| @ref Plateau    | Charge la carte et les tickets depuis les CSV, valide les chemins par BFS. |
+| @ref Plateau    | Charge la carte et les tickets depuis les CSV, valide les chemins par Dijkstra. |
 | @ref Joueur     | Wagons, main de cartes, missions. |
 | @ref VoieFerree | Route entre deux villes : couleur, longueur, propriétaire. |
 | @ref Ville      | Sommet du graphe. |
@@ -69,7 +69,7 @@ Tout est paramétré sans recompilation via les fichiers du dossier `files/` :
 
 # Points d'entrée utiles
 
-- @ref Plateau::existeChemin : validation d'un ticket par BFS.
+- @ref Plateau::existeChemin : validation d'un ticket par Dijkstra.
 - @ref Plateau::placeWagon : prise d'une voie ferrée.
 - @ref Joueur::peutPrendreVoie : vérification des cartes avant achat.
 - @ref Partie::piocherTrain : pioche d'une carte train.

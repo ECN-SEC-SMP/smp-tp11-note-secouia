@@ -316,7 +316,7 @@ public:
      *      incrémenté sans qu'aucun élément ne soit réellement retiré).
      *
      * @par Complexité
-     * O(V + E) dominée par le parcours de graphe dans @ref Plateau::existeChemin.
+     * O(V^2) dominée par l'algorithme de Dijkstra dans @ref Plateau::existeChemin.
      *
      * @see Plateau::existeChemin, aGagne
      */

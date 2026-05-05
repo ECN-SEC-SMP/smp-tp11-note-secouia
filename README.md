@@ -23,7 +23,7 @@ Elle est générée et déployée automatiquement sur GitHub Pages à chaque pus
 - Chargement de la carte et des tickets depuis des fichiers CSV
 - Pioche et gestion des cartes train (6 couleurs + locomotives joker)
 - Prise de voies ferrées avec vérification des cartes et wagons disponibles
-- Validation automatique des tickets par recherche de chemin (BFS)
+- Validation automatique des tickets par recherche de chemin (Dijkstra)
 - Recyclage de la défausse lorsque la pioche est vide
 - Détection de la **grande traversée** (côte ouest vers côte est)
 - Conditions de fin de partie : 6 tickets complétés ou plus de wagons
@@ -60,7 +60,7 @@ L'exécutable principal `aventuriers` est généré dans le dossier `build/`. Si
 
 ## Tests
 
-Le projet inclut une suite de tests unitaires Google Test couvrant les classes `Joueur`, `Ticket`, `Train`, `VoieFerree`, ainsi que la logique de jeu (BFS, pioche, prise de voie).
+Le projet inclut une suite de tests unitaires Google Test couvrant les classes `Joueur`, `Ticket`, `Train`, `VoieFerree`, ainsi que la logique de jeu (Dijkstra, pioche, prise de voie).
 
 ```bash
 ctest --test-dir build --output-on-failure

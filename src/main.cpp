@@ -4,7 +4,7 @@
 //   - Piocher 2 cartes train
 //   - Prendre une voie ferrée (locomotives jokers)
 //   - Passer son tour (défausser tickets + reprendre 2)
-//   - Validation automatique des tickets via BFS
+//   - Validation automatique des tickets via Dijkstra
 //   - Pioche un nouveau ticket après en avoir réussi un
 //   - Recyclage de la défausse quand la pioche est vide
 //   - Grande traversée (relier côte ouest à côte est)
@@ -138,7 +138,7 @@ static void afficherPlateau(const vector<VoieFerree*>& voies)
     cout << "\n";
 }
 
-// ── BFS connectivité ────────────────────────────────────────────────────────
+// ── Dijkstra connectivité ───────────────────────────────────────────────────
 /**
  * @brief Vérifie si deux villes sont connectées par des voies de train
  * 
