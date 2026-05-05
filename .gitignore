@@ -132,3 +132,6 @@ build
 CR/_minted-rapport_new/
 *.gz
 .claude/build/
+
+# cache de clangd
+.cache/
